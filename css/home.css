@@ -158,7 +158,10 @@
     linear-gradient(to right, rgb(22 22 22 / .82) 0%, rgb(22 22 22 / 0) 60.5%);
 }
 .pr-feature--service .pr-body + .pr-actions { margin-block-start: 24px; }
-.pr-feature--about .pr-cover img { object-position: 50% 0%; }
+.pr-feature--about .pr-cover img { object-position: 50% 50%; }
+/* the Amalfi evening: the car stands mid-frame on its turntable, so the copy
+   sits low, on the showroom floor beneath it, not across it */
+@media (min-width: 48.0625rem) { .pr-feature--about { padding-block-end: clamp(2.5rem, 4.2vw, 80px); } }
 .pr-feature--about .pr-feature__shade {
   background:
     linear-gradient(to top, #181818 0%, rgb(24 24 24 / 0) 59.4%),
