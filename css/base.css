@@ -1,0 +1,539 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   The AAN Ferrari page base — shared by the retailer sub pages.
+   Taken from the Purosangue American Grand Tour build (site/css/page.css)
+   with its campaign sections removed: tokens, type, controls, the
+   retailer's header and footer, the marker. The page's own sections live
+   in css/approved.css.
+
+   Ground rules this file holds to:
+   · one type family. Ferrari's identity runs on a single grotesque, so the
+     house three-voice system yields; the label register is carried by case,
+     tracking, size and dimmed ink instead of by a second family.
+   · one accent, in one role only — the primary control fill. The red of the
+     marque enters the page through the car, not through the interface.
+   · separation by air and hairline. No cards, no boxes, no shadows.
+   · every spacing value resolves to the scale below.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── the family ────────────────────────────────────────────────────────────
+   Ferrari Sans, self-hosted. An earlier build set the page in Archivo on the
+   premise that the marque's own face was not available here; it is — the 2021
+   release sits in the project folder — so the stand-in is gone and with it the
+   third-party font request.
+
+   The release ships two weights, Regular and Medium, and there is no third.
+   Every rule below therefore resolves to 400 or 500 and `font-synthesis` is
+   off: a 600 that silently became a faux-bold would be a weight the marque
+   does not have. The label register was already carried by case, tracking,
+   size and dimmed ink rather than by weight, so it survives the loss intact.
+   ──────────────────────────────────────────────────────────────────────── */
+@font-face {
+  font-family: "Ferrari Sans";
+  src: url("../fonts/Ferrari-SansRegular.woff2") format("woff2"),
+       url("../fonts/Ferrari-SansRegular.woff")  format("woff");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Ferrari Sans";
+  src: url("../fonts/Ferrari-SansMedium.woff2") format("woff2"),
+       url("../fonts/Ferrari-SansMedium.woff")  format("woff");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+
+/* ── tokens ───────────────────────────────────────────────────────────── */
+:root {
+  /* built in order: ground → ink → rules → accent */
+  --bg:           #0d0e11;   /* off-black, cool — matched to the renders' neutral */
+  --bg-0:         rgb(13 14 17 / 0);
+  --bg-deep:      #08090b;
+  --ink:          #f3f4f6;
+  --ink-80:       rgb(243 244 246 / .82);   /* body            11.7:1 */
+  --ink-55:       rgb(243 244 246 / .58);   /* labels           6.3:1 */
+  --rule:         rgb(243 244 246 / .24);   /* record hairlines        */
+  --rule-strong:  rgb(243 244 246 / .42);   /* control edges    3.8:1 */
+  --marque:       #a6a6a6;                  /* retailer name    7.9:1 */
+  --pool:         rgb(150 152 160 / .16);   /* sampled from the studio floor */
+
+  /* accent — measured from the supplied American Grand Tour badge (#a00909),
+     confirmed against the lead car's lit body (#bf2424) */
+  --rosso:        #a00909;
+  --rosso-lift:   #bf2424;
+  /* the library's own brand token, color/brand/rosso-corsa — the marker's
+     colour is this and not the badge sample */
+  --rosso-corsa:  #da291c;
+  /* the renders' studio floor, sampled at their edges: #5b5a60 top, #666669
+     bottom. Sits under the plate while it loads. */
+  --plate-floor:  #5f5e63;
+
+  /* spacing — 4px base */
+  --space-1:  .25rem;  --space-2:  .5rem;   --space-3:  .75rem;
+  --space-4:  1rem;    --space-5:  1.5rem;  --space-6:  2rem;
+  --space-7:  3rem;    --space-8:  4rem;    --space-9:  6rem;
+  --space-10: 8rem;    --space-11: 12rem;
+
+  /* sections exhale downward — 1 : 1.5 → 1 : 2 */
+  /* the marker sits 128px below a section's top edge at 1920 and 32px at 430 */
+  --pad-top:    clamp(2rem, 6.67vw, 128px);
+  --pad-bottom: clamp(6rem, 14vw, 12rem);
+
+  /* The shell is the design's, not a round number. In the 1920 frames the
+     content column runs 256 → 1664: 1408 wide, 256 each side. Mobile frames
+     are 430 wide with a 16 px gutter. Between the two the gutter holds the
+     same 13.34% ratio, so the column keeps the design's proportion at every
+     width instead of snapping at a breakpoint. */
+  --shell-max: 1408px;
+  --band-pad:  1rem;
+  /* the marker hangs 50 px left of the column — 206 against the content's 256 */
+  --marker-out: 0px;
+  /* the retailer's header, measured: a 40 px top bar over a 91 px navigation
+     band. Below 64rem the top bar is replaced by their 40 px mobile bar. */
+  --head-h:    calc(40px + var(--nav-h));
+  /* the part of it that stays: the navigation band sticks, the top bar
+     scrolls away. Below 64rem it is the 40 px mobile bar instead. */
+  --stick-h:   var(--nav-h);
+  /* The retailer's header steps at their own breakpoints (read off their
+     stylesheet): the lockup is 360 wide above 1600, 320 to 1600, 240 to
+     1400, 210 to 1280; the band is that lockup's height plus 24 above and
+     below. 7.5 : 1 is the lockup's own proportion. */
+  --logo-w:    360px;
+  --logo-h:    calc(var(--logo-w) / 7.5);
+  --nav-h:     calc(var(--logo-h) + 48px);
+
+  /* type */
+  --font: "Ferrari Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --text-xs:      .875rem;                                  /* 14px — the floor */
+  --text-sm:      clamp(.9375rem, .25vw + .88rem, 1rem);
+  --text-body:    clamp(1rem, .3vw + .95rem, 1.0625rem);
+  --text-h3:      clamp(1.25rem, 1.1vw + .95rem, 1.75rem);
+  /* the library's section headline sits in a 34px block — 28px type. Measured
+     on Legacy (1319:19087, 1319:19094), not chosen. */
+  --text-h2:      clamp(1.375rem, 1.1vw + .5rem, 1.75rem);
+  /* ceiling set by measurement, not taste: at 1440 the type column is 557 px
+     and ATELIER COLLECTION — the longest authored line — measures 555 px at
+     40 px in this face. 40 clears it by 2 px, which is not a margin; 39 clears
+     it by 16 and looks the same. */
+  --text-display: clamp(1.5rem, 2.25vw + .5rem, 2.4375rem);
+
+  /* Motion, measured off Ferrari's own page rather than chosen: transform
+     runs 0.3s ease, opacity and colour 0.2s ease, and disclosures 0.5s
+     ease-out. Their page has NO scroll reveal at all — text sits at opacity
+     1 with no transform before and after it enters the viewport — so this
+     page has none either. The only content that moves is the slider. */
+  --dur: .2s;        /* opacity, colour */
+  --dur-move: .3s;   /* transform */
+  --ease: ease;
+}
+@media (max-width: 22.5rem) { :root { --text-display: 1.375rem; } }
+@media (min-width: 48rem) {
+  :root {
+    --band-pad:   min(13.34vw, 256px);
+    --marker-out: min(2.604vw, 50px);
+  }
+}
+
+/* ── reset ────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-block-start: var(--stick-h); }
+html, body { overflow-x: clip; }
+body {
+  position: relative;  /* the header's containing block — see .header */
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: var(--text-body);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  /* the release has two weights and no third — never invent the rest */
+  font-synthesis: none;
+}
+img, svg { display: block; max-width: 100%; height: auto; }
+h1, h2, h3, h4, p, dl, dd, ol, ul, figure { margin: 0; }
+ol, ul { list-style: none; padding: 0; }
+a { color: inherit; }
+/* the page has bare icon buttons now — a default UA button ground showed up
+   twice as a grey box before this rule existed. `.btn` sets its own. */
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+
+:where(a, button, input, textarea):focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.skip {
+  position: absolute; left: var(--space-4); top: var(--space-4);
+  transform: translateY(-200%);
+  background: var(--ink); color: var(--bg);
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--text-xs); text-transform: uppercase; letter-spacing: .12em;
+  text-decoration: none; z-index: 100;
+}
+.skip:focus { transform: none; }
+
+/* the page's one measure: a padded full-width band, so any ground a section
+   paints reaches the viewport edge while its content stays on the shell */
+.band {
+  width: 100%;
+  padding-inline: var(--band-pad);
+}
+.band > * { min-width: 0; }
+
+/* ── controls — the retailer's own button system, 1:1 ────────────────────
+   Taken off cauleyferrari.com's stylesheet (Ferrari's `fr-*` buttons), not
+   approximated: 64 px tall, 24/32 padding, 208 min width, 16 gap, Ferrari
+   Sans 12/15 400 uppercase at 0.6px, square corners. Their colours too —
+   the primary's gradient, the hover reds and the yellow focus ring are the
+   retailer's, which is why they are literals here and not page tokens.
+
+     .btn--primary  fr-primary-btn            red gradient
+     .btn--ghost    fr-tiertiary-btn--dark    white outline on a dark ground
+     .btn__chev     their 16 × 16 chevron, on secondaries only
+   ───────────────────────────────────────────────────────────────────────── */
+.btn {
+  position: relative; box-sizing: border-box;
+  display: inline-flex; align-items: center; justify-content: center; gap: 16px;
+  min-width: 208px; height: 64px; padding: 24px 32px;
+  font-family: inherit; font-size: 12px; font-weight: 400; line-height: 15px;
+  text-transform: uppercase; letter-spacing: .6px; text-decoration: none;
+  border: 1px solid transparent; border-radius: 0; cursor: pointer;
+  transition: background-color .3s ease, border-color .3s ease, color .3s ease;
+}
+/* A gradient cannot transition, so swapping it for the hover red snaps.
+   The hover red is the ground and the gradient a layer over it that fades
+   out — the same two colours as theirs, without the cut. */
+.btn--primary { color: #fff; background: rgb(176 30 10); border: 0; isolation: isolate; }
+.btn--primary::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, #a00c01 0%, #da291c 64%);
+  transition: opacity .3s ease;
+}
+.btn--primary:hover::before { opacity: 0; }
+.btn--primary:active { background: rgb(157 34 17); }
+.btn--primary:active::before { opacity: 0; }
+.btn--ghost { color: #fff; background: transparent; border-color: #fff; }
+.btn--ghost:hover, .btn--ghost:active { color: rgb(210 210 210); border-color: rgb(210 210 210); }
+.btn__chev { transition: transform .3s ease; }
+.btn:hover .btn__chev { transform: translateX(3px); }
+.btn:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 2px; }
+.btn__chev { width: 16px; height: 16px; flex: none; }
+.btn--sm { min-width: 144px; }
+.btn--lg { min-width: 228px; }
+
+/* ── header — reproduced from cauleyferrari.com ────────────────────────────
+   Structure, items, links and metrics taken off the retailer's live header
+   and matched: top bar 40 px on #181818, navigation band on rgba(0,0,0,.6),
+   nav 11 px uppercase at a 32 px gap, the lockup at 320 × 43, the container
+   1920 max with 32 px gutters. It is absolute over the cover; the top bar
+   scrolls away and the navigation band stays. Their theme's own values, not this page's tokens —
+   that is what 1:1 means here, and it is why this block does not read like
+   the rest of the file.
+   ───────────────────────────────────────────────────────────────────────── */
+.header {
+  /* Still absolute over the cover, but as tall as the page, so the band
+     inside it has the whole document to stick across. The box itself takes
+     no pointer events, or it would sit over everything it is laid on. */
+  position: absolute; inset: 0; z-index: 9;
+  pointer-events: none;
+  font-family: var(--font);
+}
+.header > * { pointer-events: auto; }
+.h-container {
+  max-width: 120rem; margin-inline: auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+
+/* top bar */
+.header__top-bar { background: #181818; }
+/* three tracks, not space-between: theirs centres the horse on the viewport,
+   which only holds if the middle cell is a track of its own */
+.header__top-bar > .h-container {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  /* 40 px flat, as theirs measures. The horse is 28 px and simply centres in
+     it; the 12 px padding their theme writes only ever applied to the 16 px
+     text rows, and stating it here would make the bar 52. */
+  height: 40px; padding: 0 32px;
+}
+.header__top-bar-logo { justify-self: center; }
+.header__top-bar-right { justify-self: end; }
+.header__contact {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; line-height: 1.2; letter-spacing: .015em;
+  text-transform: uppercase; color: #8f8f8f; text-decoration: none;
+  transition: color var(--dur) var(--ease);
+}
+.header__contact:hover, .header__contact:focus-visible { color: #f7f7f7; }
+.header__contact img { width: 16px; height: 16px; flex: none; }
+.header__horse { width: 21px; height: 28px; }
+.header__top-bar-right { display: flex; align-items: center; gap: 24px; }
+.header__search { display: flex; align-items: center; gap: 8px; padding-inline-start: 24px; border-inline-start: 1px solid #303030; }
+.header__search input {
+  width: 0; padding: 0; border: 0; background: transparent; color: #fff;
+  font-family: inherit; font-size: 11px; letter-spacing: .015em;
+  transition: width var(--dur) var(--ease), padding var(--dur) var(--ease);
+}
+.header__search:hover input, .header__search input:focus { width: 10rem; padding-inline-end: 8px; }
+.header__search-btn { display: grid; place-items: center; padding: 0; opacity: .9; transition: opacity var(--dur) var(--ease); }
+.header__search-btn:hover, .header__search-btn:focus-visible { opacity: 1; }
+.header__search-btn img { width: 16px; height: 16px; }
+
+/* navigation band */
+.header__navigation-section {
+  position: sticky; inset-block-start: 0; background: rgb(0 0 0 / .6);
+  transition: background-color var(--dur) var(--ease);
+}
+/* Stuck, the band keeps the retailer's own .6 black, as theirs does over
+   every section — but over a blur, so display type passing beneath it reads
+   as tone rather than as letters colliding with the menu. */
+.header.is-stuck .header__navigation-section {
+  -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+}
+.header__navigation-section > .h-container { padding: 24px 32px 24px 64px; align-items: center; }
+.header__logo-img { width: var(--logo-w); height: var(--logo-h); }
+@media (max-width: 100rem) { :root { --logo-w: 320px; } }
+@media (max-width: 87.5rem) {
+  :root { --logo-w: 240px; }
+  .header__navigation-section > .h-container { padding-inline-start: 40px; }
+}
+@media (max-width: 80rem) { :root { --logo-w: 210px; } }
+
+.header__nav { display: flex; }
+.header__menu { display: flex; align-items: center; gap: 32px; }
+.header__menu > li { position: relative; }
+.header__menu > li > a {
+  display: block;
+  font-size: 14px; line-height: 24px; letter-spacing: normal;
+  text-transform: uppercase; color: #fff; text-decoration: none;
+  transition: color var(--dur) var(--ease);
+}
+@media (max-width: 100rem) { .header__menu > li > a { font-size: 11px; } }
+@media (max-width: 80rem) {
+  .header__menu { gap: 24px; }
+  .header__menu > li > a { font-size: 10px; }
+}
+.header__menu > li > a:hover, .header__menu > li > a:focus-visible { color: var(--rosso-lift); }
+
+/* the drop-down: a full-width band on the retailer's own #181818, drawn by
+   the panel itself so it is exactly as tall as whatever opened it */
+.header__menu .sub-menu {
+  /* the panel hangs off the item but opens at the header's own bottom edge,
+     as theirs does. 33px is that distance: the band's 24px bottom padding
+     plus the 9px the 24px menu row is centred by inside the 43px lockup row. */
+  position: absolute; inset-block-start: calc(100% + 24px + (var(--logo-h) - 24px) / 2); inset-inline-start: 0;
+  display: flex; flex-direction: column; gap: 16px;
+  min-width: 188px; padding-block: 35px;
+  opacity: 0; visibility: hidden;
+  transition: opacity var(--dur) var(--ease), visibility var(--dur) var(--ease);
+}
+/* The band is painted by a shadow, not by a 100vw box. A viewport-wide box
+   centred on the item is only centred on the viewport for the item that
+   happens to sit in the middle: on Motorsports it reached x 1950 and gave the
+   document 524 px of horizontal overflow. A spread shadow covers the same
+   width, clipped back to the panel's own height, and never enters layout. */
+.header__menu .sub-menu::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: #181818;
+  box-shadow: 0 0 0 100vmax #181818;
+  clip-path: inset(0 -100vmax);
+}
+/* The panel hangs from its item's left edge, which runs off-screen for the
+   last items when a retailer's labels are long — Greenwich's Owners panel is
+   259 wide behind an item that starts at 1661, and `Passione Ferrari Club
+   Challenge` pushed 15px past the viewport. The last items hang from their
+   right edge instead. */
+.header__menu > li:nth-last-child(-n+3) .sub-menu {
+  inset-inline-start: auto; inset-inline-end: 0;
+}
+.header__menu > li:hover .sub-menu,
+.header__menu > li:focus-within .sub-menu { opacity: 1; visibility: visible; }
+/* the li must not keep the body's 17px line-height strut, or every row is
+   28px tall instead of 19.5 and the panel runs 93px long */
+.header__menu .sub-menu li { font-size: 13px; line-height: 1.5; }
+.header__menu .sub-menu a {
+  font-size: 13px; line-height: 1.5; color: #fff; text-decoration: none; white-space: nowrap;
+  transition: color var(--dur) var(--ease);
+}
+.header__menu .sub-menu a:hover, .header__menu .sub-menu a:focus-visible { color: var(--rosso-lift); }
+.header__submenu-backdrop { display: none; }
+
+/* mobile bar — theirs switches at 1025 */
+.header__mobile-section { display: none; }
+.header__burger-text,
+.header__mobile-action {
+  font-family: inherit; font-size: 12px; line-height: 1.25; letter-spacing: .05em;
+  text-transform: uppercase; color: #fff; text-decoration: none;
+  padding: 0; background: none; border: 0; cursor: pointer;
+}
+
+@media (max-width: 64rem) {
+  .header__top-bar { display: none; }
+  :root { --stick-h: 40px; --logo-w: 320px; }
+  /* on a phone the band is only the lockup; the bar with Menu is what stays */
+  .header__navigation-section { position: relative; }
+  .header__mobile-section {
+    position: sticky; inset-block-start: 0; z-index: 1;
+    display: flex; align-items: center; justify-content: space-between;
+    min-height: 40px; padding: 8px 16px; background: #181818;
+  }
+  .header__navigation-section > .h-container { padding: 16px; justify-content: center; }
+  .header__logo-img { width: min(320px, 100%); height: auto; }
+  .header__nav { display: none; }
+}
+
+/* the panel behind the burger — the same eight sections, as a list */
+.mobile-menu {
+  position: fixed; inset: 0; z-index: 60;
+  background: #181818; color: #fff;
+  padding: 72px 16px 32px;
+  overflow-y: auto;
+}
+.mobile-menu__inner { display: flex; flex-direction: column; gap: 20px; max-width: 32rem; margin-inline: auto; }
+.mobile-menu__inner > a {
+  font-size: 18px; letter-spacing: .05em; text-transform: uppercase;
+  color: #fff; text-decoration: none;
+}
+.mobile-menu__inner > a:hover { color: var(--rosso-lift); }
+.mobile-menu__foot { display: grid; gap: 8px; margin-block-start: 24px; padding-block-start: 24px; border-block-start: 1px solid #303030; }
+.mobile-menu__foot a { font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: #8f8f8f; text-decoration: none; }
+body.menu-open { overflow: hidden; }
+/* ── the page's sections ──────────────────────────────────────────────────
+   Built on the AAN Ferrari page grammar, taken from the model pages in the
+   AAN FERRARI PROJECT LIB (849 Testarossa Spider, node 1319:19038) and from
+   Ferrari's own Tier 1 page for this campaign. Four components carry the
+   whole page:
+
+     · the marker      N ——— NAME, red, tracked caps
+     · the eyebrow     tracked caps over a sentence-case headline
+     · the action pair a filled red INQUIRE beside an outlined secondary
+     · the record      caps label over the value, in a row
+
+   Headlines are sentence case. The earlier build set every headline in caps
+   and that is not what the house does — caps belong to markers, eyebrows,
+   labels and controls, and to nothing else.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* The marker — the library's `Chapter` component, node 1319:19070, taken at
+   its own values rather than approximated: Ferrari Sans Regular 12/15, 0.6px
+   tracking, uppercase, rosso corsa, an 8px gap, and a separator that is a
+   fixed 96px box holding a 1px rule pushed 2px down off the centre line.
+   It sits 50px left of the content column and 128px below the section's top
+   edge. 12px is under this file's own 14px floor; it is the marque's
+   component and the floor yields to it — nothing else on the page does. */
+.marker {
+  display: flex; align-items: center; gap: 8px;
+  margin-inline-start: calc(var(--marker-out) * -1);
+  font-size: 12px; font-weight: 400; line-height: 15px;
+  text-transform: uppercase; letter-spacing: .6px;
+  color: var(--rosso-corsa);
+}
+.marker__rule {
+  width: 96px; flex: none;
+  padding-block-start: 2px;
+}
+.marker__rule::before { content: ""; display: block; height: 1px; background: currentColor; }
+.marker--ink { color: var(--rosso-corsa); }
+
+.eyebrow {
+  font-size: var(--text-xs); line-height: 24px; font-weight: 500;
+  text-transform: uppercase; letter-spacing: .14em;
+  color: var(--ink-55);
+}
+.eyebrow--light { color: rgb(255 255 255 / .78); }
+
+/* headings — sentence case, this is the house voice */
+.display {
+  font-size: var(--text-display); font-weight: 500;
+  line-height: 1.06; letter-spacing: -.01em;
+}
+.h2 {
+  font-size: var(--text-h2); font-weight: 500;
+  line-height: 1.215; letter-spacing: -.01em;
+}
+.copy { color: var(--ink-80); max-width: 46ch; line-height: 1.65; text-wrap: pretty; }
+.copy--light { color: rgb(255 255 255 / .84); }
+
+.actions { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+
+
+/* ── footer — reproduced from cauleyferrari.com ────────────────────────────
+   Same source and same rule as the header: their five centred columns, their
+   hairlines at #303030, the lockup band, the address-and-social row, the
+   Ferrari copyright, the #303030 legal bar and the All Auto Network line.
+   The one addition is this page's own credit, which is a fact about this page
+   that the retailer's footer has no reason to carry.
+   ───────────────────────────────────────────────────────────────────────── */
+.super-footer { background: #181818; color: #fff; font-family: var(--font); }
+.super-footer__top-section { padding-inline: 16px; }
+.f-container { max-width: 120rem; margin-inline: auto; padding-inline: 16px; }
+
+.super-footer__navigation { padding-block: 96px 64px; }
+.footer__menu { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.footer__menu > li { display: flex; flex-direction: column; gap: 24px; text-align: center; }
+.footer__col-head {
+  font-size: 12px; line-height: 1.25; letter-spacing: .05em;
+  text-transform: uppercase; color: #f7f7f7; text-decoration: none;
+}
+.footer__menu .sub-menu { display: flex; flex-direction: column; gap: 24px; }
+/* the row must not keep the body's 17px strut — see the header's panel */
+.footer__menu .sub-menu li { font-size: 13px; line-height: 1.5; }
+.footer__menu .sub-menu a {
+  font-size: 13px; line-height: 1.5; color: #f7f7f7; text-decoration: none;
+  transition: color var(--dur) var(--ease);
+}
+.footer__col-head:hover, .footer__col-head:focus-visible,
+.footer__menu .sub-menu a:hover, .footer__menu .sub-menu a:focus-visible { color: var(--rosso-lift); }
+
+.super-footer__logo { padding-block: 48px; border-block-start: 1px solid #303030; }
+.super-footer__logo img { width: 320px; height: 43px; max-width: 100%; }
+
+.super-footer__dealer-outer {
+  display: flex; align-items: center; justify-content: space-between; gap: 32px;
+  padding-block: 40px; border-block: 1px solid #303030;
+}
+.super-footer address { font-style: normal; }
+.super-footer address a {
+  font-size: 16px; font-weight: 500; line-height: 1.2; letter-spacing: .005em;
+  text-transform: uppercase; color: #fff; text-decoration: none;
+}
+.super-footer__tel { display: inline-block; margin-block-start: 4px; font-size: 13px; color: #fff; text-decoration: none; }
+.super-footer address a:hover, .super-footer__tel:hover { color: var(--rosso-lift); }
+.super-footer .social { display: flex; align-items: center; gap: 64px; }
+.super-footer .social a { color: #f7f7f7; transition: color var(--dur) var(--ease); }
+.super-footer .social a:hover, .super-footer .social a:focus-visible { color: var(--rosso-lift); }
+.super-footer .social svg { width: 16px; height: 16px; display: block; }
+
+.super-footer__ferrari { padding-block: 40px 16px; text-align: center; font-size: 9px; font-weight: 500; color: #8f8f8f; }
+.super-footer__credit {
+  max-width: 60ch; margin-inline: auto; padding-block-end: 64px;
+  text-align: center; font-size: 11px; line-height: 1.6; color: #6f6f6f;
+}
+
+.super-footer__f-nav { background: #303030; padding: 24px 16px; }
+.footer-ferrari__menu { display: flex; flex-wrap: wrap; gap: 32px; }
+.footer-ferrari__menu a { font-size: 13px; color: #f7f7f7; text-decoration: none; transition: color var(--dur) var(--ease); }
+.footer-ferrari__menu a:hover, .footer-ferrari__menu a:focus-visible { color: var(--rosso-lift); }
+
+.super-footer__aan { padding: 32px 16px; }
+.super-footer__aan .power { display: flex; justify-content: flex-end; }
+.super-footer__aan a { font-size: 11px; letter-spacing: .015em; color: #6f6f6f; text-decoration: none; }
+.super-footer__aan a:hover { color: #8f8f8f; }
+
+@media (max-width: 64rem) {
+  .super-footer__navigation { padding-block: 56px 40px; }
+  .footer__menu { justify-content: flex-start; gap: 40px 32px; }
+  .footer__menu > li { flex: 1 1 40%; text-align: left; gap: 16px; }
+  .footer__menu .sub-menu { gap: 16px; }
+  .super-footer__dealer-outer { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .super-footer .social { gap: 32px; }
+  .super-footer__aan .power { justify-content: flex-start; }
+}
+
+/* ── reduced motion — the static page is the page ─────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; }
+}

@@ -1,0 +1,288 @@
+<main id="main">
+
+<!-- ══ HERO — Figma 2794:46461 ══════════════════════════════════════════ -->
+<section class="pr-hero" aria-labelledby="pr-hero-h">
+  <picture class="pr-cover">
+    <img src="img/home/hero-night-1920.webp"
+         srcset="img/home/hero-night-800.webp 800w, img/home/hero-night-1280.webp 1280w, img/home/hero-night-1920.webp 1920w"
+         sizes="100vw" width="1920" height="1282" alt="The Ferrari of Puerto Rico showroom at dusk, San Juan" fetchpriority="high">
+  </picture>
+  <div class="pr-hero__shade" aria-hidden="true"></div>
+  <div class="pr-shell pr-copy">
+    <p class="pr-pretitle">welcome to</p>
+    <h1 class="pr-hero__title" id="pr-hero-h">Ferrari of Puerto Rico</h1>
+    <div class="pr-actions">
+      <a class="btn btn--primary" href="#">Discover</a>
+      <a class="btn btn--ghost" href="our-team.html">Our team <svg class="btn__chev" aria-hidden="true"><use href="#chev"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 1 · 2026 RANGE — the client's first edit: the model line-up as
+     Ferrari of Fort Lauderdale sets it (ferrarifl.com "Our Collection"):
+     square lifestyle photographs, the name on each, arrows and dots below.
+     Photographs: Ferrari's dealer asset library (DealerInspire). ════════ -->
+<section class="pr-lineup" aria-labelledby="pr-lineup-h">
+  <div class="pr-shell">
+    <p class="marker"><span>1</span><span class="marker__rule"></span><span id="pr-lineup-h">2026 range</span></p>
+  </div>
+  <ul class="pr-lineup__track">
+{{LINEUP}}
+  </ul>
+  <div class="pr-shell pr-lineup__nav">
+    <button type="button" class="pr-lineup__arrow" data-step="-1" aria-label="Previous models"><svg aria-hidden="true" style="transform:scaleX(-1)"><use href="#chev"/></svg></button>
+    <div class="pr-lineup__dots" role="group" aria-label="Pages"></div>
+    <button type="button" class="pr-lineup__arrow" data-step="1" aria-label="Next models"><svg aria-hidden="true"><use href="#chev"/></svg></button>
+  </div>
+  <div class="pr-shell">
+    <a class="pr-link pr-link--after" href="#"><span>Contact us</span><span class="pr-jumbo pr-jumbo--60"><svg class="pr-ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" pathLength="100"/></svg><svg aria-hidden="true"><use href="#chev"/></svg></span></a>
+  </div>
+</section>
+
+<!-- ══ 2 · CERTIFIED PRE-OWNED FERRARI — Figma 2791:32502 ═══════════════ -->
+<section class="pr-cpo pr-light pr-pinned" id="pre-owned" aria-labelledby="pr-cpo-h">
+  <div class="pr-shell">
+    <p class="marker"><span>2</span><span class="marker__rule"></span><span id="pr-cpo-h">Certified pre-owned ferrari</span></p>
+  </div>
+  <!-- the rail, as thecollectionferrari.com runs its inventory: three cars
+       on the column, the next ones showing past its edges; drag or step one
+       car at a time; under it the arrows at the column's edges and, between
+       them, the dots, a rule and View all -->
+  <div class="pr-shell pr-cpo__rail">
+    <div class="swiper pr-cpo__swiper">
+      <ul class="swiper-wrapper pr-cpo__track">
+{{CPO_CARDS}}
+      </ul>
+    </div>
+    <div class="pr-cpo__nav">
+      <button type="button" class="pr-cpo__arrow pr-cpo__prev" aria-label="Previous car"><svg aria-hidden="true" style="transform:scaleX(-1)"><use href="#chev"/></svg></button>
+      <div class="pr-cpo__mid">
+        <div class="pr-cpo__dots"></div>
+        <a class="pr-cpo__all" href="pre-owned.html">View all</a>
+      </div>
+      <button type="button" class="pr-cpo__arrow pr-cpo__next" aria-label="Next car"><svg aria-hidden="true"><use href="#chev"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 3 · SERVICE — Figma 2791:33069 ═══════════════════════════════════════ -->
+<section class="pr-feature pr-feature--service pr-pinned" aria-labelledby="pr-service-h">
+  <picture class="pr-cover">
+    <img src="img/home/service-technician-1920.webp"
+         srcset="img/home/service-technician-800.webp 800w, img/home/service-technician-1280.webp 1280w, img/home/service-technician-1920.webp 1920w"
+         sizes="100vw" width="1920" height="1849" loading="lazy" alt="A Ferrari technician working in the Ferrari of Puerto Rico workshop">
+  </picture>
+  <div class="pr-feature__shade" aria-hidden="true"></div>
+  <div class="pr-shell pr-feature__top">
+    <p class="marker marker--soft"><span>3</span><span class="marker__rule"></span><span>Service</span></p>
+  </div>
+  <div class="pr-shell pr-copy">
+    <p class="pr-pretitle">GENUINE SERVICE</p>
+    <h2 class="pr-h2" id="pr-service-h">Service &amp; Maintenance</h2>
+    <p class="pr-body pr-body--642">At Ferrari of Puerto Rico, every vehicle in our care receives the full Ferrari Genuine experience — the manufacturer's official program encompassing genuine parts, accessories, and factory-authorized service. </p>
+    <div class="pr-actions">
+      <a class="btn btn--primary" href="#">Schedule Service</a>
+      <a class="btn btn--dark btn--328" href="#">Contact Service Team <svg class="btn__chev" aria-hidden="true"><use href="#chev"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 4 · OWNERS — Figma 2791:32741 ════════════════════════════════════ -->
+<section class="pr-owners pr-light pr-pinned" aria-labelledby="pr-owners-h">
+  <div class="pr-shell">
+    <p class="marker"><span>4</span><span class="marker__rule"></span><span id="pr-owners-h">owners</span></p>
+    <ul class="pr-tiles">
+      <li class="pr-tile">
+        <img src="img/home/owners-warranty.webp" width="656" height="800" loading="lazy" alt="">
+        <div class="pr-tile__body">
+          <p class="pr-record"><span>warranty</span><span class="pr-record__rule"></span><span>3 YRS</span></p>
+          <h3 class="pr-tile__title">Ferrari Factory Warranty</h3>
+          <a class="pr-link" href="#"><span class="pr-jumbo pr-jumbo--40"><svg class="pr-ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" pathLength="100"/></svg><svg aria-hidden="true"><use href="#chev"/></svg></span><span>Explore Warranty</span></a>
+        </div>
+      </li>
+      <li class="pr-tile">
+        <img src="img/home/owners-maintenance.webp" width="656" height="800" loading="lazy" alt="">
+        <div class="pr-tile__body">
+          <p class="pr-record"><span>MAINTENANCE</span><span class="pr-record__rule"></span><span>7 YRS</span></p>
+          <h3 class="pr-tile__title">7-Year Genuine Maintenance</h3>
+          <a class="pr-link" href="#"><span class="pr-jumbo pr-jumbo--40"><svg class="pr-ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" pathLength="100"/></svg><svg aria-hidden="true"><use href="#chev"/></svg></span><span>View Coverage Details</span></a>
+        </div>
+      </li>
+      <li class="pr-tile">
+        <img src="img/home/owners-myferrari.webp" width="656" height="800" loading="lazy" alt="">
+        <div class="pr-tile__body">
+          <p class="pr-record"><span>MYFERRARI</span><span class="pr-record__rule"></span><span>APP</span></p>
+          <h3 class="pr-tile__title">MyFerrari App Services</h3>
+          <a class="pr-link" href="#"><span class="pr-jumbo pr-jumbo--40"><svg class="pr-ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" pathLength="100"/></svg><svg aria-hidden="true"><use href="#chev"/></svg></span><span>Explore MyFerrari</span></a>
+        </div>
+      </li>
+      <li class="pr-tile">
+        <img src="img/home/owners-assistance.webp" width="656" height="800" loading="lazy" alt="">
+        <div class="pr-tile__body">
+          <p class="pr-record"><span>ASSISTANCE</span><span class="pr-record__rule"></span><span>24/7</span></p>
+          <h3 class="pr-tile__title">Ferrari<br>Assistance</h3>
+          <a class="pr-link" href="#"><span class="pr-jumbo pr-jumbo--40"><svg class="pr-ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" pathLength="100"/></svg><svg aria-hidden="true"><use href="#chev"/></svg></span><span>Get Assistance</span></a>
+        </div>
+      </li>
+    </ul>
+    <div class="pr-owners__copy">
+      <p class="pr-pretitle">FERRARI OWNERSHIP</p>
+      <h2 class="pr-h2">Ferrari of Puerto Rico Ownership Experience</h2>
+      <p class="pr-body pr-body--688">Unlock exclusive events, driving experiences, private previews, and personalized ownership privileges available only at Ferrari of Puerto Rico</p>
+      <div class="pr-actions">
+        <a class="btn btn--primary btn--328" href="#">ACCESS OWNER SERVICES</a>
+        <a class="btn btn--dark" href="#">MYFERRARI APP <svg class="btn__chev" aria-hidden="true"><use href="#chev"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 5 · DEALERSHIP — Figma 2797:1070. The frame's copy is a placeholder (Xxxxxxx);
+     this is drafted copy in its place, to be confirmed by the dealer. ══ -->
+<section class="pr-feature pr-feature--about" aria-labelledby="pr-about-h">
+  <picture class="pr-cover">
+    <img src="img/home/about-showroom-1920.webp"
+         srcset="img/home/about-showroom-800.webp 800w, img/home/about-showroom-1280.webp 1280w, img/home/about-showroom-1920.webp 1920w"
+         sizes="100vw" width="1920" height="1080" loading="lazy" alt="A red Ferrari 512 TR outside the Ferrari of Puerto Rico service building">
+  </picture>
+  <div class="pr-feature__shade" aria-hidden="true"></div>
+  <div class="pr-shell pr-feature__top">
+    <p class="marker marker--soft"><span>5</span><span class="marker__rule"></span><span>Dealership</span></p>
+  </div>
+  <div class="pr-shell pr-copy">
+    <p class="pr-pretitle">THE FERRARI excellence</p>
+    <h2 class="pr-h2" id="pr-about-h">The Ferrari of Puerto Rico Difference</h2>
+    <p class="pr-body pr-body--568 pr-body--soft">Ferrari of Puerto Rico delivers a world-class Ferrari experience on the island, combining Ferrari’s own standards with a passion for Italian craftsmanship.</p>
+    <div class="pr-actions">
+      <a class="btn btn--primary" href="our-team.html">meet the team</a>
+      <a class="btn btn--dark btn--auto" href="#">contact us <svg class="btn__chev" aria-hidden="true"><use href="#chev"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 6 · NEWS & EVENTS — Figma 2791:32820. The six latest stories from
+     ferrari.com/en-US/news (read 22 Oct 2026): photograph, date, category,
+     title and Ferrari's own summary; read more opens the article. Six, in a looping carousel,
+     as Cauley's home runs them; a PDF link appears only when a story
+     carries a PDF — these six don't. ═════════════════════════════════════════════════════ -->
+<section class="pr-news pr-light" aria-labelledby="pr-news-h">
+  <div class="pr-shell">
+    <p class="marker"><span>6</span><span class="marker__rule"></span><span id="pr-news-h">NEWS &amp; EVENTS</span></p>
+    <div class="pr-news__swiper swiper">
+      <ul class="pr-news__grid swiper-wrapper">
+        <li class="pr-post swiper-slide">
+          <img src="img/news/austin-livery.webp" width="860" height="489" loading="lazy" alt="">
+          <p class="pr-record pr-record--red"><span>21 Oct 2026</span><span class="pr-record__rule"></span><span>Scuderia</span></p>
+          <div class="pr-post__copy">
+            <h3 data-reveal-words>Scuderia Ferrari HP unveils special Austin livery revealing the path from concept to competition</h3>
+            <p>For the United States Grand Prix in Austin, Scuderia Ferrari HP will race with a special livery on the two SF-26s of Charles Leclerc and Lewis Hamilton, celebrating the creative and engineering process that transforms an idea into a Formula 1 car.</p>
+          </div>
+          <div class="pr-post__links">
+            <a class="pr-link pr-link--dark" href="https://www.ferrari.com/en-US/formula1/articles/united-states-grand-prix-2026-livery" target="_blank" rel="noopener"><span class="pr-jumbo pr-jumbo--40"><svg class="pr-ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" pathLength="100"/></svg><svg aria-hidden="true"><use href="#chev"/></svg></span><span>read more</span></a>
+          </div>
+        </li>
+        <li class="pr-post swiper-slide">
+          <img src="img/news/austin-cover-art.webp" width="860" height="489" loading="lazy" alt="">
+          <p class="pr-record pr-record--red"><span>21 Oct 2026</span><span class="pr-record__rule"></span><span>Scuderia</span></p>
+          <div class="pr-post__copy">
+            <h3 data-reveal-words>United States Grand Prix 2026 by Margherita Caspani</h3>
+            <p>Cover Art by Margherita Caspani</p>
+          </div>
+          <div class="pr-post__links">
+            <a class="pr-link pr-link--dark" href="https://www.ferrari.com/en-US/formula1/articles/united-states-grand-prix-2026-cover-art" target="_blank" rel="noopener"><span class="pr-jumbo pr-jumbo--40"><svg class="pr-ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" pathLength="100"/></svg><svg aria-hidden="true"><use href="#chev"/></svg></span><span>read more</span></a>
+          </div>
+        </li>
+        <li class="pr-post swiper-slide">
+          <img src="img/news/austin-preview.webp" width="860" height="489" loading="lazy" alt="">
+          <p class="pr-record pr-record--red"><span>21 Oct 2026</span><span class="pr-record__rule"></span><span>Scuderia</span></p>
+          <div class="pr-post__copy">
+            <h3 data-reveal-words>American triple-header kicks off in Austin</h3>
+            <p>Following on from two races in Asia, the Formula 1 World Championship moves on to the Americas and the United States Grand Prix, held at the Circuit of The Americas in Austin, Texas.</p>
+          </div>
+          <div class="pr-post__links">
+            <a class="pr-link pr-link--dark" href="https://www.ferrari.com/en-US/formula1/articles/united-states-grand-prix-2026-preview" target="_blank" rel="noopener"><span class="pr-jumbo pr-jumbo--40"><svg class="pr-ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" pathLength="100"/></svg><svg aria-hidden="true"><use href="#chev"/></svg></span><span>read more</span></a>
+          </div>
+        </li>
+        <li class="pr-post swiper-slide">
+          <img src="img/news/new-manual-era.webp" width="860" height="489" loading="lazy" alt="">
+          <p class="pr-record pr-record--red"><span>21 Oct 2026</span><span class="pr-record__rule"></span><span>Magazine</span></p>
+          <div class="pr-post__copy">
+            <h3 data-reveal-words>A New Manual Era</h3>
+            <p>The Ferrari manual gear shift returns with the 12Cilindri Manuale, combining a classic open-gate interface with innovative Manuale By-Wire technology.</p>
+          </div>
+          <div class="pr-post__links">
+            <a class="pr-link pr-link--dark" href="https://www.ferrari.com/en-US/magazine/articles/ferrari-12cilindri-manuale-new-manual-era" target="_blank" rel="noopener"><span class="pr-jumbo pr-jumbo--40"><svg class="pr-ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" pathLength="100"/></svg><svg aria-hidden="true"><use href="#chev"/></svg></span><span>read more</span></a>
+          </div>
+        </li>
+        <li class="pr-post swiper-slide">
+          <img src="img/news/550-bloodline.webp" width="860" height="489" loading="lazy" alt="">
+          <p class="pr-record pr-record--red"><span>20 Oct 2026</span><span class="pr-record__rule"></span><span>Magazine</span></p>
+          <div class="pr-post__copy">
+            <h3 data-reveal-words>The 550 Maranello Bloodline</h3>
+            <p>Thirty years after the 550 Maranello revived Ferrari’s front-engined V12 flagship, trace the remarkable naturally aspirated bloodline that continues through to today’s 12Cilindri.</p>
+          </div>
+          <div class="pr-post__links">
+            <a class="pr-link pr-link--dark" href="https://www.ferrari.com/en-US/magazine/articles/ferrari-550-maranello-v12-bloodline" target="_blank" rel="noopener"><span class="pr-jumbo pr-jumbo--40"><svg class="pr-ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" pathLength="100"/></svg><svg aria-hidden="true"><use href="#chev"/></svg></span><span>read more</span></a>
+          </div>
+        </li>
+        <li class="pr-post swiper-slide">
+          <img src="img/news/barcelona-comments.webp" width="860" height="489" loading="lazy" alt="">
+          <p class="pr-record pr-record--red"><span>14 Oct 2026</span><span class="pr-record__rule"></span><span>6 Hours of Barcelona</span></p>
+          <div class="pr-post__copy">
+            <h3 data-reveal-words>Comments ahead of 6 Hours of Barcelona</h3>
+            <p>The 499P cars head to the Circuit de Barcelona-Catalunya for the seventh and penultimate round of the season.</p>
+          </div>
+          <div class="pr-post__links">
+            <a class="pr-link pr-link--dark" href="https://www.ferrari.com/en-US/hypercar/articles/fia-wec-6h-barcelona-2026-pre-race-comments" target="_blank" rel="noopener"><span class="pr-jumbo pr-jumbo--40"><svg class="pr-ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" pathLength="100"/></svg><svg aria-hidden="true"><use href="#chev"/></svg></span><span>read more</span></a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="pr-news__dots" aria-label="News pages"></div>
+    <div class="pr-center">
+      <a class="btn btn--outline-dark" href="#">VIEW ALL</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 7 · VALUE YOUR EXOTIC CAR — Figma 2791:32866 ═════════════════════ -->
+<section class="pr-feature pr-feature--value" id="value" aria-labelledby="pr-value-h">
+  <picture class="pr-cover">
+    <img src="img/home/value-sf90-top-1920.webp"
+         srcset="img/home/value-sf90-top-800.webp 800w, img/home/value-sf90-top-1280.webp 1280w, img/home/value-sf90-top-1920.webp 1920w"
+         sizes="100vw" width="1920" height="1435" loading="lazy" alt="A red Ferrari SF90 Stradale seen from above on a track">
+  </picture>
+  <div class="pr-feature__shade" aria-hidden="true"></div>
+  <div class="pr-shell pr-feature__top">
+    <p class="marker marker--soft"><span>7</span><span class="marker__rule"></span><span>Value your exotic car</span></p>
+  </div>
+  <div class="pr-shell pr-copy">
+    <p class="pr-pretitle">Precision Valuation</p>
+    <h2 class="pr-h2" id="pr-value-h">Know Your Ferrari’s Value</h2>
+    <p class="pr-body pr-body--568">Get an accurate, Ferrari-approved valuation using authentic market data and certified appraisal standards.</p>
+    <div class="pr-actions">
+      <a class="btn btn--primary" href="#">Get Estimate</a>
+      <a class="btn btn--dark btn--328" href="#">Speak With a Specialist <svg class="btn__chev" aria-hidden="true"><use href="#chev"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 8 · CURATED MOMENTS — Figma 2791:32985 ═══════════════════════════ -->
+<section class="pr-ig" aria-labelledby="pr-ig-h">
+  <div class="pr-shell">
+    <p class="marker"><span>8</span><span class="marker__rule"></span><span id="pr-ig-h">CURATED MOMENTS</span></p>
+    <ul class="pr-ig__grid">
+      <li><img src="img/home/ig-new-1.webp" width="416" height="460" loading="lazy" alt=""></li>
+      <li><img src="img/home/ig-new-2.webp" width="416" height="460" loading="lazy" alt=""></li>
+      <li><img src="img/home/ig-new-3.webp" width="416" height="460" loading="lazy" alt=""></li>
+      <li><img src="img/home/ig-new-4.webp" width="416" height="460" loading="lazy" alt=""></li>
+      <li><img src="img/home/ig-new-5.webp" width="416" height="460" loading="lazy" alt=""></li>
+      <li><img src="img/home/ig-new-6.webp" width="416" height="460" loading="lazy" alt=""></li>
+    </ul>
+    <p class="pr-pretitle pr-pretitle--ink"><a href="https://www.instagram.com/ferrariofpuertorico/">@ferrariofpuertorico</a></p>
+    <h2 class="pr-h2 pr-h2--ink">A Closer Look at Ferrari of Puerto Rico</h2>
+  </div>
+</section>
+{{POPUPS}}
+
+</main>

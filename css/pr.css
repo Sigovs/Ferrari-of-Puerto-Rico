@@ -1,0 +1,242 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Ferrari of Puerto Rico — dealer layer over base.css.
+   Every value is read off the Figma frame 2791:32481 at 1920 (AAN FERRARI
+   PROJECT LIB). base.css carries the house system — Ferrari Sans, the fr-*
+   buttons, the marker, the header's mechanics; this file sets what the
+   Puerto Rico design does differently, and the shared pieces of its home.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --bg: #181818;                        /* the design's dark ground */
+  --pr-ink: #181818;
+  --pr-grey: #8f8f8f;
+  --pr-line: #303030;
+  --pr-light: #d2d2d2;
+
+  /* header, from the frame: a 48 px top bar over an 88 px band — the
+     319 × 50 lockup with 19 px above and below it */
+  --logo-w: 319px;
+  --logo-h: calc(var(--logo-w) / 6.374);
+  --nav-h:  calc(var(--logo-h) + 38px);
+  --head-h: calc(48px + var(--nav-h));
+}
+/* the band steps down at the theme's own breakpoints, in proportion */
+@media (max-width: 100rem) { :root { --logo-w: 284px; } }
+@media (max-width: 87.5rem) { :root { --logo-w: 213px; } }
+@media (max-width: 80rem)   { :root { --logo-w: 186px; } }
+@media (max-width: 64rem)   { :root { --logo-w: 284px; --head-h: calc(40px + var(--nav-h)); } }
+
+/* ── header ─────────────────────────────────────────────────────────── */
+.header__top-bar > .h-container {
+  grid-template-columns: 1fr auto;
+  height: 48px; padding: 0 35px 0 102px;
+}
+.header__contact--address span { font-size: 12px; letter-spacing: .18px; }
+.header__contact--phone span   { font-size: 11px; letter-spacing: .165px; }
+.header__top-bar-right { gap: 48px; }
+.header__search { border: 0; padding: 0; gap: 0; }
+.header__search-btn img { width: 37px; height: 16px; }
+
+.header__navigation-section > .h-container { padding: 19px 46px 19px 102px; }
+.header__menu .sub-menu { inset-block-start: calc(100% + 19px + (var(--logo-h) - 24px) / 2); }
+.header__menu > li > a:hover,
+.header__menu > li > a:focus-visible {
+  color: var(--rosso-corsa);
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 7px;
+}
+@media (max-width: 87.5rem) {
+  .header__top-bar > .h-container { padding-inline-start: 40px; }
+  .header__navigation-section > .h-container { padding-inline-start: 40px; }
+}
+@media (max-width: 64rem) {
+  .header__navigation-section > .h-container { padding: 16px; justify-content: center; }
+  .header__logo-img { width: min(284px, 100%); height: auto; }
+}
+
+/* the UA's 1px 6px button padding would squeeze every icon button */
+button { padding: 0; }
+
+/* ── the frame ──────────────────────────────────────────────────────── */
+/* 1408 content between 256 px gutters at 1920; the marker hangs 48–50 px
+   out into the gutter (base.css: --band-pad, --marker-out) */
+.pr-shell {
+  width: 100%;
+  max-width: calc(1408px + 2 * var(--band-pad));
+  margin-inline: auto;
+  padding-inline: var(--band-pad);
+}
+.pr-light { background: #fff; color: var(--pr-ink); }
+.pr-center { display: flex; justify-content: center; }
+.marker--soft { color: #efeded; }
+
+/* ── type, as the library names it ──────────────────────────────────── */
+.pr-pretitle {                                   /* pretitle/regular */
+  font-size: 16px; line-height: 1.5; font-weight: 500;
+  text-transform: uppercase; color: #fff;
+}
+.pr-pretitle--ink { color: #000; }
+.pr-pretitle a { color: inherit; text-decoration: none; }
+.pr-h2 { font-size: 28px; line-height: 1.2; font-weight: 500; color: #fff; }
+.pr-h2--ink { color: var(--pr-ink); }
+.pr-pretitle + .pr-h2, .pr-pretitle + .pr-hero__title { margin-block-start: 16px; }
+.pr-body {                                       /* body/regular, 1.8 */
+  font-size: 13px; line-height: 1.8; letter-spacing: .195px; color: #fff;
+  margin-block-start: 32px;
+}
+.pr-body--soft { color: #efeded; }
+.pr-body--642 { max-width: 642px; }
+.pr-body--688 { max-width: 688px; }
+.pr-body--568 { max-width: 568px; }
+.pr-actions { display: flex; flex-wrap: wrap; gap: 32px; margin-block-start: 48px; }
+.pr-body + .pr-actions { margin-block-start: 48px; }
+
+/* ── buttons the design adds to base's primary / ghost ──────────────── */
+.btn { height: 63px; }
+.btn--dark { color: #fff; background: var(--pr-ink); border: 0; }
+.btn--dark:hover, .btn--dark:active { background: var(--pr-line); }
+.btn--outline-dark { color: var(--pr-ink); background: transparent; border-color: var(--pr-ink); }
+.btn--outline-dark:hover, .btn--outline-dark:active { color: var(--pr-line); border-color: var(--pr-line); }
+.btn--328 { min-width: 328px; }
+.btn--auto { min-width: 0; }
+.btn--fill { flex: 1 1 0; min-width: 0; padding-inline: 16px; }
+@media (max-width: 30rem) {
+  .pr-actions { display: grid; gap: 16px; width: 100%; }
+  .pr-actions .btn { width: 100%; min-width: 0; }
+}
+
+/* ── Button / Jumbo and Link / Text + Jumbo ─────────────────────────── */
+.pr-jumbo {
+  display: inline-grid; place-items: center; flex: none;
+  border: 2px solid var(--pr-line); border-radius: 999px;
+  color: #fff; background: transparent;
+  transition: border-color .3s ease, background-color .3s ease;
+}
+.pr-jumbo svg { width: 16px; height: 16px; }
+.pr-jumbo--40 { width: 40px; height: 40px; }
+.pr-jumbo--60 { width: 60px; height: 60px; }
+.pr-light .pr-jumbo { color: var(--pr-ink); }
+.pr-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; line-height: 15px; letter-spacing: .6px; text-transform: uppercase;
+  color: #f7f7f7; text-decoration: none;
+}
+.pr-link--dark { color: var(--pr-line); }
+.pr-link:hover .pr-jumbo, button.pr-jumbo:hover { border-color: var(--rosso-corsa); }
+.pr-link:focus-visible, .pr-jumbo:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 2px; }
+
+/* ── the record: label ——— value (Chapter, tertiary) ────────────────── */
+.pr-record {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; line-height: 15px; letter-spacing: .6px; text-transform: uppercase;
+  color: #fff; white-space: nowrap;
+}
+.pr-record__rule { width: 96px; flex: 0 1 96px; min-width: 24px; padding-block-start: 2px; }
+.pr-record__rule::before { content: ""; display: block; height: 1px; background: currentColor; }
+.pr-record--red { color: var(--rosso-corsa); }
+
+/* ── footer — Figma 2791:32882 ──────────────────────────────────────── */
+.pr-footer { background: var(--pr-ink); color: #fff; }
+.pr-footer__main {
+  max-width: calc(1408px + 2 * var(--band-pad)); margin-inline: auto;
+  padding: 94px var(--band-pad) 60px;
+}
+.pr-footer a { color: inherit; text-decoration: none; }
+.pr-footer a:hover { color: #fff; }
+.pr-footer__map {
+  display: flex; flex-wrap: wrap; justify-content: space-between; row-gap: 24px;
+  text-align: center; color: var(--pr-light);
+}
+.pr-footer__map > div:first-child { width: 166px; }
+.pr-footer__h { font-size: 12px; line-height: 1.25; letter-spacing: .6px; text-transform: uppercase; }
+.pr-footer__map ul { margin-block-start: 24px; }
+.pr-footer__col--tight ul { margin-block-start: 16px; }
+.pr-footer__map li { font-size: 13px; line-height: 1.8; letter-spacing: .195px; }
+/* each link is followed by an empty line in the design */
+.pr-footer__map li + li { margin-block-start: 23.4px; }
+.pr-footer__lockup {
+  margin-block-start: 60px; padding-block: 47px 36px;
+  border-block: 1px solid var(--pr-line);
+}
+.pr-footer__lockup img { width: 319px; height: 50px; }
+.pr-footer__contact {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px;
+  padding-block: 41px 47px; border-block-end: 1px solid var(--pr-line);
+}
+.pr-footer__contact address {
+  flex: 1 0 300px; font-style: normal;
+  font-size: 16px; line-height: 1.5; font-weight: 500; color: #fff;
+}
+.pr-footer__social { display: flex; align-items: center; gap: 64px; }
+.pr-footer__social img { width: 16px; height: 16px; }
+.pr-footer__legal {
+  margin-block-start: 34px; text-align: center;
+  font-size: 9px; line-height: 14px; color: var(--pr-grey);
+}
+.pr-footer__bottom { background: var(--pr-line); }
+.pr-footer__bottom ul {
+  display: flex; flex-wrap: wrap; gap: 8px 37px; align-items: center;
+  max-width: calc(1408px + 2 * var(--band-pad)); margin-inline: auto;
+  min-height: 75px; padding: 16px var(--band-pad);
+  font-size: 13px; line-height: 1.8; letter-spacing: .195px; color: #f7f7f7;
+}
+.pr-footer__aan p {
+  max-width: calc(1408px + 2 * var(--band-pad)); margin-inline: auto;
+  padding: 29px var(--band-pad);
+  text-align: right; font-size: 11px; line-height: 1.5; letter-spacing: .165px; color: var(--pr-line);
+}
+@media (max-width: 64rem) {
+  .pr-footer__map { justify-content: flex-start; gap: 40px 24px; }
+  .pr-footer__map > div { flex: 1 1 40%; width: auto !important; }
+  .pr-footer__social { gap: 32px; }
+}
+
+/* ── sizes as the frame sets them ───────────────────────────────────────
+   Figma fixes the boxes — 208 or 328 wide — and the label centres in
+   them; the house min-width let a long label (Schedule Service, MyFerrari
+   App) grow the box to 225. Fixed widths, the padding narrowed to fit. */
+.btn { width: 208px; min-width: 0; padding-inline: 16px; }
+.btn--328 { width: 328px; }
+.btn--auto { width: auto; padding-inline: 32px; }
+.btn--fill { width: auto; }
+
+/* ── rollover, as the retailer's fr-rollover-btn: the ring stays, and on
+   hover a rosso-corsa stroke runs once round it (1s, the theme's curve) */
+.pr-jumbo { position: relative; }
+.pr-ring {
+  position: absolute; top: -2px; left: -2px; width: 40px !important; height: 40px !important; max-width: none; max-height: none;
+  transform: rotate(-90deg); pointer-events: none; overflow: visible;
+}
+.pr-ring circle {
+  fill: none; stroke: var(--rosso-corsa); stroke-width: 2;
+  stroke-linecap: butt; stroke-dasharray: 100; stroke-dashoffset: 100;
+  transition: stroke-dashoffset 1s cubic-bezier(.4, 0, .2, 1);
+}
+.pr-link:hover .pr-ring circle, .pr-link:focus-visible .pr-ring circle,
+button.pr-jumbo:not([disabled]):hover .pr-ring circle { stroke-dashoffset: 0; }
+.pr-link:hover .pr-jumbo, button.pr-jumbo:hover { border-color: var(--pr-line); }
+@media (prefers-reduced-motion: reduce) { .pr-ring circle { transition: none; } }
+
+/* ── the retailer's own interaction details (cauleyferrari.com) ─────────
+   nav: hover only lifts the white to #f7f7f7 over .3s; a drop-down link
+   greys to #8f8f8f. The bookmark pin sits on #f7f7f7 and halves on hover. */
+.header__menu > li > a { transition: color .3s; }
+.header__menu > li > a:hover, .header__menu > li > a:focus-visible {
+  color: #f7f7f7; text-decoration: none;
+}
+.header__menu .sub-menu a:hover, .header__menu .sub-menu a:focus-visible { color: var(--pr-grey); }
+
+.pr-jumbo--60 .pr-ring { width: 60px !important; height: 60px !important; }
+/* the ring scales with its box; keep the drawn stroke at 2 px */
+.pr-jumbo--60 .pr-ring circle { stroke-width: 1.333; }
+
+/* ── outline buttons — thecollectionferrari.com's btn-primary-outline:
+   no fill on hover; the dark one's line greys to #8f8f8f and its type to
+   #303030, the light one's line and type both to #8f8f8f; .3s. Focus is
+   their 2 px #f6e500 ring. */
+.btn--outline-dark, .btn--ghost { background: transparent; transition: color .3s, border-color .3s; }
+.btn--outline-dark:hover, .btn--outline-dark:active { background: transparent; border-color: var(--pr-grey); color: var(--pr-line); }
+.btn--ghost:hover, .btn--ghost:active { background: transparent; border-color: var(--pr-grey); color: var(--pr-grey); }
+.btn--outline-dark:focus-visible, .btn--ghost:focus-visible { outline: 2px solid #f6e500; outline-offset: 0; }
+
+/* a placeholder that has to read as one */
+.pr-todo { color: var(--pr-grey); font-style: italic; }

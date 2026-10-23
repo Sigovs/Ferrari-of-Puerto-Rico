@@ -1,0 +1,318 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Ferrari of Puerto Rico — home page sections. Figma frame 2791:32481.
+   At 1920 every position below lands on the frame's own pixel; between
+   breakpoints the section keeps the frame's proportion and the content
+   stays on the 256 px gutter (base.css --band-pad).
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* a photograph behind a section */
+.pr-cover, .pr-cover img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; }
+.pr-cover img { object-fit: cover; }
+
+/* ── HERO — 960 tall at 1920, copy 123 px off the bottom ────────────── */
+.pr-hero {
+  position: relative; isolation: isolate;
+  display: flex; align-items: flex-end;
+  /* the full viewport, as Cauley's hero (the frame's 960 was 2:1) */
+  min-height: max(36rem, 100svh);
+  padding-block: calc(var(--head-h) + 48px) clamp(3rem, 5.4vw, 104px);
+}
+/* held to the top edge: at 16:10 the sign only just clears the header */
+.pr-hero .pr-cover img { object-position: 50% 0%; }
+.pr-hero__shade {
+  position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(to top, rgb(24 24 24 / .45) 0%, rgb(24 24 24 / 0) 29.6%),
+    linear-gradient(to top, #181818 0%, rgb(24 24 24 / 0) 58.3%);
+}
+.pr-hero__title { font-size: clamp(30px, 1.25vw + 1.25rem, 40px); line-height: 1.25; font-weight: 500; color: #fff; }
+
+/* ── 1 · 2026 RANGE — Ferrari of Fort Lauderdale's model line-up ───────
+   Read off ferrarifl.com: square 410 tiles on a 20 px gutter; a #181818
+   gradient (0 → .85) over the lower half; the name 24/30 Medium caps, 30 px
+   in and 27 px up. Hover over .3s: the gradient climbs to 75%, the name
+   lifts 10 px, the photograph slides 5 px left. Arrows scale 1.3 on hover;
+   the active dot is a 30 px #8f8f8f ring, the others small dots. */
+.pr-lineup { background: #181818; padding-block: clamp(4rem, 6.67vw, 128px); overflow-x: clip; }
+.pr-lineup__track {
+  margin-block-start: 48px;
+  display: grid; grid-auto-flow: column; grid-auto-columns: 410px; gap: 20px;
+  overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none;
+  padding-inline: var(--band-pad); scroll-padding-inline: var(--band-pad);
+}
+.pr-lineup__track::-webkit-scrollbar { display: none; }
+.pr-lineup__track > li { scroll-snap-align: start; }
+@media (max-width: 36rem) { .pr-lineup__track { grid-auto-columns: 78vw; } }
+
+.pr-model { position: relative; display: block; color: #fff; text-decoration: none; overflow: hidden; }
+.pr-model__img { position: relative; display: block; aspect-ratio: 1; transition: transform .3s; }
+.pr-model__img img { width: 100%; height: 100%; object-fit: cover; }
+.pr-model__img::after {
+  content: ""; position: absolute; left: 0; bottom: 0; width: 100%; height: 50%;
+  background: linear-gradient(rgb(24 24 24 / 0) 0%, rgb(24 24 24 / .85) 100%);
+  transition: height .3s;
+}
+.pr-model__name {
+  position: absolute; left: 0; bottom: 27px; padding: 0 30px;
+  font-size: 24px; line-height: 30px; font-weight: 500; text-transform: uppercase;
+  transition: bottom .3s;
+}
+.pr-model:hover .pr-model__img { transform: translateX(-5px); }
+.pr-model:hover .pr-model__img::after { height: 75%; }
+.pr-model:hover .pr-model__name { bottom: 37px; }
+.pr-model:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 2px; }
+/* Schedule test drive — the client's addition to the line-up: a quiet
+   caps link under the name, on the tile's own gradient, so the tile still
+   reads as just the photograph. It opens the Inquire drawer as a test-drive
+   request for that model. */
+.pr-lineup__item { position: relative; }
+.pr-lineup__item .pr-model__name { bottom: 64px; }
+.pr-lineup__item .pr-model:hover .pr-model__name { bottom: 74px; }
+.pr-model__td {
+  position: absolute; left: 30px; bottom: 27px; z-index: 1;
+  display: inline-flex; align-items: center; gap: 12px; padding: 4px 0;
+  font: inherit; font-size: 12px; line-height: 15px; letter-spacing: .6px; text-transform: uppercase;
+  color: #fff; background: none; border: 0; cursor: pointer; transition: color .3s;
+}
+.pr-model__td svg { width: 12px; height: 12px; transition: transform .3s; }
+.pr-model__td:hover { color: var(--pr-light); }
+.pr-model__td:hover svg { transform: translateX(3px); }
+.pr-model__td:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 2px; }
+
+.pr-lineup__nav { margin-block-start: 40px; display: flex; align-items: center; justify-content: space-between; }
+.pr-lineup__arrow { display: grid; place-items: center; width: 20px; height: 30px; color: #fff; transition: transform .3s; }
+.pr-lineup__arrow svg { width: 16px; height: 16px; }
+.pr-lineup__arrow:hover { transform: scale(1.3); }
+.pr-lineup__arrow[disabled] { opacity: .35; cursor: default; transform: none; }
+.pr-lineup__dots { display: flex; align-items: center; gap: 4px; }
+.pr-lineup__dots button { position: relative; width: 30px; height: 30px; border-radius: 50%; }
+.pr-lineup__dots button::after {
+  content: ""; position: absolute; inset: 0; margin: auto; width: 6px; height: 6px; border-radius: 50%;
+  background: #fff; transition: all .3s;
+}
+.pr-lineup__dots button[aria-current="true"]::after {
+  width: 30px; height: 30px; background: transparent; border: 2.4px solid var(--pr-grey); box-sizing: border-box;
+}
+.pr-lineup .pr-link--after { margin-block-start: 48px; }
+.pr-link--after { gap: 16px; }
+
+/* ── 2 · CERTIFIED PRE-OWNED ────────────────────────────────────────── */
+.pr-cpo { padding-block: clamp(4rem, 6.67vw, 128px) clamp(4rem, 7.8vw, 150px); }
+/* the rail — thecollectionferrari.com's inventory slider: Swiper, three
+   cars on the column (448 + 32 + 448 + 32 + 448 = the 1408 column), the
+   neighbours visible past its edges, the section clipping them at the
+   screen; one car a step, 0.3s, no loop, no autoplay, drag with mouse or
+   finger. Two cars from 768, one below. */
+.pr-cpo { overflow-x: clip; }
+/* the rail runs on The Collection's container: 112 px in at 1440 (cards
+   ~384), the 1408 column from 1920 */
+.pr-cpo__rail { --cpo-pad: max(16px, min(var(--band-pad), 7.8vw)); margin-block: 48px 0; padding-inline: var(--cpo-pad); max-width: calc(1408px + 2 * var(--cpo-pad)); }
+.pr-cpo__swiper { overflow: visible; }
+.pr-cpo__track { align-items: stretch; }
+.pr-cpo__track > .pr-car { height: auto; }
+/* without the script the cards still sit in a scrolling row */
+.pr-cpo__swiper:not(.swiper-initialized) { overflow-x: auto; scrollbar-width: none; }
+.pr-cpo__swiper:not(.swiper-initialized) .pr-cpo__track { display: grid; grid-auto-flow: column; grid-auto-columns: min(448px, 86vw); gap: 32px; }
+/* the row under it — thecollectionferrari.com's slider-nav-container,
+   value for value: 32 below the cards; the arrows (16 px) at the column's
+   edges, .35 when they rest, .4s; in the middle five dots of a dynamic
+   pagination (20 px bullets, 4 px apart, #181818 at a third of their size;
+   the current one a 20 px ring, 1 px #181818), then View all: 12/15 caps
+   .6 px, 16 px after the dots, a 64 × 1 rule 16 px before the word. */
+.pr-cpo__nav { position: relative; display: flex; align-items: center; justify-content: center; margin-block-start: 32px; min-height: 20px; }
+.pr-cpo__arrow { position: absolute; bottom: 0; display: grid; place-items: center; width: 16px; height: 20px; padding: 0; color: var(--pr-ink); background: none; border: 0; cursor: pointer; transition: opacity .4s ease-in-out; }
+.pr-cpo__prev { left: 0; }
+.pr-cpo__next { right: 0; }
+.pr-cpo__arrow svg { width: 16px; height: 16px; }
+.pr-cpo__arrow.swiper-button-disabled { opacity: .35; cursor: default; }
+.pr-cpo__arrow:focus-visible { outline: 2px solid #f6e500; outline-offset: 2px; }
+.pr-cpo__mid { display: flex; align-items: center; }
+.pr-cpo__dots.swiper-pagination-bullets { position: relative; flex-shrink: 0; height: 20px; overflow: hidden; font-size: 0; white-space: nowrap; left: auto !important; transform: none !important; }
+.pr-cpo__dots .swiper-pagination-bullet {
+  position: relative; display: inline-block; width: 20px; height: 20px; margin: 0 4px !important;
+  border-radius: 50%; background: var(--pr-ink); opacity: 1; box-sizing: border-box;
+  vertical-align: top; transform: scale(.33); transition: transform .2s, left .2s;
+}
+.pr-cpo__dots .swiper-pagination-bullet-active-main { background: transparent; border: 1px solid var(--pr-ink); transform: scale(1); }
+.pr-cpo__all {
+  display: flex; align-items: center; gap: 16px; margin-inline-start: 16px; white-space: nowrap;
+  font-size: 12px; line-height: 15px; letter-spacing: .6px; text-transform: uppercase; color: var(--pr-ink); text-decoration: none;
+}
+.pr-cpo__all::before { content: ""; width: 64px; height: 1px; background: var(--pr-ink); }
+
+/* ── full-bleed feature sections — SERVICE, ABOUT, VALUE ────────────── */
+.pr-feature {
+  position: relative; isolation: isolate;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  min-height: max(40rem, min(100svh, 56.25vw));
+  padding-block: clamp(4rem, 6.67vw, 128px) clamp(3.5rem, 10vw, 192px);
+  background: #181818;
+}
+.pr-feature__shade { position: absolute; inset: 0; z-index: -1; }
+.pr-feature--service .pr-cover img { object-position: 50% 50%; }
+.pr-feature--service .pr-feature__shade {
+  background:
+    linear-gradient(to top, #161616 0%, rgb(22 22 22 / 0) 37.8%),
+    linear-gradient(to top, #161616 0%, rgb(22 22 22 / 0) 40%),
+    linear-gradient(to bottom, rgb(22 22 22 / .82) 0%, rgb(22 22 22 / 0) 38%),
+    linear-gradient(to right, rgb(22 22 22 / .82) 0%, rgb(22 22 22 / 0) 60.5%);
+}
+.pr-feature--service .pr-body + .pr-actions { margin-block-start: 24px; }
+.pr-feature--about .pr-cover img { object-position: 50% 0%; }
+.pr-feature--about .pr-feature__shade {
+  background:
+    linear-gradient(to top, #181818 0%, rgb(24 24 24 / 0) 59.4%),
+    linear-gradient(to bottom, rgb(24 24 24 / .64) 0%, rgb(24 24 24 / 0) 43.9%),
+    linear-gradient(to bottom, rgb(24 24 24 / .64) 0%, rgb(24 24 24 / 0) 43.9%);
+}
+/* marker at the top, copy at the foot — as every photo section now runs */
+.pr-feature { justify-content: space-between; }
+.pr-feature--value .pr-cover img { object-position: 50% 68.6%; }
+.pr-feature--value .pr-feature__shade {
+  background:
+    linear-gradient(to top, #181818 0%, rgb(24 24 24 / 0) 40%),
+    linear-gradient(to bottom, rgb(24 24 24 / .82) 0%, rgb(24 24 24 / 0) 38%);
+}
+.pr-feature__top { margin-block-end: auto; }
+
+/* ── 4 · OWNERS ─────────────────────────────────────────────────────── */
+.pr-owners { padding-block: clamp(4rem, 6.67vw, 128px) clamp(4rem, 9.2vw, 177px); }
+.pr-tiles {
+  margin-block-start: 48px;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px;
+}
+@media (max-width: 64rem) { .pr-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 36rem) { .pr-tiles { grid-template-columns: 1fr; } }
+.pr-tile {
+  position: relative; isolation: isolate; overflow: hidden;
+  aspect-ratio: 328 / 400; display: flex; align-items: flex-end;
+  background: #000;
+}
+.pr-tile > img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.pr-tile::after {
+  content: ""; position: absolute; inset: 2% 0 0; z-index: -1;
+  background: linear-gradient(to top, #000 0%, rgb(0 0 0 / 0) 100%);
+}
+.pr-tile__body { display: grid; gap: 16px; width: 100%; padding: 32px 16px 37px; color: #fff; }
+.pr-tile__title { font-size: 18px; line-height: 1.4; font-weight: 500; letter-spacing: .18px; text-transform: uppercase; }
+.pr-owners__copy { margin-block-start: 49px; }
+.pr-owners .pr-h2 { color: var(--pr-ink); }
+.pr-owners .pr-body { color: #000; }
+.pr-owners .pr-pretitle { color: #000; }
+
+/* ── 6 · NEWS & EVENTS ──────────────────────────────────────────────── */
+.pr-news { padding-block: clamp(4rem, 6.67vw, 128px) clamp(4rem, 9.95vw, 191px); }
+/* the carousel, as Cauley's home: Swiper, looping, 3s autoplay, three
+   cards from 1280 (32 gap), two from 960 (16), one below; the dots only
+   where Cauley shows them (under 1280) */
+.pr-news__swiper { margin-block-start: 48px; }
+.pr-news__dots { display: flex; justify-content: center; margin-block-start: 24px; }
+@media (min-width: 80rem) { .pr-news__dots { display: none; } }
+.pr-news__dots .swiper-pagination-bullet {
+  position: relative; width: 24px; height: 24px; margin: 0 2px; background: none; opacity: 1;
+}
+.pr-news__dots .swiper-pagination-bullet::after {
+  content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 6px; height: 6px; box-sizing: border-box;
+  background: var(--pr-ink); border: 2px solid var(--pr-ink); border-radius: 999px; transition: .3s;
+}
+.pr-news__dots .swiper-pagination-bullet-active::after { width: 100%; height: 100%; background: transparent; }
+.pr-news__dots .swiper-pagination-bullet:hover:not(.swiper-pagination-bullet-active)::after { width: 70%; height: 70%; background: transparent; }
+.pr-news .pr-center { margin-block-start: 48px; }
+.pr-post { display: flex; flex-direction: column; padding: 8px 8px 32px; background: #fff; height: auto; box-sizing: border-box; }
+.pr-post > img { width: 100%; aspect-ratio: 430 / 244; object-fit: cover; }
+.pr-post .pr-record { margin-block-start: 16px; }
+.pr-post__copy {
+  /* top-aligned, and tall enough for three lines of title and three of
+     summary, so every card's rows and links line up across the grid */
+  margin-block-start: 16px; min-height: 142px;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 8px; color: var(--pr-ink);
+}
+.pr-post__copy h3 {
+  font-size: 18px; line-height: 25.2px; font-weight: 500; letter-spacing: .18px; text-transform: uppercase;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.pr-post__copy p {
+  font-size: 13px; line-height: 19.5px; letter-spacing: .195px;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.pr-post__links { margin-block-start: 16px; display: flex; align-items: center; justify-content: space-between; }
+.pr-pdf {
+  display: inline-flex; align-items: center; gap: 13px;
+  font-size: 12px; line-height: 15px; letter-spacing: .6px; text-transform: uppercase;
+  color: var(--pr-line); text-decoration: none;
+}
+.pr-pdf img { width: 16px; height: 16px; }
+
+/* ── 8 · CURATED MOMENTS ────────────────────────────────────────────── */
+.pr-ig { background: #ebebeb; color: var(--pr-ink); padding-block: clamp(4rem, 6.67vw, 128px); }
+.pr-ig__grid {
+  margin-block: 48px;
+  display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 32px;
+}
+@media (max-width: 64rem) { .pr-ig__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; } }
+.pr-ig__grid img { width: 100%; aspect-ratio: 208 / 230; object-fit: cover; border-radius: 5px; }
+.pr-ig .pr-h2 { margin-block-start: 16px; }
+
+/* the Owners tiles sit on the light section but carry their own dark ground */
+.pr-tile .pr-jumbo { color: #fff; }
+
+/* ── phone ───────────────────────────────────────────────────────────── */
+
+/* A wide showroom frame stretched to a portrait screen puts the lockup on
+   the glass. On a phone the frame is a band at the top, the building whole
+   in it, and the copy sits below on the ground — as on the Approved page. */
+@media (max-width: 48rem) {
+  /* the 3:2 night frame whole, under the header, so the sign survives */
+  .pr-hero { min-height: 0; padding-block: calc(var(--head-h) + 54vw) 3rem; }
+  .pr-hero .pr-cover { inset: var(--head-h) 0 auto; height: 66.8vw; }
+  .pr-hero .pr-cover img { inset: 0 0 auto; height: 66.8vw; }
+  .pr-hero .pr-cover img { object-position: 50% 50%; }
+  .pr-hero__shade {
+    inset: var(--head-h) 0 auto; height: calc(66.8vw + 1px);
+    background: linear-gradient(to top, #181818 0%, rgb(24 24 24 / 0) 40%);
+  }
+  /* Dealership the same way: the 16:9 frame as a band, the car whole in
+     it, the marker and the copy below on the ground */
+  .pr-feature--about { min-height: 0; padding-block: calc(56.25vw + 16px) 3.5rem; }
+  .pr-feature--about .pr-feature__top { margin-block-end: 40px; }
+  .pr-feature--about .pr-cover, .pr-feature--about .pr-cover img { inset: 0 0 auto; height: 56.25vw; }
+  .pr-feature--about .pr-feature__shade {
+    inset: 0 0 auto; height: calc(56.25vw + 1px);
+    background:
+      linear-gradient(to top, #181818 0%, rgb(24 24 24 / 0) 35%),
+      linear-gradient(to bottom, rgb(24 24 24 / .64) 0%, rgb(24 24 24 / 0) 30%);
+  }
+  .pr-feature .pr-body, .pr-owners .pr-body { max-width: none; }
+}
+
+
+/* ── pinned sections, as the retailer pins Our Selection, Service and
+   Owners: each holds while the next one slides over it. Sticky, with a
+   top that lets a section taller than the screen finish before it holds
+   (set by home.js — the retailer's own rule). Every section is positioned
+   so the later one paints over the held one. */
+main > section, .pr-footer { position: relative; }
+.pr-pinned { position: sticky; top: 0; }
+
+/* a phone shows one tile a page — ten dots: they shrink to fit the row */
+@media (max-width: 36rem) {
+  .pr-lineup__nav { gap: 8px; }
+  .pr-lineup__dots { gap: 0; }
+  .pr-lineup__dots button { width: 22px; height: 22px; }
+  .pr-lineup__dots button::after { width: 5px; height: 5px; }
+  .pr-lineup__dots button[aria-current="true"]::after { width: 18px; height: 18px; border-width: 2px; }
+}
+
+/* ── news reveal, as ferrari.com/news: the card fades in, the title's
+   words rise into place one by one (see home.js § 4) ─────────────────── */
+.pr-post__copy h3 .rw { display: inline-block; }
+.pr-post__copy h3 .rw__p { display: inline-block; transform-origin: 0 100%; }
+.js-reveal .pr-post { opacity: 0; transition: opacity .8s cubic-bezier(.25, .46, .45, .94); }
+.js-reveal .pr-post .rw__p {
+  opacity: 0; transform: translate3d(0, 25px, 0) rotate(4deg);
+  transition: transform .6s cubic-bezier(.22, 1, .36, 1) var(--rw, 0ms), opacity .6s ease-out var(--rw, 0ms);
+}
+.js-reveal .pr-post.is-in { opacity: 1; }
+.js-reveal .pr-post.is-in .rw__p { opacity: 1; transform: none; }
+

@@ -1,0 +1,81 @@
+<!-- ══ the inventory card's two popups, as cauleyferrari.com runs them:
+     Text to Phone is a centred modal, Share a drawer from the right.
+     Neither has a service behind it yet — a valid form says so. ══════ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><mask id="pr-roll-mask" fill="white"><path d="M0 20C0 8.95431 8.95431 0 20 0C31.0457 0 40 8.95431 40 20C40 31.0457 31.0457 40 20 40C8.95431 40 0 31.0457 0 20Z"/></mask><radialGradient id="pr-roll-shade" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(20) rotate(90) scale(15.2 23.2)"><stop stop-color="#303030"/><stop offset="1" stop-color="#303030" stop-opacity="0.01"/></radialGradient></defs></svg>
+<div class="pr-pop pr-sms" id="pr-sms" hidden>
+  <div class="pr-pop__backdrop" data-pop-close></div>
+  <div class="pr-sms__modal" role="dialog" aria-modal="true" aria-labelledby="pr-sms-h">
+    <button type="button" class="pr-pop__close" data-pop-close aria-label="Close"><svg class="pr-pop__roll" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#fff"/><path d="M20 40V38C10.0589 38 2 29.9411 2 20H0H-2C-2 32.1503 7.84974 42 20 42V40ZM40 20H38C38 29.9411 29.9411 38 20 38V40V42C32.1503 42 42 32.1503 42 20H40ZM20 0V2C29.9411 2 38 10.0589 38 20H40H42C42 7.84974 32.1503 -2 20 -2V0ZM20 0V-2C7.84974 -2 -2 7.84974 -2 20H0H2C2 10.0589 10.0589 2 20 2V0Z" fill="#CDCBCB" mask="url(#pr-roll-mask)"/><path d="M20 40V38C10.0589 38 2 29.9411 2 20H0H-2C-2 32.1503 7.84974 42 20 42V40ZM40 20H38C38 29.9411 29.9411 38 20 38V40V42C32.1503 42 42 32.1503 42 20H40ZM20 0V2C29.9411 2 38 10.0589 38 20H40H42C42 7.84974 32.1503 -2 20 -2V0ZM20 0V-2C7.84974 -2 -2 7.84974 -2 20H0H2C2 10.0589 10.0589 2 20 2V0Z" fill="url(#pr-roll-shade)" fill-opacity=".6" mask="url(#pr-roll-mask)"/></svg><svg class="pr-ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" pathLength="100"/></svg><svg class="pr-pop__x" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 9.32703L3.05025 13.6581C2.85509 13.8532 2.53831 13.8532 2.34315 13.6581C2.14798 13.4629 2.14798 13.1461 2.34315 12.951L6.67417 8.00121L2.34315 3.05146C2.14798 2.8563 2.14798 2.53952 2.34315 2.34435C2.53831 2.14919 2.85509 2.14919 3.05025 2.34435L8 6.67538L12.9497 2.34435C13.1449 2.14919 13.4617 2.14919 13.6569 2.34435C13.852 2.53952 13.852 2.8563 13.6569 3.05146L9.32583 8.00121L13.6569 12.951C13.852 13.1461 13.852 13.4629 13.6569 13.6581C13.4617 13.8532 13.1449 13.8532 12.9497 13.6581L8 9.32703Z" fill="currentColor"/></svg></button>
+    <img class="pr-sms__logo" src="img/icons/horse.svg" width="24" height="32" alt="">
+    <h2 class="pr-sms__title" id="pr-sms-h">Continue on Your Phone</h2>
+    <p class="pr-sms__text">Receive this Ferrari instantly on your phone — including full details, photos, and availability.<br> Continue the experience anytime, anywhere.</p>
+    <form class="pr-sms__form" novalidate>
+      <div class="pr-sms__field">
+        <input type="tel" inputmode="numeric" maxlength="10" autocomplete="off" placeholder=" " aria-label="Mobile phone number">
+        <div class="pr-sms__mask" aria-hidden="true"><span>+1</span><span class="pr-sms__num"> (___) ___-____</span></div>
+        <p class="pr-pop__error" aria-live="polite"></p>
+      </div>
+      <button class="btn btn--primary pr-sms__send" type="submit">Send Details <svg class="btn__chev" aria-hidden="true"><use href="#chev"/></svg></button>
+      <p class="pr-pop__sent" aria-live="polite"></p>
+    </form>
+  </div>
+</div>
+
+<div class="pr-pop pr-drawer" id="pr-share" hidden>
+  <div class="pr-pop__backdrop" data-pop-close></div>
+  <div class="pr-drawer__dialog" role="dialog" aria-modal="true" aria-labelledby="pr-share-h" data-lenis-prevent>
+    <button type="button" class="pr-pop__close" data-pop-close aria-label="Close"><svg class="pr-pop__roll" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#fff"/><path d="M20 40V38C10.0589 38 2 29.9411 2 20H0H-2C-2 32.1503 7.84974 42 20 42V40ZM40 20H38C38 29.9411 29.9411 38 20 38V40V42C32.1503 42 42 32.1503 42 20H40ZM20 0V2C29.9411 2 38 10.0589 38 20H40H42C42 7.84974 32.1503 -2 20 -2V0ZM20 0V-2C7.84974 -2 -2 7.84974 -2 20H0H2C2 10.0589 10.0589 2 20 2V0Z" fill="#CDCBCB" mask="url(#pr-roll-mask)"/><path d="M20 40V38C10.0589 38 2 29.9411 2 20H0H-2C-2 32.1503 7.84974 42 20 42V40ZM40 20H38C38 29.9411 29.9411 38 20 38V40V42C32.1503 42 42 32.1503 42 20H40ZM20 0V2C29.9411 2 38 10.0589 38 20H40H42C42 7.84974 32.1503 -2 20 -2V0ZM20 0V-2C7.84974 -2 -2 7.84974 -2 20H0H2C2 10.0589 10.0589 2 20 2V0Z" fill="url(#pr-roll-shade)" fill-opacity=".6" mask="url(#pr-roll-mask)"/></svg><svg class="pr-ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" pathLength="100"/></svg><svg class="pr-pop__x" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 9.32703L3.05025 13.6581C2.85509 13.8532 2.53831 13.8532 2.34315 13.6581C2.14798 13.4629 2.14798 13.1461 2.34315 12.951L6.67417 8.00121L2.34315 3.05146C2.14798 2.8563 2.14798 2.53952 2.34315 2.34435C2.53831 2.14919 2.85509 2.14919 3.05025 2.34435L8 6.67538L12.9497 2.34435C13.1449 2.14919 13.4617 2.14919 13.6569 2.34435C13.852 2.53952 13.852 2.8563 13.6569 3.05146L9.32583 8.00121L13.6569 12.951C13.852 13.1461 13.852 13.4629 13.6569 13.6581C13.4617 13.8532 13.1449 13.8532 12.9497 13.6581L8 9.32703Z" fill="currentColor"/></svg></button>
+    <div class="pr-drawer__content">
+      <h2 class="pr-drawer__title" id="pr-share-h">Share</h2>
+      <p class="pr-drawer__req">*Required fields</p>
+      <form class="pr-drawer__form" novalidate>
+        <div class="pr-field"><input type="email" id="share-from" name="email_from" placeholder=" " required><label for="share-from">Email From*</label></div>
+        <div class="pr-field"><input type="email" id="share-to" name="email_to" placeholder=" " required><label for="share-to">Email To*</label></div>
+        <div class="pr-field"><textarea id="share-msg" name="message" placeholder=" "></textarea><label for="share-msg">Message</label></div>
+        <label class="pr-check"><input type="checkbox" name="attachimages" value="1"><span>Attach Vehicle Images</span></label>
+        <div class="pr-drawer__actions">
+          <button class="btn btn--primary" type="submit">Send <svg class="btn__chev" aria-hidden="true"><use href="#chev"/></svg></button>
+        </div>
+        <p class="pr-pop__sent" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- the retailer's Inquire drawer (contacts_vdp): the car on a dark band,
+     then First / Last name, Email / Phone, a message that names the car,
+     the consent line and Send. Schedule test drive is the same form —
+     only its title and the message's first line change. -->
+<div class="pr-pop pr-drawer pr-lead" id="pr-lead" hidden>
+  <div class="pr-pop__backdrop" data-pop-close></div>
+  <div class="pr-drawer__dialog" role="dialog" aria-modal="true" aria-labelledby="pr-lead-h" data-lenis-prevent>
+    <button type="button" class="pr-pop__close" data-pop-close aria-label="Close"><svg class="pr-pop__roll" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#fff"/><path d="M20 40V38C10.0589 38 2 29.9411 2 20H0H-2C-2 32.1503 7.84974 42 20 42V40ZM40 20H38C38 29.9411 29.9411 38 20 38V40V42C32.1503 42 42 32.1503 42 20H40ZM20 0V2C29.9411 2 38 10.0589 38 20H40H42C42 7.84974 32.1503 -2 20 -2V0ZM20 0V-2C7.84974 -2 -2 7.84974 -2 20H0H2C2 10.0589 10.0589 2 20 2V0Z" fill="#CDCBCB" mask="url(#pr-roll-mask)"/><path d="M20 40V38C10.0589 38 2 29.9411 2 20H0H-2C-2 32.1503 7.84974 42 20 42V40ZM40 20H38C38 29.9411 29.9411 38 20 38V40V42C32.1503 42 42 32.1503 42 20H40ZM20 0V2C29.9411 2 38 10.0589 38 20H40H42C42 7.84974 32.1503 -2 20 -2V0ZM20 0V-2C7.84974 -2 -2 7.84974 -2 20H0H2C2 10.0589 10.0589 2 20 2V0Z" fill="url(#pr-roll-shade)" fill-opacity=".6" mask="url(#pr-roll-mask)"/></svg><svg class="pr-ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" pathLength="100"/></svg><svg class="pr-pop__x" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 9.32703L3.05025 13.6581C2.85509 13.8532 2.53831 13.8532 2.34315 13.6581C2.14798 13.4629 2.14798 13.1461 2.34315 12.951L6.67417 8.00121L2.34315 3.05146C2.14798 2.8563 2.14798 2.53952 2.34315 2.34435C2.53831 2.14919 2.85509 2.14919 3.05025 2.34435L8 6.67538L12.9497 2.34435C13.1449 2.14919 13.4617 2.14919 13.6569 2.34435C13.852 2.53952 13.852 2.8563 13.6569 3.05146L9.32583 8.00121L13.6569 12.951C13.852 13.1461 13.852 13.4629 13.6569 13.6581C13.4617 13.8532 13.1449 13.8532 12.9497 13.6581L8 9.32703Z" fill="currentColor"/></svg></button>
+    <div class="pr-lead__car">
+      <span class="pr-lead__img"><img src="" width="202" height="133" alt=""></span>
+      <div class="pr-lead__title">
+        <div><h2 id="pr-lead-h"></h2><p class="pr-lead__spec"></p></div>
+        <p class="pr-lead__price"></p>
+      </div>
+    </div>
+    <div class="pr-drawer__content">
+      <h2 class="pr-drawer__title pr-lead__intent">Schedule a test drive</h2>
+      <p class="pr-drawer__req">*Required fields</p>
+      <form class="pr-drawer__form pr-lead__form" novalidate>
+        <div class="pr-lead__pair">
+          <div class="pr-field"><input type="text" id="lead-fname" name="fname" autocomplete="given-name" placeholder=" " required><label for="lead-fname">First Name*</label></div>
+          <div class="pr-field"><input type="text" id="lead-lname" name="lname" autocomplete="family-name" placeholder=" " required><label for="lead-lname">Last Name*</label></div>
+        </div>
+        <div class="pr-lead__pair">
+          <div class="pr-field"><input type="email" id="lead-email" name="email" autocomplete="email" placeholder=" " required><label for="lead-email">Email*</label></div>
+          <div class="pr-field"><input type="tel" id="lead-phone" name="phone" autocomplete="tel" placeholder=" " required><label for="lead-phone">Phone*</label></div>
+        </div>
+        <div class="pr-field"><textarea id="lead-msg" name="message" placeholder=" " required></textarea><label for="lead-msg">Message*</label></div>
+        <label class="pr-check"><input type="checkbox" name="i_agree" value="1"><span>Please note that by completing this form, you agree to being contacted via text, phone and email.</span></label>
+        <div class="pr-drawer__actions">
+          <button class="btn btn--primary" type="submit">Send <svg class="btn__chev" aria-hidden="true"><use href="#chev"/></svg></button>
+        </div>
+        <p class="pr-pop__sent" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</div>

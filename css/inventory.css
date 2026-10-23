@@ -1,0 +1,593 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Inventory — the car card, its popups, the SRP and the VDP. Shared by
+   the home page (Certified pre-owned rail), pre-owned.html and every
+   vehicle page. The card is the Figma frame's (2791:32504); the popups
+   and the pages follow cauleyferrari.com, built out toward
+   ferrarifl.com's SRP and VDP.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── the card ──────────────────────────────────────────────────────── */
+.pr-car {
+  scroll-snap-align: start;
+  display: flex; flex-direction: column;
+  border: 1px solid var(--pr-light); background: #fff; overflow: hidden;
+}
+.pr-car__media { position: relative; margin: -1px -1px 0; aspect-ratio: 448 / 298; overflow: hidden; }
+.pr-car__media > img { width: 100%; height: 100%; object-fit: cover; }
+.pr-car__badges { position: absolute; top: 0; left: 0; display: flex; height: 28px; isolation: isolate; }
+.pr-badge {
+  position: relative; display: flex; align-items: center; height: 28px;
+  padding: 0 12px 0 16px; margin-inline-end: 10px;
+  font-size: 11px; line-height: 16.5px; letter-spacing: .275px; text-transform: uppercase;
+  background: #fff; color: var(--pr-ink);
+}
+.pr-badge::after { content: ""; position: absolute; top: 0; left: 100%; width: 10px; height: 28px; background: url("../img/icons/badge-notch-white.svg") no-repeat; }
+.pr-badge:first-child { z-index: 2; margin-inline-end: 0; }
+.pr-badge--red { background: var(--rosso-corsa); color: #fff; z-index: 1; padding-inline-start: 16px; }
+.pr-badge--red::after { background-image: url("../img/icons/badge-notch-red.svg"); }
+.pr-car__save {
+  position: absolute; top: 15px; right: 15px;
+  display: grid; place-items: center; padding: 8px; background: rgb(255 255 255 / .8);
+}
+.pr-car__save img { width: 24px; height: 24px; }
+.pr-car__series {
+  position: absolute; inset: auto 0 0; height: 33px;
+  display: grid; place-items: center; background: var(--pr-ink); color: #fff;
+  font-size: 11px; line-height: 16.5px; letter-spacing: .275px; text-transform: uppercase;
+  opacity: 0; transition: opacity .3s ease;
+}
+.pr-car:hover .pr-car__series, .pr-car:focus-within .pr-car__series { opacity: 1; }
+
+.pr-car__body { display: flex; flex-direction: column; padding: 24px 24px 18px; flex: 1; }
+.pr-car__eyebrow {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; line-height: 16.5px; letter-spacing: .275px; text-transform: uppercase; color: var(--pr-ink);
+}
+.pr-tag {
+  margin-inline-start: auto; padding: 4px 10px; border-radius: 999px;
+  background: var(--pr-ink); color: #fff;
+}
+.pr-car__name { margin-block-start: 8px; font-size: 18px; line-height: 25.2px; font-weight: 500; letter-spacing: .18px; text-transform: uppercase; }
+.pr-car__price { margin-block-start: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: end; }
+.pr-car__price span { font-size: 18px; line-height: 25.2px; font-weight: 500; letter-spacing: .18px; }
+.pr-car__price a {
+  justify-self: start; font-size: 13px; line-height: 1.5; letter-spacing: .195px; color: var(--pr-ink);
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px;
+}
+.pr-car__colours {
+  margin-block-start: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  font-size: 11px; line-height: 16.5px; letter-spacing: .275px; text-transform: uppercase;
+}
+.pr-car__colours div { display: flex; flex-direction: column; gap: 2px; min-width: 0; overflow: hidden; }
+.pr-car__colours dt, .pr-car__colours dd { white-space: nowrap; overflow: hidden; text-overflow: clip; }
+.pr-car__colours dt { color: var(--pr-grey); }
+.pr-car__cta { margin-block-start: 32px; display: flex; gap: 8px; }
+.pr-car__share {
+  margin-block-start: 27px; display: grid; grid-template-columns: 1fr 1fr;
+  font-size: 11px; line-height: 1.5; letter-spacing: .165px;
+}
+.pr-car__share a { justify-self: center; display: inline-flex; align-items: center; gap: 16px; color: var(--pr-grey); text-decoration: none; }
+.pr-car__share img { width: 16px; height: 16px; }
+
+@media (max-width: 36rem) {
+  /* a 330 px card: the bookmark drops below the badges, the CTA labels
+     hold one line, and the colour names may wrap instead of clipping */
+  .pr-car__save { top: 40px; }
+  .pr-car__cta .btn { padding-inline: 8px; white-space: nowrap; }
+  .pr-car__colours dt, .pr-car__colours dd { white-space: normal; }
+}
+
+/* ── bookmark, as the retailer's .pin ─────────────────────────────────── */
+.pr-car__save { background: #f7f7f7; transition: opacity .3s; }
+.pr-car__save:hover { opacity: .5; }
+
+/* ── the card's popups — cauleyferrari.com's sms-popup-fr and popup-fr ───
+   Measured on their page at 1440: a 0.55 black backdrop that fades in
+   over ~0.2s; Text to Phone a 576 white modal (48 in) that fades in after
+   it; Share a 50vw drawer (max 855, 64 in) that runs in from the right on
+   a long ease-out (~0.5s) and leaves on an ease-in. The close is their
+   red-circle rollover: a white disc whose ring runs red on hover. */
+.pr-car__share button {
+  justify-self: center; display: inline-flex; align-items: center; gap: 16px;
+  font: inherit; letter-spacing: inherit; color: var(--pr-grey); background: none; border: 0; cursor: pointer;
+}
+.pr-car__share button:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 2px; }
+
+.pr-pop { position: fixed; inset: 0; z-index: 9999; color: var(--pr-ink); }
+.pr-pop[hidden] { display: none; }
+.pr-pop__backdrop { position: absolute; inset: 0; background: rgb(0 0 0 / .55); opacity: 0; transition: opacity .2s ease-out .3s; }
+.pr-pop.is-open .pr-pop__backdrop { opacity: 1; transition-delay: 0s; }
+
+.pr-pop__close {
+  position: absolute; z-index: 1; display: grid; place-items: center;
+  width: 40px; height: 40px; padding: 0; border: 0; border-radius: 999px;
+  background: none; color: var(--pr-line); cursor: pointer;
+}
+.pr-pop__roll { position: absolute; inset: 0; width: 40px; height: 40px; overflow: visible; }
+.pr-pop__close .pr-ring { top: 0; left: 0; }
+.pr-pop__x { position: relative; }
+/* at rest the run sits a hair past its start, so no red speck shows */
+.pr-pop__close .pr-ring circle { stroke-dasharray: 100 120; stroke-dashoffset: 101; }
+.pr-pop__close:hover .pr-ring circle, .pr-pop__close:focus-visible .pr-ring circle { stroke-dashoffset: 0; }
+.pr-pop__close:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 2px; }
+.pr-pop__x { width: 16px; height: 16px; }
+
+.pr-pop__error { position: absolute; top: calc(100% + 8px); left: 0; right: 0; color: var(--rosso-corsa); font-size: 11px; }
+.pr-pop__sent:empty { display: none; }
+.pr-pop__sent { margin-block-start: 24px; color: var(--pr-grey); font-style: italic; font-size: 13px; }
+
+/* Text to Phone */
+.pr-sms__modal {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 100%; max-width: 576px; min-height: 378px; padding: 48px;
+  display: flex; flex-direction: column; background: #fff; text-align: center;
+  opacity: 0; transition: opacity .4s ease-in;
+}
+.pr-sms.is-open .pr-sms__modal { opacity: 1; transition: opacity .3s ease-out .08s; }
+.pr-sms .pr-pop__close { bottom: calc(100% + 32px); left: 50%; transform: translateX(-50%); }
+.pr-sms__logo { display: none; filter: brightness(0) saturate(100%); }
+.pr-sms__title { margin-block-end: 24px; font-size: 22px; line-height: 1.25; font-weight: 500; }
+.pr-sms__text { margin-block-end: 32px; font-size: 13px; line-height: 1.5; letter-spacing: .015em; }
+.pr-sms__field { position: relative; }
+.pr-sms__field input {
+  width: 100%; height: 36px; padding: 8px 0; border: 0; border-bottom: 1px solid var(--pr-grey); border-radius: 0;
+  text-align: center; color: transparent; caret-color: transparent; background: #fff; font: inherit; outline: none;
+}
+.pr-sms__field input.is-invalid { border-bottom: 2px solid var(--rosso-corsa); }
+.pr-sms__mask {
+  position: absolute; left: 0; right: 0; bottom: 8px; display: flex; gap: 10px; justify-content: center;
+  pointer-events: none; color: var(--pr-grey); font-size: 13px; letter-spacing: .015em; transition: color .3s;
+}
+.pr-sms__field input:focus + .pr-sms__mask,
+.pr-sms__field input:not(:placeholder-shown) + .pr-sms__mask { color: var(--pr-ink); }
+.pr-sms__send { width: 100%; margin-block-start: 32px; }
+
+/* Share */
+.pr-drawer__dialog {
+  position: absolute; top: 0; right: 0; width: 50vw; max-width: 855px; height: 100%;
+  display: flex; flex-direction: column; background: #fff;
+  transform: translateX(100%); transition: transform .45s cubic-bezier(.7, 0, .84, 0);
+}
+.pr-drawer.is-open .pr-drawer__dialog { transform: none; transition: transform .5s cubic-bezier(.16, 1, .3, 1) .1s; }
+.pr-drawer .pr-pop__close { right: calc(100% + 64px); top: 50%; transform: translateY(-50%); }
+.pr-drawer__content { flex: 1; padding: 64px; overflow-y: auto; overscroll-behavior: contain; }
+/* their popup h2: display-m, caps, 48 above the required line */
+.pr-drawer__title { margin-block-end: 48px; font-size: 40px; line-height: 1.1; font-weight: 500; text-transform: uppercase; }
+@media (max-width: 37.5rem) { .pr-drawer__title { font-size: 28px; } }
+.pr-drawer__req { margin-block-end: 24px; font-size: 11px; line-height: 1.5; letter-spacing: .015em; }
+.pr-drawer__form { display: flex; flex-direction: column; gap: 32px; padding-inline: 3px; }
+.pr-field { position: relative; }
+.pr-field input, .pr-field textarea {
+  display: block; width: 100%; height: 52px; padding: 24px 2px 8px;
+  border: 0; border-bottom: 1px solid var(--pr-grey); border-radius: 0; background: #fff;
+  font: inherit; font-size: 13px; letter-spacing: .015em; color: var(--pr-ink); outline: none;
+}
+.pr-field textarea { height: 128px; resize: vertical; }
+.pr-field input::placeholder, .pr-field textarea::placeholder { color: transparent; }
+.pr-field label { position: absolute; top: 24px; left: 2px; color: var(--pr-grey); font-size: 13px; letter-spacing: .015em; pointer-events: none; transition: transform .4s; }
+.pr-field :focus + label, .pr-field :not(:placeholder-shown) + label { transform: translateY(-24px); }
+.pr-field :focus-visible { border-bottom: 2px solid rgb(246 229 0); }
+.pr-field .is-invalid { border-bottom: 2px solid var(--rosso-corsa); }
+.pr-check { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; cursor: pointer; }
+.pr-check input {
+  position: relative; flex: none; width: 16px; height: 16px; margin: 2px 0 0; appearance: none;
+  border: 2px solid var(--pr-grey); background: #fff; cursor: pointer;
+}
+.pr-check input::after {
+  content: ""; position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; transform: translate(-50%, -50%);
+  background: var(--pr-ink); opacity: 0; transition: opacity .3s;
+}
+.pr-check input:checked::after { opacity: 1; }
+.pr-check input:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 2px; }
+.pr-drawer__actions { display: flex; justify-content: flex-end; margin-block-start: 32px; }
+
+@media (max-width: 64rem) { .pr-drawer__dialog { width: 80vw; } }
+@media (max-width: 37.5rem) {
+  .pr-sms__modal { top: 0; left: 0; transform: none; height: 100%; max-width: none; padding: 32px 24px; overflow-y: auto; }
+  .pr-sms__logo { display: block; margin: 8px auto 32px; }
+  .pr-sms .pr-pop__close { position: relative; bottom: auto; left: auto; transform: none; margin: 0 auto 64px; flex: none; }
+  .pr-drawer__dialog { width: 100vw; }
+  .pr-drawer .pr-pop__close { right: 50%; top: 24px; transform: translateX(50%); }
+  .pr-drawer__content { padding: 96px 24px 48px; }
+  .pr-drawer__actions .btn { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pr-pop__backdrop, .pr-sms__modal, .pr-drawer__dialog, .pr-field label { transition: none !important; }
+}
+/* Lenis clips the page while stopped; the retailer keeps its scrollbar
+   under a popup, so the page does not shift 15 px (wheel is held in JS) */
+html.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: auto; }
+
+/* ── card additions for the stock: the photo stepper (ferrarifl.com's
+   "1 of N"), the stock line, the test-drive button ────────────────────── */
+.pr-car__photo { display: block; width: 100%; height: 100%; }
+.pr-car__photo img { width: 100%; height: 100%; object-fit: cover; }
+.pr-car__step {
+  position: absolute; inset: auto 0 0; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 8px; height: 40px; color: #fff;
+  background: linear-gradient(rgb(24 24 24 / 0), rgb(24 24 24 / .55));
+  font-size: 11px; line-height: 16.5px; letter-spacing: .275px;
+}
+.pr-car__step button { display: grid; place-items: center; width: 32px; height: 32px; color: #fff; background: none; border: 0; cursor: pointer; transition: transform .3s; }
+.pr-car__step button svg { width: 12px; height: 12px; }
+.pr-car__step button:hover { transform: scale(1.3); }
+.pr-car__step button:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: -2px; }
+.pr-car__name a { color: inherit; text-decoration: none; }
+.pr-car__name a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.pr-car__ids span { display: block; }
+.pr-car__ids { margin-block-start: 4px; font-size: 11px; line-height: 16.5px; letter-spacing: .165px; color: var(--pr-grey); }
+.pr-car__price .pr-todo { font-size: 13px; font-weight: 400; letter-spacing: .195px; }
+.pr-car__td { width: 100%; margin-block-start: 8px; }
+/* cards in a row line up: the eyebrow holds the pill's height whether or
+   not the car carries one, and the actions sit on the card's floor */
+.pr-car__eyebrow { min-height: 26px; }
+.pr-car__colours { margin-block-end: 32px; }
+.pr-car__cta { margin-block-start: auto; }
+.pr-car__save[aria-pressed="true"] { background: var(--pr-ink); }
+.pr-car__save[aria-pressed="true"] img { filter: invert(1); }
+
+/* ── Inquire / Schedule test drive — the retailer's contacts_vdp drawer:
+   the car on a 133 px band (its photo 202 wide, the name, year and miles,
+   the price) over the form; two fields a row, 32 apart ──────────────── */
+.pr-lead__car { display: flex; flex: none; height: 133px; }
+.pr-lead__img { flex: none; width: 202px; height: 133px; overflow: hidden; background: var(--pr-ink); }
+.pr-lead__img img { width: 100%; height: 100%; object-fit: cover; }
+.pr-lead__title {
+  flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  padding: 32px; background: var(--pr-ink); color: #fff;
+}
+.pr-lead__title h2 { font-size: 18px; line-height: 25.2px; font-weight: 500; text-transform: uppercase; }
+.pr-lead__spec { margin-block-start: 16px; font-size: 13px; line-height: 19.5px; font-weight: 500; text-transform: uppercase; }
+.pr-lead__price { font-size: 18px; line-height: 25.2px; font-weight: 500; white-space: nowrap; }
+.pr-lead__price:empty { display: none; }
+.pr-lead .pr-drawer__title { font-size: 28px; line-height: 1.2; text-transform: none; margin-block-end: 32px; }
+.pr-lead__pair { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.pr-lead .pr-check span { line-height: 19.5px; }
+@media (max-width: 37.5rem) {
+  .pr-lead__car { flex-direction: column; height: auto; }
+  .pr-lead__img { width: 100%; height: auto; aspect-ratio: 15.2 / 10; }
+  .pr-lead__pair { grid-template-columns: 1fr; }
+  .pr-lead .pr-drawer__content { padding-block-start: 48px; }
+  .pr-lead .pr-pop__close { top: 16px; }
+}
+
+/* ── inventory pages — a white page under the retailer's header ─────── */
+/* the stock runs wide, as the retailer's inventory does (cauleyferrari.com
+   sets its SRP and VDP on the header's own container, not the 1408 column) */
+.pr-inv .pr-shell { max-width: 1920px; padding-inline: clamp(16px, 4.45vw, 64px); }
+.pr-car__cta .btn { padding-inline: 12px; white-space: nowrap; }
+body:has(.pr-inv) { background: #fff; }
+.pr-inv { background: #fff; color: var(--pr-ink); padding-block-start: var(--head-h); }
+.pr-crumbs { display: flex; flex-wrap: wrap; gap: 8px; padding-block: 40px 32px; font-size: 13px; line-height: 19.5px; letter-spacing: .195px; color: var(--pr-grey); }
+.pr-crumbs a { color: inherit; text-decoration: none; }
+.pr-crumbs a:hover { color: var(--pr-ink); }
+.pr-crumbs [aria-current] { color: var(--pr-ink); }
+.pr-disclaimer { margin-block: 64px; max-width: 1060px; font-size: 11px; line-height: 16.5px; letter-spacing: .165px; color: var(--pr-grey); }
+.pr-tag--line { background: transparent; color: var(--pr-ink); border: 1px solid var(--pr-ink); }
+.pr-icon { display: grid; place-items: center; width: 40px; height: 40px; color: inherit; background: none; border: 0; cursor: pointer; transition: opacity .3s; }
+.pr-icon svg { width: 22px; height: 22px; }
+.pr-icon:hover { opacity: .6; }
+.pr-icon:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 2px; }
+.pr-icon[aria-pressed="true"] svg path { fill: currentColor; }
+
+/* ── SRP ─────────────────────────────────────────────────────────────── */
+/* no breadcrumb on the SRP: the marker opens the page, 64 under the header */
+.pr-srp { padding-block-start: calc(var(--head-h) + 64px); }
+.pr-srp__title { margin-block: 24px 48px; font-size: 32px; line-height: 40px; font-weight: 500; }
+.pr-srp__layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 48px; align-items: start; }
+.pr-filters { position: sticky; top: calc(var(--stick-h) + 24px); }
+.pr-filters__head { display: flex; align-items: baseline; justify-content: space-between; padding-block-end: 16px; border-bottom: 1px solid var(--pr-ink); }
+.pr-filters__head h2 { font-size: 12px; line-height: 15px; letter-spacing: .6px; text-transform: uppercase; font-weight: 500; }
+.pr-filters__clear { font: inherit; font-size: 13px; color: var(--rosso-corsa); background: none; border: 0; cursor: pointer; }
+.pr-filter { border-bottom: 1px solid var(--pr-light); }
+.pr-filter summary {
+  display: flex; align-items: center; justify-content: space-between; padding: 20px 0; cursor: pointer; list-style: none;
+  font-size: 13px; line-height: 19.5px; letter-spacing: .195px; font-weight: 500;
+}
+.pr-filter summary::-webkit-details-marker { display: none; }
+.pr-filter summary svg { width: 12px; height: 12px; transform: rotate(90deg); transition: transform .3s; }
+.pr-filter[open] summary svg { transform: rotate(-90deg); }
+.pr-filter summary:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 2px; }
+.pr-filter ul { display: grid; gap: 12px; padding-block-end: 20px; }
+.pr-filter .pr-check { align-items: center; }
+.pr-filter .pr-check span:first-of-type { flex: 1; }
+.pr-filter__n { color: var(--pr-grey); font-size: 11px; }
+
+/* search — ferrariofnewengland.com's keyword bar, lifted on a soft shadow:
+   66 px, a #d8d8d8 line, 0 12 28 at 8%; the magnifier in a 58 px well,
+   the field 15 px, the red Search inside on the right */
+.pr-search {
+  display: flex; align-items: center; height: 66px; background: #fff;
+  border: 1px solid #d8d8d8; box-shadow: 0 12px 28px rgb(0 0 0 / .08);
+}
+.pr-search__icon { flex: none; display: grid; place-items: center; width: 58px; color: #111; }
+.pr-search__icon svg { width: 22px; height: 22px; }
+.pr-search input {
+  flex: 1; min-width: 0; height: 100%; padding: 0 12px; border: 0; background: none; outline: none;
+  font: inherit; font-size: 15px; color: #111;
+}
+.pr-search input::placeholder { color: #777; opacity: 1; }
+.pr-search input::-webkit-search-cancel-button { display: none; }
+.pr-search__clear { flex: none; width: 40px; height: 100%; padding: 0; border: 0; background: none; font-size: 24px; line-height: 1; color: #777; cursor: pointer; }
+.pr-search__clear[hidden] { display: none; }
+.pr-search .pr-search__go { flex: none; width: auto; min-width: 117px; height: 64px; margin-inline-end: -1px; padding-inline: 24px; }
+.pr-search:focus-within { border-color: var(--pr-grey); }
+@media (max-width: 48rem) { .pr-search .pr-search__go { min-width: 0; padding-inline: 16px; } .pr-search input { font-size: 16px; } }
+.pr-results__bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; margin-block: 32px 24px; }
+.pr-results__count { font-size: 18px; line-height: 25.2px; font-weight: 500; text-transform: uppercase; }
+.pr-results__tools { display: flex; align-items: center; gap: 32px; }
+/* layout — ferrariofcentralnj.com's view buttons: 53 × 54 (the Order box's
+   height); the idle one white with a #d2d2d2 line and a black icon, the
+   chosen one #181818 with a white icon */
+.pr-view { display: flex; }
+.pr-view button {
+  display: grid; place-items: center; width: 53px; height: 54px; padding: 0; cursor: pointer;
+  color: var(--pr-ink); background: #fff; border: 1px solid var(--pr-light); transition: background-color .3s, color .3s, border-color .3s;
+}
+.pr-view button + button { margin-inline-start: -1px; }
+.pr-view button[aria-pressed="true"] { position: relative; color: #fff; background: var(--pr-ink); border-color: var(--pr-ink); }
+.pr-view button:focus-visible { outline: 2px solid #f6e500; outline-offset: 0; }
+.pr-view svg { width: 16px; height: 16px; }
+/* Order — ferrariofnewengland.com's ih-order: a 1 px box, ORDER set on
+   its top line (12 px caps, .14em, on white), the value 14 px caps, a
+   small filled caret 12 px from the right */
+.pr-order { position: relative; display: flex; flex-direction: column; min-width: 210px; cursor: pointer; }
+.pr-order__label {
+  position: absolute; top: -5px; left: 10px; padding-inline: 2px; background: #fff;
+  font-size: 12px; line-height: 1; letter-spacing: .14em; text-transform: uppercase; color: var(--pr-ink);
+}
+.pr-order__select {
+  appearance: none; -webkit-appearance: none; width: 100%; padding: 12px 40px 12px 14px;
+  font: inherit; font-size: 14px; line-height: 2; text-transform: uppercase; color: var(--pr-ink);
+  border: 1px solid var(--pr-ink); border-radius: 0; background-color: #fff; cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--pr-ink) 50%), linear-gradient(135deg, var(--pr-ink) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 50%, calc(100% - 12px) 50%; background-size: 6px 6px; background-repeat: no-repeat;
+}
+.pr-order__select:focus-visible { outline: 2px solid #f6e500; outline-offset: 0; }
+.pr-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-block-end: 24px; }
+.pr-chips[hidden] { display: none; }
+.pr-chip {
+  display: inline-flex; align-items: center; gap: 10px; height: 32px; padding: 0 14px; border: 0; border-radius: 999px;
+  font: inherit; font-size: 11px; letter-spacing: .275px; text-transform: uppercase; cursor: pointer;
+  background: var(--pr-ink); color: #fff; transition: background-color .3s;
+}
+.pr-chip svg { width: 12px; height: 12px; }
+.pr-chip:hover { background: var(--pr-line); }
+.pr-chip--all { background: var(--rosso-corsa); }
+.pr-chip--all:hover { background: rgb(176 30 10); }
+
+.pr-srp__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+.pr-srp__grid .pr-car[hidden] { display: none; }
+.pr-empty { padding-block: 64px; display: grid; justify-items: start; gap: 24px; font-size: 18px; }
+.pr-empty[hidden] { display: none; }
+/* list: the photograph left, the record right — ferrarifl.com's list view */
+.pr-srp__grid.is-list { grid-template-columns: 1fr; }
+.pr-srp__grid.is-list .pr-car { flex-direction: row; }
+.pr-srp__grid.is-list .pr-car__media { flex: none; width: 42%; aspect-ratio: auto; margin: -1px 0 -1px -1px; }
+.pr-srp__grid.is-list .pr-car__body { padding: 32px; }
+@media (max-width: 100rem) { .pr-srp__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.pr-filters__toggle { display: none; }
+@media (max-width: 64rem) {
+  .pr-srp__layout { grid-template-columns: 1fr; gap: 24px; }
+  .pr-filters { position: static; }
+  .pr-filters__head { display: none; }
+  .pr-filters__toggle {
+    display: flex; align-items: center; gap: 8px; width: 100%; height: 56px; padding: 0 20px;
+    font: inherit; font-size: 12px; letter-spacing: .6px; text-transform: uppercase; color: var(--pr-ink);
+    background: #fff; border: 1px solid var(--pr-ink); cursor: pointer;
+  }
+  .pr-filters__toggle svg { width: 12px; height: 12px; margin-inline-start: auto; transform: rotate(90deg); transition: transform .3s; }
+  .pr-filters.is-open .pr-filters__toggle svg { transform: rotate(-90deg); }
+  .pr-filters__body { display: none; }
+  .pr-filters.is-open .pr-filters__body { display: block; }
+  .pr-filter summary { padding-block: 16px; }
+}
+@media (max-width: 48rem) {
+  .pr-srp__grid, .pr-srp__grid.is-list { grid-template-columns: 1fr; }
+  .pr-srp__grid.is-list .pr-car { flex-direction: column; }
+  .pr-srp__grid.is-list .pr-car__media { width: auto; aspect-ratio: 448 / 298; margin: -1px -1px 0; }
+  .pr-view { display: none; }
+  .pr-srp__title { font-size: 24px; line-height: 30px; }
+}
+
+/* ── VDP ─────────────────────────────────────────────────────────────── */
+.pr-vdp__overview { padding-block: 64px 56px; border-bottom: 1px solid var(--pr-light); }
+.pr-vdp__h2 { font-size: 36px; line-height: 1.1; font-weight: 500; margin-block-end: 32px; }
+.pr-records { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; }
+.pr-records dt { font-size: 11px; line-height: 16.5px; letter-spacing: .275px; text-transform: uppercase; color: var(--pr-grey); }
+.pr-records dd { margin-block-start: 6px; font-size: 13px; line-height: 19.5px; letter-spacing: .195px; }
+.pr-records--table { gap: 0 48px; }
+.pr-records--table > div { display: flex; justify-content: space-between; gap: 24px; padding-block: 16px; border-bottom: 1px solid var(--pr-light); }
+.pr-records--table dd { margin: 0; text-align: end; }
+@media (max-width: 64rem) { .pr-records { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* the retailer's tabs: caps, the open one red with a 2 px red rule */
+.pr-tabs { padding-block: 48px 16px; }
+.pr-tabs__list { display: flex; justify-content: center; border-bottom: 1px solid var(--pr-light); overflow-x: auto; scrollbar-width: none; }
+.pr-tabs__list [role=tab] {
+  flex: none; padding: 16px 24px; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; background: none; cursor: pointer;
+  font: inherit; font-size: 12px; line-height: 15px; letter-spacing: .6px; text-transform: uppercase; color: var(--pr-ink);
+  transition: color .3s, border-color .3s;
+}
+.pr-tabs__list [role=tab][aria-selected="true"] { color: var(--rosso-corsa); border-bottom-color: var(--rosso-corsa); }
+.pr-tabs__list [role=tab]:hover { color: var(--rosso-corsa); }
+.pr-tabs__list [role=tab]:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: -2px; }
+.pr-tabs__panel { padding-block: 40px; }
+.pr-tabs__panel[hidden] { display: none; }
+.pr-desc { max-width: 880px; font-size: 13px; line-height: 1.8; letter-spacing: .195px; }
+.pr-desc p + p, .pr-desc p + ul, .pr-desc ul + p { margin-block-start: 20px; }
+.pr-desc__list { columns: 2; column-gap: 48px; }
+.pr-desc__list li { break-inside: avoid; padding-inline-start: 16px; position: relative; }
+.pr-desc__list li::before { content: ""; position: absolute; left: 0; top: .9em; width: 6px; height: 1px; background: var(--rosso-corsa); }
+.pr-eq__h { margin-block: 32px 16px; font-size: 12px; line-height: 15px; letter-spacing: .6px; text-transform: uppercase; font-weight: 500; }
+.pr-eq__h:first-child { margin-block-start: 0; }
+.pr-eq { columns: 3; column-gap: 48px; font-size: 13px; line-height: 1.6; }
+.pr-eq li { break-inside: avoid; padding-block: 6px; border-bottom: 1px solid #f0f0f0; }
+@media (max-width: 64rem) { .pr-eq { columns: 2; } }
+@media (max-width: 48rem) { .pr-eq, .pr-desc__list { columns: 1; } .pr-tabs__list { justify-content: flex-start; } }
+
+/* Ferrari Approved — the dark band and its record (the Approved page's) */
+.pr-vdp__approved { background: var(--pr-ink); color: #fff; padding-block: clamp(4rem, 6.67vw, 128px); }
+.pr-vdp__approved-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: center; }
+.pr-vdp__approved .pr-body { margin-block-start: 24px; max-width: 568px; }
+.pr-vdp__approved .pr-link { margin-block-start: 40px; color: #fff; }
+.pr-vdp__figures { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+.pr-vdp__figures div { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 8px; }
+.pr-vdp__figures dt { font-size: 11px; line-height: 16.5px; letter-spacing: .275px; text-transform: uppercase; color: var(--pr-light); }
+.pr-vdp__figures dd { font-size: 36px; line-height: 1.1; font-weight: 500; }
+.pr-vdp__figures dd span { color: var(--pr-grey); font-size: 18px; }
+
+.pr-related { padding-block: clamp(4rem, 6.67vw, 128px) 32px; }
+.pr-related__grid { margin-block: 48px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+@media (max-width: 64rem) { .pr-related__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 48rem) { .pr-related__grid { grid-template-columns: 1fr; } }
+
+/* the dealer — ferrarifl.com closes its VDP on the store; this is it */
+.pr-dealer { background: var(--pr-ink); color: #fff; padding-block: 64px; margin-block-start: 64px; }
+.pr-dealer__in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: start; }
+.pr-dealer .pr-body { margin-block-start: 16px; }
+.pr-dealer .pr-body a { color: inherit; }
+.pr-dealer .btn { margin-block-start: 32px; width: auto; }
+.pr-dealer .btn svg { width: 12px; height: 12px; }
+.pr-hours { display: grid; gap: 24px; }
+.pr-hours dt { font-size: 11px; line-height: 16.5px; letter-spacing: .275px; text-transform: uppercase; color: var(--pr-light); }
+.pr-hours dd { margin-block-start: 8px; font-size: 13px; line-height: 1.8; }
+
+@media (max-width: 64rem) {
+  .pr-vdp__approved-in, .pr-dealer__in { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 48rem) {
+  .pr-vdp__h2 { font-size: 28px; }
+  .pr-vdp__figures dd { font-size: 28px; }
+}
+
+@media print {
+  .header, .pr-footer, .pr-vdp__cta, .pr-vdp__tools, .pr-vdp__back, .pr-gal__side, .pr-gal__b, .pr-vdp__bg, .pr-related, .pr-dealer .btn, .pr-pop, .pr-lightbox { display: none !important; }
+  .pr-tabs__panel[hidden] { display: block !important; }
+  .pr-inv { padding-block-start: 0; }
+}
+
+
+/* ── VDP top — thecollectionferrari.com's: the first photograph blurred
+   (8 px) behind header and gallery, under their gradient (.6 at the top,
+   clear through the middle, .86 at the foot); white type on it ────────── */
+.pr-vdp { padding-block-start: 0; }
+.pr-vdp__top { position: relative; isolation: isolate; overflow: hidden; color: #fff; background: var(--pr-ink); padding-block: var(--head-h) 24px; }
+.pr-vdp__bg { position: absolute; inset: 0; z-index: -1; }
+.pr-vdp__bg img { position: absolute; inset: -16px; width: calc(100% + 32px); height: calc(100% + 32px); max-width: none; object-fit: cover; filter: blur(8px); }
+.pr-vdp__bg::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(rgb(0 0 0 / .6) 0%, rgb(0 0 0 / 0) 34.13%, rgb(0 0 0 / 0) 64.9%, rgb(0 0 0 / .86) 100%);
+}
+.pr-vdp__back {
+  display: inline-flex; align-items: center; gap: 8px; padding-block: 24px;
+  font-size: 12px; line-height: 22px; letter-spacing: .6px; text-transform: uppercase; color: #fff; text-decoration: none; transition: color .3s;
+}
+.pr-vdp__back svg { width: 12px; height: 12px; }
+.pr-vdp__back:hover { color: var(--pr-grey); }
+
+/* the gallery: 757 + 757 + 252 at 1920, 8 apart, 560 tall */
+.pr-gal { display: grid; grid-template-columns: 3fr 3fr 1fr; gap: 8px; height: clamp(300px, 29.2vw, 560px); }
+.pr-gal button { position: relative; display: block; min-height: 0; padding: 0; border: 0; overflow: hidden; background: #f7f7f7; cursor: zoom-in; }
+.pr-gal img { width: 100%; height: 100%; object-fit: cover; }
+.pr-gal button:focus-visible { outline: 2px solid #f6e500; outline-offset: 2px; }
+.pr-gal__side { display: grid; grid-template-rows: repeat(3, minmax(0, 1fr)) 66px; gap: 8px; min-height: 0; }
+.pr-gal .pr-gal__more { display: inline-flex; align-items: center; justify-content: center; gap: 16px; width: 100%; height: 66px; min-width: 0; padding: 0 24px; border: 1px solid #fff; background: transparent; color: #fff; cursor: pointer; }
+.pr-gal .pr-gal__more:hover { border-color: var(--pr-grey); color: var(--pr-grey); }
+.pr-gal .pr-gal__more svg { width: 12px; height: 12px; }
+.pr-gal--one { grid-template-columns: 1fr; }
+.pr-gal .pr-gal__one { background: #000; cursor: default; }
+.pr-gal__one img { object-fit: contain; }
+
+.pr-vdp__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px 48px; padding-block: 40px 0; }
+.pr-vdp__name h1 { font-size: 40px; line-height: 1.1; font-weight: 500; text-transform: uppercase; }
+.pr-vdp__meta, .pr-vdp__ids { display: flex; flex-wrap: wrap; margin-block-start: 16px; font-size: 13px; line-height: 19.5px; letter-spacing: .195px; }
+.pr-vdp__meta span + span::before, .pr-vdp__ids span + span::before { content: "|"; margin-inline: 12px; color: var(--pr-grey); }
+.pr-vdp__ids { margin-block-start: 8px; font-size: 11px; line-height: 16.5px; letter-spacing: .275px; text-transform: uppercase; color: var(--pr-grey); }
+.pr-vdp__ids b { font-weight: 400; color: #fff; margin-inline-start: 4px; }
+.pr-vdp__deal { display: flex; align-items: center; gap: 32px; }
+.pr-vdp__price { font-size: 28px; line-height: 1.2; font-weight: 500; white-space: nowrap; }
+.pr-vdp__price .pr-todo { font-size: 16px; color: var(--pr-light); }
+.pr-vdp__cta { display: flex; gap: 8px; }
+.pr-vdp__cta .btn { width: auto; min-width: 208px; white-space: nowrap; }
+.pr-vdp__tools { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px 32px; margin-block-start: 24px; }
+.pr-vdp__tools button {
+  display: inline-flex; align-items: center; gap: 12px; padding: 0; border: 0; background: none; cursor: pointer;
+  font: inherit; font-size: 11px; line-height: 16.5px; letter-spacing: .165px; color: var(--pr-light); transition: color .3s;
+}
+.pr-vdp__tools img { width: 16px; height: 16px; filter: invert(1); opacity: .85; }
+.pr-vdp__tools svg { width: 16px; height: 16px; }
+.pr-vdp__tools button:hover { color: #fff; }
+.pr-vdp__tools [aria-pressed="true"] svg path { fill: currentColor; }
+.pr-vdp__tools button:focus-visible { outline: 2px solid #f6e500; outline-offset: 2px; }
+
+@media (max-width: 64rem) {
+  .pr-gal { grid-template-columns: 1fr 1fr; height: auto; }
+  .pr-gal__a { grid-column: 1 / -1; aspect-ratio: 3 / 2; }
+  .pr-gal__b { aspect-ratio: 3 / 2; }
+  .pr-gal__side { grid-template-rows: none; grid-template-columns: 1fr 1fr; }
+  .pr-gal__side > button:not(.pr-gal__more) { aspect-ratio: 3 / 2; }
+  .pr-gal__side > button:nth-child(n+3):not(.pr-gal__more) { display: none; }
+  .pr-gal .pr-gal__more { grid-column: 1 / -1; }
+  .pr-vdp__deal { width: 100%; justify-content: space-between; }
+}
+@media (max-width: 48rem) {
+  .pr-gal { display: block; }
+  .pr-gal .pr-gal__b, .pr-gal .pr-gal__side > button:not(.pr-gal__more) { display: none; }
+  .pr-gal__side { display: block; margin-block-start: 8px; }
+  .pr-gal .pr-gal__one { aspect-ratio: 16 / 9; width: 100%; }
+  .pr-vdp__name h1 { font-size: 28px; }
+  .pr-vdp__deal { flex-direction: column; align-items: stretch; gap: 16px; }
+  .pr-vdp__cta { flex-direction: column; }
+  .pr-vdp__cta .btn { width: 100%; }
+  .pr-vdp__tools { justify-content: flex-start; }
+}
+
+/* ── the full-screen gallery — ferrariofnewengland.com's ──────────────── */
+.pr-lightbox { position: fixed; inset: 0; z-index: 9999; display: flex; flex-direction: column; background: var(--pr-ink); color: #fff; }
+.pr-lightbox[hidden] { display: none; }
+.pr-lightbox__head { position: absolute; inset: 0 0 auto; z-index: 2; display: flex; justify-content: space-between; align-items: flex-start; padding: 20px; }
+.pr-lightbox__close {
+  display: inline-flex; align-items: center; gap: 16px; padding: 0; border: 0; background: none; cursor: pointer; color: #fff;
+  font: inherit; font-size: 12px; line-height: 15px; letter-spacing: 1px; text-transform: uppercase;
+}
+.pr-lightbox__ring { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid #fff; border-radius: 50%; transition: background-color .3s, color .3s; }
+.pr-lightbox__ring svg { width: 14px; height: 14px; }
+.pr-lightbox__close:hover .pr-lightbox__ring { background: #fff; color: var(--pr-ink); }
+.pr-lightbox__views { display: flex; border: 1px solid #fff; }
+.pr-lightbox__views button { display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 0; background: var(--pr-ink); color: #fff; cursor: pointer; }
+.pr-lightbox__views button[aria-pressed="true"] { background: #fff; color: var(--pr-ink); }
+/* ferrarifl.com's toggle: 40 × 40, a 1 px white line on each, the chosen
+   one white with a black glyph, the other #181818 with a white one; 20 px glyphs */
+.pr-lightbox__views { border: 0; }
+.pr-lightbox__views button { border: 1px solid #fff; }
+.pr-lightbox__views svg { width: auto; height: 20px; }
+.pr-lightbox__stage { flex: 1; min-height: 0; display: grid; place-items: center; }
+.pr-lightbox__img { max-width: 100%; max-height: 100vh; height: 100%; object-fit: contain; }
+.pr-lightbox__grid {
+  flex: 1; overflow-y: auto; overscroll-behavior: contain; display: grid; grid-template-columns: repeat(4, minmax(0, 236px));
+  justify-content: center; align-content: start; gap: 12px; padding: 80px 24px 48px;
+}
+.pr-lightbox__grid[hidden] { display: none; }
+.pr-lightbox__grid button { display: block; padding: 0; border: 0; background: #000; cursor: pointer; aspect-ratio: 236 / 160; overflow: hidden; }
+.pr-lightbox__grid img { width: 100%; height: 100%; object-fit: cover; transition: opacity .3s; }
+.pr-lightbox__grid button:hover img { opacity: .75; }
+.pr-lightbox.is-grid .pr-lightbox__stage, .pr-lightbox.is-grid .pr-lightbox__nav { display: none; }
+.pr-lightbox__nav { position: absolute; inset: auto 0 36px; display: flex; align-items: center; justify-content: center; }
+.pr-lightbox__prev, .pr-lightbox__next { position: absolute; display: grid; place-items: center; padding: 16px; border: 0; background: none; color: #fff; cursor: pointer; transition: opacity .3s; }
+.pr-lightbox__prev { left: 64px; }
+.pr-lightbox__next { right: 64px; }
+.pr-lightbox__prev svg, .pr-lightbox__next svg { width: 54px; height: 16px; }
+.pr-lightbox__prev:hover, .pr-lightbox__next:hover { opacity: .6; }
+.pr-lightbox__dots { display: flex; align-items: center; gap: 12px; height: 20px; }
+.pr-lightbox__dots span { width: 6.6px; height: 6.6px; border-radius: 50%; background: #fff; transition: all .2s; }
+.pr-lightbox__dots span.is-on { width: 20px; height: 20px; background: transparent; border: 1px solid #fff; box-sizing: border-box; }
+.pr-lightbox__count { position: absolute; left: 0; right: 0; bottom: -28px; text-align: center; font-size: 11px; letter-spacing: .275px; color: var(--pr-grey); }
+.pr-lightbox button:focus-visible { outline: 2px solid #f6e500; outline-offset: 2px; }
+@media (max-width: 64rem) { .pr-lightbox__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 48rem) {
+  .pr-lightbox__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding-inline: 16px; }
+  .pr-lightbox__prev { left: 8px; }
+  .pr-lightbox__next { right: 8px; }
+  .pr-lightbox__prev svg, .pr-lightbox__next svg { width: 36px; }
+}

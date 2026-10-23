@@ -1,0 +1,28 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Our Team — cauleyferrari.com/our-team/ at its values, read at 1920:
+   a white page; "Our Team" 32/40 Medium; a three-up grid of 448 cards on
+   a 32 px column / 48 px row gap, 48 px under the title; the portrait
+   448 × 299 (3:2) cover; 16 px to the name 18/25.2 Medium, the position
+   13/19.5 under it, 15 px to the contact lines 11/16.5 at .165px.
+   ═══════════════════════════════════════════════════════════════════════ */
+body { background: #fff; }
+.pr-team {
+  background: #fff; color: var(--pr-ink);
+  padding-block: calc(var(--head-h) + clamp(3rem, 4.8vw, 92px)) clamp(4rem, 6.67vw, 128px);
+}
+.pr-team__title { font-size: 32px; line-height: 40px; font-weight: 500; }
+.pr-team__list {
+  margin-block-start: 48px;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 32px;
+}
+@media (max-width: 64rem) { .pr-team__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 36rem) { .pr-team__list { grid-template-columns: 1fr; } }
+.pr-member__img { aspect-ratio: 448 / 299; overflow: hidden; background: #1c1d22; }
+.pr-member__img img { width: 100%; height: 100%; object-fit: cover; }
+.pr-member__name { margin-block-start: 16px; font-size: 18px; line-height: 25.2px; font-weight: 500; }
+.pr-member__role { font-size: 13px; line-height: 19.5px; letter-spacing: .195px; }
+.pr-member__info { margin-block-start: 15px; font-size: 11px; line-height: 16.5px; letter-spacing: .165px; }
+.pr-member__info a { color: inherit; text-decoration: none; }
+.pr-member__info a:hover { text-decoration: underline; }
+.pr-member__nophoto { display: grid; place-items: center; width: 100%; height: 100%; font-size: 13px; }
+.pr-member__img .pr-todo { color: #8f8f8f; }
