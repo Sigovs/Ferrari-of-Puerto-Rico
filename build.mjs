@@ -53,7 +53,8 @@ const tile = ([slug, name, url]) => `      <li class="pr-lineup__item">
 
 /* ── the dealer's stock ─────────────────────────────────────────────── */
 const INV = JSON.parse(read('data/inventory.json'));
-const CARS = INV.cars;
+/* the stock's own copy writes the dealer's number several ways; one format, also after a re-scrape */
+const CARS = INV.cars.map(c => ({ ...c, description: (c.description || '').replace(/(\+?1[ .-]*)?\(?787\)?[ .-]*296[ .-]*9996/g, '787-296-9996') }));
 /* three listings carry only the source's "Photos coming soon" frames
    (checked by eye, 22 Oct 2026): show the one with the horse, once */
 const soon = c => c.photo_count <= 6;
@@ -308,14 +309,14 @@ ${related(c).map(x => card(x)).join('\n')}
   <section class="pr-dealer" aria-labelledby="dl-h">
     <div class="pr-shell pr-dealer__in">
       <div>
-        <h2 class="pr-h2" id="dl-h">Ferrari of Puerto Rico</h2>
-        <p class="pr-body">JF Kennedy Ave. Marginal Calle John Erndt<br>San Juan, PR 00920</p>
+        <h2 class="pr-h2" id="dl-h">Ferrari Puerto Rico</h2>
+        <p class="pr-body"><span>John F. Kennedy Ave,</span> <span>Cll John Alberto Ernot</span><br>San Juan, 00920, Puerto Rico</p>
         <p class="pr-body"><a href="tel:+17872969996">787-296-9996</a></p>
-        <a class="btn btn--ghost" href="https://www.google.com/maps/dir/?api=1&amp;destination=18.421542,-66.095417" target="_blank" rel="noopener">Get directions ${chev}</a>
+        <a class="btn btn--ghost" href="https://www.google.com/maps/dir/?api=1&amp;destination=18.4217456,-66.096962" target="_blank" rel="noopener">Get directions ${chev}</a>
       </div>
       <dl class="pr-hours">
-        <div><dt>Sales</dt><dd>Monday – Saturday, 9:00am – 6:00pm<br>Sunday, closed</dd></div>
-        <div><dt>Service &amp; Parts</dt><dd>Monday – Friday, 8:00am – 5:00pm</dd></div>
+        <div><dt>Sales Hours</dt><dd>Monday to Saturday, 9:00am to 6:00pm<br>Sunday, Closed</dd></div>
+        <div><dt>Service &amp; Parts Hours</dt><dd>Monday to Friday, 8:00am to 5:00pm<br>Saturday and Sunday, Closed</dd></div>
       </dl>
     </div>
   </section>
@@ -354,14 +355,14 @@ ${related(c).map(x => card(x)).join('\n')}
    Anything not supplied renders as "… to be confirmed". `y` is where the 3:2
    card window sits on each 4:5 portrait (object-position). */
 const STAFF = [
-  { slug: '',                            y: 50, name: 'Peter Tocci',                 role: 'Sales Manager',                         tel: '+1 (787) 665-3865', email: 'peter.tocci@ferraripuertorico.com' },
-  { slug: 'mia-karina-rodriguez-imbert', y: 56, name: 'Mia Karina Rodríguez Imbert', role: 'Experience Manager, Marketing Manager',  tel: '+1 (787) 665-3864', email: 'mia.rodriguez@ferraripuertorico.com' },
-  { slug: 'naomi-negron',                y: 64, name: 'Naomi Negron',                role: 'Service Manager, Spare Parts Manager',  tel: '+1 (787) 665-3866', email: 'naomi.negron@ferraripuertorico.com' },
-  { slug: 'alexandra-martinez',          y: 30, name: 'Alexandra Martinez',          role: 'After Sales Ambassador, Service Advisor', tel: '+1 (787) 665-3867', email: 'alexandra.martinez@ferraripuertorico.com' },
-  { slug: 'jose-a-vera',                 y: 42, name: 'Jose A Vera',                 role: 'Warranty Manager',                      tel: '+1 (787) 665-3862', email: 'jose.vera@ferraripuertorico.com' },
-  { slug: 'chaffiel-diaz',               y: 32, name: 'Chaffiel Díaz',               role: 'Master Technician',                     tel: '+1 (787) 296-9996', email: 'chaffiel.diaz@ferraripuertorico.com' },
-  { slug: 'juan-lizardi-velez',          y: 38, name: 'Juan Carlos Lizardi Vélez',   role: 'Master Technician',                     tel: '+1 (787) 665-3867', email: 'juan.lizardi@ferraripuertorico.com' },
-  { slug: '',                            y: 50, name: 'Alondra Figueroa',            role: 'Receptionist',                          tel: '+1 (787) 296-9996', email: 'ea@ferraripuertorico.com' },
+  { slug: '',                            y: 50, name: 'Peter Tocci',                 role: 'Sales Manager',                         tel: '787-665-3865', email: 'peter.tocci@ferraripuertorico.com' },
+  { slug: 'mia-karina-rodriguez-imbert', y: 56, name: 'Mia Karina Rodríguez Imbert', role: 'Experience Manager, Marketing Manager',  tel: '787-665-3864', email: 'mia.rodriguez@ferraripuertorico.com' },
+  { slug: 'naomi-negron',                y: 64, name: 'Naomi Negron',                role: 'Service Manager, Spare Parts Manager',  tel: '787-665-3866', email: 'naomi.negron@ferraripuertorico.com' },
+  { slug: 'alexandra-martinez',          y: 30, name: 'Alexandra Martinez',          role: 'After Sales Ambassador, Service Advisor', tel: '787-665-3867', email: 'alexandra.martinez@ferraripuertorico.com' },
+  { slug: 'jose-a-vera',                 y: 42, name: 'Jose A Vera',                 role: 'Warranty Manager',                      tel: '787-665-3862', email: 'jose.vera@ferraripuertorico.com' },
+  { slug: 'chaffiel-diaz',               y: 32, name: 'Chaffiel Díaz',               role: 'Master Technician',                     tel: '787-296-9996', email: 'chaffiel.diaz@ferraripuertorico.com' },
+  { slug: 'juan-lizardi-velez',          y: 38, name: 'Juan Carlos Lizardi Vélez',   role: 'Master Technician',                     tel: '787-665-3867', email: 'juan.lizardi@ferraripuertorico.com' },
+  { slug: '',                            y: 50, name: 'Alondra Figueroa',            role: 'Receptionist',                          tel: '787-296-9996', email: 'ea@ferraripuertorico.com' },
 ];
 const digits = t => t.replace(/[^\d+]/g, '');
 const member = m => `      <li class="pr-member">
@@ -371,7 +372,7 @@ const member = m => `      <li class="pr-member">
         <h2 class="pr-member__name">${m.name || tbc('Name')}</h2>
         <p class="pr-member__role">${m.role || tbc('Position')}</p>
         <div class="pr-member__info">
-          <p>${m.tel ? `<a href="tel:${digits(m.tel)}">${m.tel}</a>` : tbc('Phone')}</p>
+          <p>${m.tel ? `<a href="tel:+1${digits(m.tel).slice(-10)}">${m.tel}</a>` : tbc('Phone')}</p>
           <p>${m.email ? `<a href="mailto:${m.email}">${m.email}</a>` : tbc('Email')}</p>
         </div>
       </li>`;
@@ -428,15 +429,24 @@ const PAGES = [
   })),
 ];
 
+/* the home as it was before the dealer's confirmed details, on its old chrome */
+PAGES.push({ ...PAGES[0], out: 'index-v1.html', v1: true });
+
 /* a car that has left the stock takes its page with it */
 const live = new Set(PAGES.map(p => p.out));
 for (const f of readdirSync('.')) if (/^pre-owned-.+\.html$/.test(f) && !live.has(f)) unlinkSync(f);
 
 for (const p of PAGES) {
-  const fill = h => h.replace(/\{\{(TITLE|DESC|PRELOAD|PAGE_CSS|PAGE_JS)\}\}/g, (_, k) => p[k]);
+  const vars = p.v1 ? p : {
+    ...p,
+    PAGE_CSS: p.PAGE_CSS + '<link rel="stylesheet" href="css/v2.css">\n',
+    PAGE_JS: p.PAGE_JS + '<script src="js/footer.js" defer></script>\n',
+  };
+  const fill = h => h.replace(/\{\{(TITLE|DESC|PRELOAD|PAGE_CSS|PAGE_JS)\}\}/g, (_, k) => vars[k]);
+  const chrome = p.v1 ? '-pr-v1' : '-pr';
   const page = [
-    fill(read('_head.html')), read('_header-pr.html'), read('_mobilemenu-pr.html'),
-    p.main(), read('_footer-pr.html'), fill(read('_tail.html')),
+    fill(read('_head.html')), read(`_header${chrome}.html`), read(`_mobilemenu${chrome}.html`),
+    p.main(), read(`_footer${chrome}.html`), fill(read('_tail.html')),
   ].join('\n');
   writeFileSync(p.out, bust(page));
   console.log(`${p.out.padEnd(48)} ${page.split('\n').length} lines`);
