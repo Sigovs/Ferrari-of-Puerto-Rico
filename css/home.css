@@ -17,8 +17,10 @@
   min-height: max(36rem, 100svh);
   padding-block: calc(var(--head-h) + 48px) clamp(3rem, 5.4vw, 104px);
 }
-/* held to the top edge: at 16:10 the sign only just clears the header */
-.pr-hero .pr-cover img { object-position: 50% 0%; }
+/* 20:9 day frame: on narrower screens the crop centres on the Ferrari sign
+   (61% across), so the lockup survives at every width */
+.pr-hero .pr-cover { inset: var(--head-h) 0 0; height: auto; }
+.pr-hero .pr-cover img { object-position: 61% 0%; }
 .pr-hero__shade {
   position: absolute; inset: 0; z-index: -1;
   background:
@@ -266,15 +268,12 @@
    the glass. On a phone the frame is a band at the top, the building whole
    in it, and the copy sits below on the ground — as on the Approved page. */
 @media (max-width: 48rem) {
-  /* the 3:2 night frame whole, under the header, so the sign survives */
-  .pr-hero { min-height: 0; padding-block: calc(var(--head-h) + 54vw) 3rem; }
-  .pr-hero .pr-cover { inset: var(--head-h) 0 auto; height: 66.8vw; }
-  .pr-hero .pr-cover img { inset: 0 0 auto; height: 66.8vw; }
-  .pr-hero .pr-cover img { object-position: 50% 50%; }
-  .pr-hero__shade {
-    inset: var(--head-h) 0 auto; height: calc(66.8vw + 1px);
-    background: linear-gradient(to top, #181818 0%, rgb(24 24 24 / 0) 40%);
-  }
+  /* the phone's own portrait frame (800 x 1542): the showroom in the top
+     half, the lower half already fades to #181818, so the copy sits on it */
+  .pr-hero { min-height: calc(var(--head-h) + 192.75vw); padding-block: calc(var(--head-h) + 96vw) 3rem; }
+  .pr-hero .pr-cover { inset: var(--head-h) 0 auto; height: 192.75vw; }
+  .pr-hero .pr-cover img { inset: 0 0 auto; height: 192.75vw; object-position: 50% 0%; }
+  .pr-hero__shade { display: none; }
   /* Dealership the same way: the 16:9 frame as a band, the car whole in
      it, the marker and the copy below on the ground */
   .pr-feature--about { min-height: 0; padding-block: calc(56.25vw + 16px) 3.5rem; }

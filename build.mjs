@@ -386,7 +386,7 @@ const PAGES = [
     out: 'index.html',
     TITLE: 'Ferrari of Puerto Rico — Official Ferrari Dealer, San Juan',
     DESC: 'Ferrari of Puerto Rico, official Ferrari dealer in San Juan: the 2026 range, Ferrari Approved pre-owned, genuine service and ownership.',
-    PRELOAD: '<link rel="preload" href="img/home/hero-night-1920.webp" as="image" imagesrcset="img/home/hero-night-800.webp 800w, img/home/hero-night-1280.webp 1280w, img/home/hero-night-1920.webp 1920w" imagesizes="100vw">\n',
+    PRELOAD: '<link rel="preload" href="img/home/hero-showroom-2000.webp" as="image" imagesrcset="img/home/hero-showroom-800.webp 800w, img/home/hero-showroom-1280.webp 1280w, img/home/hero-showroom-2000.webp 2000w" imagesizes="100vw" media="(min-width: 48.0625rem)">\n<link rel="preload" href="img/home/hero-showroom-m-800.webp" as="image" imagesrcset="img/home/hero-showroom-m-430.webp 430w, img/home/hero-showroom-m-800.webp 800w" imagesizes="100vw" media="(max-width: 48rem)">\n',
     PAGE_CSS: '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css">\n<link rel="stylesheet" href="css/home.css">\n' + INV_CSS,
     PAGE_JS: '<script src="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.js" defer></script>\n<script src="js/home.js" defer></script>\n' + POP_JS,
     main: () => read('_home.html')
