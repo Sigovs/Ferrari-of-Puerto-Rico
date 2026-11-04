@@ -268,12 +268,16 @@
    the glass. On a phone the frame is a band at the top, the building whole
    in it, and the copy sits below on the ground — as on the Approved page. */
 @media (max-width: 48rem) {
-  /* the phone's own portrait frame (800 x 1542): the showroom in the top
-     half, the lower half already fades to #181818, so the copy sits on it */
-  .pr-hero { min-height: calc(var(--head-h) + 192.75vw); padding-block: calc(var(--head-h) + 96vw) 3rem; }
-  .pr-hero .pr-cover { inset: var(--head-h) 0 auto; height: 192.75vw; }
-  .pr-hero .pr-cover img { inset: 0 0 auto; height: 192.75vw; object-position: 50% 0%; }
-  .pr-hero__shade { display: none; }
+  /* the phone's own portrait frame (1080 x 1920, 9:16): the car in the
+     upper half, the copy on the dark floor below it. The frame's floor is
+     #131417; the last 12% eases it into the page's #181818. */
+  .pr-hero { min-height: calc(var(--head-h) + 177.78vw); padding-block: calc(var(--head-h) + 100vw) 3rem; }
+  .pr-hero .pr-cover { inset: var(--head-h) 0 auto; height: 177.78vw; }
+  .pr-hero .pr-cover img { inset: 0 0 auto; height: 177.78vw; object-position: 50% 0%; }
+  .pr-hero__shade {
+    inset: var(--head-h) 0 auto; height: calc(177.78vw + 1px);
+    background: linear-gradient(to top, #181818 0%, rgb(24 24 24 / 0) 12%);
+  }
   /* Dealership the same way: the 16:9 frame as a band, the car whole in
      it, the marker and the copy below on the ground */
   .pr-feature--about { min-height: 0; padding-block: calc(56.25vw + 16px) 3.5rem; }
