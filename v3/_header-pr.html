@@ -1,0 +1,48 @@
+<header class="header" id="masthead">
+
+  <div class="header__top-bar">
+    <div class="h-container">
+      <a class="header__contact header__contact--address" href="https://www.google.com/maps?cid=8225234948455781208">
+        <img src="img/icons/geo-pin.svg" width="16" height="16" alt="">
+        <span>John F. Kennedy Ave, Cll John Alberto Ernot, San Juan, 00920, Puerto Rico</span>
+      </a>
+
+      <div class="header__top-bar-right">
+        <a class="header__contact header__contact--phone" href="tel:+17872969996">
+          <img src="img/icons/telephone.svg" width="16" height="16" alt="">
+          <span>787-296-9996</span>
+        </a>
+        <div class="header__search">
+          <label class="sr-only" for="header-search-input">Search</label>
+          <input id="header-search-input" type="text" name="stockno" placeholder="Search by Keyword">
+          <button type="button" class="header__search-btn" aria-label="Search">
+            <img src="img/icons/topbar-search.svg" width="37" height="16" alt="">
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="header__mobile-section">
+    <button class="header__burger-text" type="button" id="burger" aria-expanded="false" aria-controls="mobile-menu">Menu</button>
+    <a class="header__mobile-logo" href="index.html" title="Ferrari of Puerto Rico">
+      <img class="header__horse" src="img/icons/horse.svg" width="20" height="29" alt="Ferrari of Puerto Rico">
+    </a>
+    <a class="header__mobile-action" href="#">Contact us</a>
+  </div>
+
+  <div class="header__navigation-section">
+    <div class="h-container">
+      <div class="header__logo">
+        <a href="index.html" title="Ferrari of Puerto Rico">
+          <img class="header__logo-img" src="img/icons/logo-pr.svg" width="319" height="50" alt="Official Ferrari Dealer — Ferrari Puerto Rico">
+        </a>
+      </div>
+
+      <nav class="header__nav" aria-label="Main">
+        {{NAV_MENU}}
+        <div class="header__submenu-backdrop" aria-hidden="true"></div>
+      </nav>
+    </div>
+  </div>
+</header>

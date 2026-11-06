@@ -1,0 +1,336 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Ferrari Approved Program — the page's own sections.
+   Content is Ferrari's (preowned.ferrari.com/en-US/ferrari-approved); the
+   language is the retailer's own AAN Ferrari system: the marker, the
+   eyebrow over a headline, the red action beside an outlined secondary, the
+   record (figure over label) and the range selector, here used as a
+   chapter index. Every value resolves to a token in base.css — this file
+   adds no colour, no radius and no shadow.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── the frame — set by the retailer's header, not by a ratio ──────────
+   The marker stands on the logo line: the lockup's left edge, which the
+   header's own container puts at 64 px (40 from 1400 down, 16 on the phone
+   bar) inside the same 1920 max width. Content steps 64 px in from it, as
+   the retailer's sections sit in from their marker. */
+:root { --logo-x: 64px; --fa-inset: 64px; }
+@media (max-width: 87.5rem) { :root { --logo-x: 40px; } }
+@media (max-width: 64rem)   { :root { --logo-x: 16px; --fa-inset: 0px; } }
+
+.fa-shell {
+  width: 100%;
+  max-width: 120rem;                       /* the header's .h-container */
+  margin-inline: auto;
+  padding-inline: calc(var(--logo-x) + var(--fa-inset)) var(--logo-x);
+}
+.fa-shell .marker,
+.fa-chapter > .marker { margin-inline-start: calc(-1 * var(--fa-inset)); }
+
+/* ── type — the retailer's scale, read off cauleyferrari.com at 1440 ─────
+     pretitle      16/22.4 Medium caps 0.08px
+     display-m     40/44   Medium            (hero title)
+     section h2    36/39.6 Medium            ("Search Our Inventory")
+     h3            28/33.6 Medium            (model names, spec figures)
+     card title    18/25.2 Medium caps
+     body          13/19.5–23.4 at 0.015em   → 14 here: the floor for text
+                                               that has to be read
+     caption       12/15 caps 0.6px          (markers, buttons, records)
+   ───────────────────────────────────────────────────────────────────── */
+:root { --text-body: 14px; }
+main .copy, main .fa-list li {
+  font-size: 14px; line-height: 1.7; letter-spacing: .015em;
+}
+
+/* ── 0 · hero ──────────────────────────────────────────────────────────── */
+.fa-hero {
+  position: relative; isolation: isolate;
+  display: flex; align-items: flex-end;
+  /* the retailer's hero: the full viewport, the content 103.5 px off the
+     bottom edge */
+  min-height: max(100svh, 36rem);
+  padding-block: calc(var(--head-h) + var(--space-7)) 104px;
+  color: #fff;
+}
+.fa-hero__bg, .fa-hero__bg img {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%;
+}
+/* the car sits at ~0.62–0.93 of the frame; on a portrait crop the window
+   slides right so the whole car stays in it */
+.fa-hero__bg img { object-fit: cover; object-position: 50% 50%; }
+
+
+/* The lockup lands on the left half of the road, which runs from mid grey
+   to near white at the guard rail. The scrim is built for that region only:
+   heavy at the bottom-left where the type is, gone before the car. */
+.fa-hero__scrim {
+  position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(to top, rgb(0 0 0 / .72) 0%, rgb(0 0 0 / .32) 38%, rgb(0 0 0 / 0) 62%),
+    linear-gradient(to right, rgb(0 0 0 / .5) 0%, rgb(0 0 0 / 0) 55%);
+}
+/* their hero content, at its values: pretitle 16/22.4 Medium caps at
+   0.08px, 16 px to a 40/44 Medium title in its own case, 48 px to the
+   action pair, the pair 32 px apart */
+.fa-hero__body { display: grid; justify-items: start; }
+.fa-hero__pretitle {
+  font-size: 16px; line-height: 22.4px; font-weight: 500;
+  text-transform: uppercase; letter-spacing: .08px; color: #fff;
+}
+.fa-hero__title {
+  margin-block-start: 16px;
+  font-size: clamp(2rem, 1.5vw + 1.25rem, 2.5rem); line-height: 1.1; font-weight: 500;
+}
+.fa-hero__body .actions { margin-block-start: 48px; gap: 32px; }
+@media (max-width: 30rem) {
+  .fa-hero__body .actions { display: grid; width: 100%; gap: 16px; }
+  .fa-hero__body .btn { width: 100%; }
+}
+
+/* On a phone a 16:9 road shot stretched to a portrait screen is a close-up
+   of a bonnet with the lockup on it. So the frame becomes a band at the top
+   — the car whole in it — and the lockup and actions sit below on the
+   ground, the band fading into it. */
+@media (max-width: 48rem) {
+  .fa-hero {
+    min-height: 0;
+    padding-block: calc(var(--head-h) + 46vw) var(--space-8);
+  }
+  .fa-hero__bg, .fa-hero__bg img { inset: 0 0 auto; height: calc(var(--head-h) + 62vw); }
+  .fa-hero__bg img { object-position: 74% 60%; }
+  .fa-hero__scrim {
+    inset: 0 0 auto; height: calc(var(--head-h) + 62vw + 1px);
+    background: linear-gradient(to top, var(--bg) 0%, var(--bg-0) 45%);
+  }
+}
+/* ── 1 · welcome ───────────────────────────────────────────────────────── */
+.fa-welcome { padding-block: clamp(4rem, 9vw, 8rem); text-align: center; }
+.fa-welcome__body { display: grid; justify-items: center; gap: var(--space-5); }
+.fa-welcome__body .h2 {
+  font-size: clamp(28px, 1.2vw + 1.2rem, 36px); line-height: 1.1;
+  margin-block-end: var(--space-2);
+}
+.fa-welcome__lead {
+  max-width: 52ch;
+  font-size: 18px; line-height: 1.5; color: var(--ink);
+  text-wrap: balance;
+}
+.fa-welcome__body .copy { max-width: 58ch; text-wrap: balance; }
+
+/* ── 2 · details — the record ──────────────────────────────────────────── */
+.fa-details { padding-block: var(--pad-top) clamp(4rem, 8vw, 8rem); }
+
+/* The retailer's model spec row (car-model-card__specs), at its values:
+   a flex row at a 32 px gap, 208 px cells, the figure 28/33.6 Medium with
+   its unit set the same size in dimmed ink, the label 11/16.5 caps under
+   it — here 12, their caption step, so it does not drop below the marker.
+   No rules, no boxes. Their unit ink (#303030) is near-invisible on this
+   ground and here the unit carries meaning, so it takes --ink-55. */
+.fa-figures {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-7) 32px;
+  margin-block: var(--space-8) clamp(3rem, 6vw, 5rem);
+}
+@media (min-width: 64rem) { .fa-figures { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.fa-figure { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 4px; }
+.fa-figure dd {
+  font-size: 28px; line-height: 33.6px; font-weight: 500; color: #fff;
+  white-space: nowrap; font-variant-numeric: tabular-nums;
+}
+.fa-figure dd span { color: var(--ink-55); }
+.fa-figure dt {
+  font-size: 12px; line-height: 16.5px; letter-spacing: .275px;
+  text-transform: uppercase; color: rgb(143 143 143);
+}
+
+.fa-details__body { display: grid; gap: var(--space-7); }
+.fa-details__copy { display: grid; gap: var(--space-5); align-content: start; }
+@media (min-width: 64rem) {
+  .fa-details__body { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(3rem, 6vw, 8rem); }
+}
+
+/* a list on hairlines — the record's row, not a bullet */
+.fa-list { counter-reset: fa; }
+.fa-list li {
+  display: flex; gap: var(--space-5);
+  padding-block: var(--space-4);
+  border-block-start: 1px solid var(--rule);
+  color: var(--ink); line-height: 1.5; text-wrap: pretty;
+}
+.fa-list li:last-child { border-block-end: 1px solid var(--rule); }
+ol.fa-list li::before {
+  counter-increment: fa; content: counter(fa, decimal-leading-zero);
+  flex: none; min-width: 2ch;
+  font-size: var(--text-xs); line-height: 1.5rem; letter-spacing: .08em;
+  color: var(--ink-55); font-variant-numeric: tabular-nums;
+}
+.fa-list--plain li { color: var(--ink-80); }
+
+/* ── 3 · the program — the retailer's Owners tiles, at their values ──────
+   324 × 395 at 1440 in a four-up row on a 32 px gap; the content sits at
+   the foot on 32/16 padding with a 16 px rhythm. Section 128 above, 177
+   below. The record line is 12/15 caps at 0.6px with a 96 px rule
+   between label and value; the title 18/25.2 Medium caps. The photograph
+   is darkened only where the type sits. */
+.fa-program { padding-block: clamp(3rem, 8vw, 128px) clamp(3rem, 6vw, 96px); }
+.fa-tiles {
+  display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 32px;
+  margin-block-start: var(--space-8);
+}
+@media (min-width: 36rem) { .fa-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 80rem) { .fa-tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.fa-tile {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; align-items: flex-end;
+  aspect-ratio: 324 / 395;
+  background: #181818;
+}
+.fa-tile__img {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .7s cubic-bezier(.4, 0, .2, 1);
+}
+.fa-tile::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(to top, rgb(0 0 0 / .9) 0%, rgb(0 0 0 / .72) 45%, rgb(0 0 0 / 0) 80%);
+}
+.fa-tile:hover .fa-tile__img { transform: scale(1.03); }
+
+/* Arrival — the row slides up as a staircase: each tile rises 80 px on a
+   long ease-out, 140 ms after the one before, so mid-move the four stand
+   at four heights. The fade is short and only takes the edge off the
+   start; the travel is what reads. Only armed when script has added
+   .js-reveal before paint; reduced motion never arms it. */
+.js-reveal .fa-tile {
+  opacity: 0; transform: translateY(80px);
+  transition: opacity .35s ease-out var(--fa-d, 0ms),
+              transform 1s cubic-bezier(.16, 1, .3, 1) var(--fa-d, 0ms);
+}
+.js-reveal .fa-tile.is-in { opacity: 1; transform: none; }
+.fa-tile__body { display: grid; gap: 16px; width: 100%; padding: 32px 16px; color: #fff; }
+.fa-tile__title { font-size: 18px; line-height: 25.2px; font-weight: 500; text-transform: uppercase; }
+
+.fa-record {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; line-height: 15px; letter-spacing: .6px; text-transform: uppercase;
+  color: #fff;
+}
+.fa-record > span:not(.fa-record__rule) { flex: none; white-space: nowrap; }
+.fa-record__rule { flex: 0 1 96px; min-width: 24px; height: 1px; background: currentColor; }
+.fa-record--muted { color: var(--ink-55); }
+
+/* the tile's link — the rollover button, chevron variant */
+.fa-roll {
+  display: inline-flex; align-items: center; gap: 8px; justify-self: start;
+  font-size: 12px; line-height: 15px; letter-spacing: .6px; text-transform: uppercase;
+  color: #fff; text-decoration: none;
+}
+.fa-roll:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 0; }
+.fa-roll:hover .fa-ring__run, .fa-roll:focus-visible .fa-ring__run { stroke-dashoffset: 0; }
+.fa-ring__chev {
+  position: absolute; left: 12px; top: 12px; width: 16px; height: 16px;
+  transform: none !important; transition: transform .7s;
+}
+.fa-roll:hover .fa-ring__chev { transform: translateX(2px) !important; }
+
+/* ── the chapters, in full — text-led; the photographs are in the tiles ── */
+.fa-chapters { padding-block: 0 clamp(4rem, 8vw, 8rem); }
+.fa-chapter {
+  display: grid; gap: var(--space-5);
+  padding-block: var(--space-8);
+  border-block-start: 1px solid var(--rule);
+}
+.fa-chapter__head { display: grid; gap: var(--space-4); align-content: start; }
+.fa-chapter__title { font-size: clamp(22px, .8vw + 1rem, 28px); line-height: 1.2; font-weight: 500; letter-spacing: 0; }
+.fa-chapter__text { display: grid; gap: var(--space-5); }
+.fa-chapter__copy { display: grid; gap: var(--space-5); }
+.fa-chapter__copy .copy, .fa-chapter__more .copy { max-width: 64ch; }
+@media (min-width: 64rem) {
+  .fa-chapter { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: clamp(3rem, 6vw, 8rem); }
+  /* the heading stays with its text while a long chapter scrolls past */
+  .fa-chapter__head { position: sticky; inset-block-start: calc(var(--stick-h) + var(--space-6)); }
+}
+
+/* Read more — the retailer's rollover button (fr-rollover-btn, --sm,
+   icon right): 12/15 caps at 0.6px, 8 px gap, a 40 px ring in their
+   #CDCBCB that a rosso-corsa stroke runs round on hover (1s), the cross
+   turning as it does. Ferrari's page carries the same control as a "+". */
+.fa-more {
+  justify-self: start;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 400; line-height: 15px;
+  text-transform: uppercase; letter-spacing: .6px; color: #fff;
+}
+.fa-more:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 0; }
+.fa-ring { position: relative; flex: none; width: 40px; height: 40px; }
+.fa-ring > svg:first-child { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+.fa-ring circle { fill: none; stroke-width: 2; }
+.fa-ring__base { stroke: #cdcbcb; }
+.fa-ring__run {
+  stroke: var(--rosso-corsa); stroke-linecap: round;
+  stroke-dasharray: 100; stroke-dashoffset: 100;
+  transition: stroke-dashoffset 1s cubic-bezier(.4, 0, .2, 1);
+}
+.fa-more:hover .fa-ring__run, .fa-more:focus-visible .fa-ring__run { stroke-dashoffset: 0; }
+.fa-ring__plus { position: absolute; inset: 0; transition: transform .7s; }
+.fa-ring__plus::before, .fa-ring__plus::after {
+  content: ""; position: absolute; left: 50%; top: 50%;
+  width: 12px; height: 1.5px; margin: -.75px 0 0 -6px; background: currentColor;
+}
+.fa-ring__plus::after { transform: rotate(90deg); }
+.fa-more[aria-expanded="true"] .fa-ring__plus { transform: rotate(45deg); }
+
+/* the panel itself carries no padding or rule, so at height 0 it is
+   really 0 — the inner block holds both */
+.fa-chapter__more-inner {
+  display: grid; gap: var(--space-5);
+  padding-block-start: var(--space-6);
+  border-block-start: 1px solid var(--rule);
+}
+.fa-chapter__more[hidden] { display: none; }
+/* Ferrari's slide: height only, ~400ms, ease-out (easeOutQuad) */
+.fa-chapter__more.is-moving {
+  overflow: hidden;
+  transition: height .4s cubic-bezier(.25, .46, .45, .94);
+}
+.fa-subhead {
+  font-size: 12px; line-height: 15px; font-weight: 400; letter-spacing: .6px;
+  text-transform: uppercase; color: var(--ink);
+}
+.fa-note {
+  font-size: var(--text-xs); text-transform: uppercase; letter-spacing: .08em;
+  color: var(--ink-55);
+}
+
+/* ── 4 · close ─────────────────────────────────────────────────────────── */
+.fa-close { padding-block: clamp(4rem, 8vw, 8rem); border-block-start: 1px solid var(--rule); }
+.fa-close__grid { display: grid; gap: var(--space-8); align-items: center; }
+.fa-close__copy { display: grid; gap: var(--space-4); justify-items: start; }
+.fa-close__title { font-size: clamp(28px, 1.2vw + 1.2rem, 36px); line-height: 1.1; letter-spacing: 0; max-width: 16ch; }
+.fa-close__copy .actions { margin-block-start: var(--space-5); }
+.fa-close__media img { width: 100%; height: auto; }
+@media (min-width: 64rem) {
+  .fa-close__grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(3rem, 6vw, 8rem); }
+}
+@media (max-width: 30rem) {
+  .fa-close .actions { display: grid; width: 100%; }
+  .fa-close .btn { width: 100%; }
+}
+
+/* ── 5 · disclaimer ────────────────────────────────────────────────────── */
+.fa-disclaimer { padding-block: var(--space-8) var(--space-9); border-block-start: 1px solid var(--rule); }
+.fa-disclaimer .fa-shell { display: grid; gap: var(--space-3); }
+.fa-disclaimer__text { max-width: 110ch; font-size: 14px; line-height: 1.7; letter-spacing: .015em; color: var(--ink-55); }
+
+/* ── reduced motion ────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .fa-tile:hover .fa-tile__img { transform: none; }
+}
+
+/* ── Ferrari of Puerto Rico — the frame is this site's own: the 1408 column
+   on the 256 px gutter, the marker hanging out into it, as on the home page */
+.fa-shell { max-width: calc(1408px + 2 * var(--band-pad)); padding-inline: var(--band-pad); }
+.fa-shell .marker,
+.fa-chapter > .marker { margin-inline-start: calc(var(--marker-out) * -1); }
+/* the site's buttons are fixed at 208; "Value your car" needs its one line */
+.fa-close .btn { width: auto; min-width: 208px; white-space: nowrap; }

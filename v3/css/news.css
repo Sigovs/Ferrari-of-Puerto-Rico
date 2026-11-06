@@ -1,0 +1,248 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Events & Media — Ferrari's news, the blog, the gallery and the event
+   schedule; the news laid out as
+   cauleyferrari.com/news/ and its articles. The card is pr.css's .pr-post.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── the newsroom ──────────────────────────────────────────────────────── */
+.pr-newsroom { padding-block: calc(var(--head-h) + 64px) clamp(4rem, 6.67vw, 128px); }
+.pr-newsroom .pr-h2, .pr-article__more .pr-h2 { margin-block-start: 16px; }
+.pr-newsroom__grid {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 32px;
+  margin-block-start: 48px;
+}
+@media (max-width: 80rem) { .pr-newsroom__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 16px; } }
+@media (max-width: 48rem) { .pr-newsroom__grid { grid-template-columns: 1fr; } }
+
+/* ── an article: copy on black beside the photograph ───────────────────── */
+.pr-article__top {
+  display: grid; grid-template-columns: 3fr 2fr; min-height: calc(var(--head-h) + 520px);
+  background: #000; color: #fff;
+}
+.pr-article__copy {
+  display: flex; flex-direction: column; justify-content: center; gap: 24px;
+  padding: calc(var(--head-h) + 48px) 64px 64px var(--band-pad);
+}
+.pr-article__copy .pr-vdp__back { align-self: flex-start; padding-block: 0; }
+.pr-article__title { font-size: clamp(32px, 2.9vw, 56px); line-height: 1.15; font-weight: 500; max-width: 18ch; text-wrap: balance; }
+.pr-article__img { position: relative; min-height: 0; }
+.pr-article__img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* the text, one reading column */
+.pr-article__body {
+  max-width: calc(800px + 2 * var(--band-pad)); margin-inline: auto;
+  padding: 64px var(--band-pad) 96px; color: var(--pr-ink);
+  font-size: 16px; line-height: 1.7;
+}
+.pr-article__body > * + * { margin-block-start: 24px; }
+.pr-article__lead { font-size: 20px; line-height: 1.6; font-weight: 500; }
+.pr-article__source { font-size: 14px; color: var(--pr-grey); }
+
+.pr-article__more { padding-block: 64px clamp(4rem, 6.67vw, 128px); border-block-start: 1px solid #e5e5e5; }
+.pr-article__more .pr-center { margin-block-start: 48px; }
+
+@media (max-width: 64rem) {
+  .pr-article__top { grid-template-columns: 1fr; min-height: 0; }
+  .pr-article__copy { padding: calc(var(--head-h) + 32px) var(--band-pad) 40px; }
+  .pr-article__img { aspect-ratio: 16 / 9; }
+}
+
+/* ── a blog post's photographs: three columns, each frame whole ────────── */
+.pr-photos { padding-block: 0 64px; }
+.pr-photos__grid { columns: 3 280px; column-gap: 16px; }
+.pr-photos__grid li { break-inside: avoid; margin-block-end: 16px; }
+.pr-photos__grid img { display: block; width: 100%; height: auto; background: #f2f2f2; }
+.pr-article__body:has(> p:only-child) { padding-block-end: 48px; }
+/* on a phone two columns, so twelve portrait frames stay a gallery, not a scroll */
+@media (max-width: 48rem) {
+  .pr-photos__grid { columns: 2; column-gap: 8px; }
+  .pr-photos__grid li { margin-block-end: 8px; }
+}
+
+/* ── a photograph that opens full screen (js/gallery.js) ───────────────── */
+.pr-photos__open { display: block; width: 100%; border: 0; background: none; cursor: zoom-in; }
+.pr-photos__open:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 2px; }
+.pr-shot {
+  position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none;
+  margin: 0; padding: 64px 80px; border: 0; background: #000; color: #fff;
+}
+.pr-shot[open] { display: grid; place-items: center; }
+.pr-shot::backdrop { background: #000; }
+.pr-shot__img { max-width: 100%; max-height: calc(100vh - 128px); object-fit: contain; }
+.pr-shot__close {
+  position: absolute; top: 16px; left: 16px; padding: 12px;
+  font-size: 12px; line-height: 22px; letter-spacing: .6px; text-transform: uppercase;
+  color: #fff; background: none; border: 0; cursor: pointer;
+}
+.pr-shot__count { position: absolute; top: 28px; right: 24px; font-size: 14px; color: var(--pr-light); }
+.pr-shot__prev, .pr-shot__next {
+  position: absolute; top: 50%; translate: 0 -50%; width: 48px; height: 48px;
+  display: grid; place-items: center; color: #fff; background: none; border: 0; cursor: pointer;
+}
+.pr-shot__prev { left: 16px; }
+.pr-shot__next { right: 16px; }
+.pr-shot__prev svg, .pr-shot__next svg { width: 20px; height: 20px; }
+.pr-shot button:hover { color: var(--pr-grey); }
+.pr-shot button:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 2px; }
+@media (max-width: 48rem) {
+  .pr-shot { padding: 64px 8px; }
+  .pr-shot__prev, .pr-shot__next { top: auto; bottom: 8px; translate: none; }
+}
+
+/* ── gallery, album and event schedule ─────────────────────────────────── */
+.pr-vdp__back--ink { color: var(--pr-ink); padding-block: 0 24px; }
+.pr-newsroom .pr-record + .pr-h2 { margin-block-start: 16px; }
+.pr-room__lead { margin-block-start: 24px; }
+.pr-newsroom .pr-photos { padding-block: 48px 0; }
+.pr-room__more { margin-block-start: 96px; }
+.pr-room__empty { margin-block-start: 24px; font-size: 16px; }
+
+.pr-events { margin-block-start: 64px; }
+.pr-events__h {
+  padding-block-end: 16px; border-block-end: 1px solid #e5e5e5;
+  font-size: 14px; font-weight: 500; letter-spacing: .6px; text-transform: uppercase; color: var(--pr-ink);
+}
+.pr-event {
+  display: grid; grid-template-columns: 200px 1fr auto; gap: 24px; align-items: baseline;
+  padding-block: 24px; border-block-end: 1px solid #e5e5e5; color: var(--pr-ink);
+}
+.pr-event__date { font-size: 14px; letter-spacing: .6px; text-transform: uppercase; color: var(--rosso-corsa); }
+.pr-event__title { font-size: 20px; font-weight: 500; }
+.pr-event__links { display: flex; gap: 24px; font-size: 14px; }
+.pr-event__links a { color: var(--pr-ink); text-decoration: underline; text-underline-offset: 4px; }
+.pr-event__links a:hover { color: var(--rosso-corsa); }
+@media (max-width: 48rem) { .pr-event { grid-template-columns: 1fr; gap: 8px; } }
+
+/* ══ ferrari.com/magazine's layout, for news and the blog ═══════════════
+   A story is the full width of the screen: the photograph, a bottom shade,
+   and centred on it the category, the title in capitals, the standfirst
+   and read more. A listing stacks them; an article opens on one. ═══════ */
+.pr-story {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; align-items: flex-end; justify-content: center;
+  min-height: max(36rem, 100svh); padding: calc(var(--head-h) + 48px) var(--band-pad) clamp(48px, 6vw, 96px);
+  background: #000; color: #fff; text-align: center;
+}
+.pr-story__img, .pr-story__img img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.pr-story__img { z-index: -2; }
+.pr-story__img img { object-fit: cover; }
+.pr-story::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(to top, rgb(0 0 0 / .78) 0%, rgb(0 0 0 / .45) 30%, rgb(0 0 0 / 0) 58%),
+              linear-gradient(rgb(0 0 0 / .45), rgb(0 0 0 / 0) calc(var(--head-h) + 80px));
+}
+.pr-story__copy { display: flex; flex-direction: column; align-items: center; max-width: 1100px; }
+.pr-story__cat { font-size: 16px; line-height: 1.4; font-weight: 500; }
+.pr-story__title {
+  margin-block-start: 12px; font-size: clamp(32px, 3.4vw, 64px); line-height: 1.08; font-weight: 500;
+  text-transform: uppercase; text-wrap: balance;
+}
+.pr-story__lead { margin-block-start: 16px; max-width: 70ch; font-size: 16px; line-height: 1.5; }
+.pr-story__more { margin-block-start: 32px; }
+.pr-link--after { gap: 16px; }
+.pr-story .pr-jumbo { border-color: rgb(255 255 255 / .6); }
+
+/* ── an article: back, the story frame, one centred column, the reel ──── */
+.pr-read { background: #fff; color: var(--pr-ink); }
+.pr-read__back { padding: calc(var(--head-h) + 24px) var(--band-pad) 24px; }
+.pr-read__back .pr-jumbo { color: var(--pr-ink); }
+.pr-read__body {
+  max-width: calc(800px + 2 * var(--band-pad)); margin-inline: auto;
+  padding: 48px var(--band-pad) 64px; font-size: 16px; line-height: 1.6;
+}
+.pr-read__body > * + * { margin-block-start: 16px; }
+.pr-read__by { font-size: 18px; line-height: 1.4; font-weight: 500; }
+.pr-read__cta {
+  display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;
+  padding: 64px var(--band-pad) clamp(4rem, 6.67vw, 128px);
+}
+
+/* the reel: the photographs in a row the width of the screen, each whole,
+   the next one showing at the edge; a click opens it full screen */
+.pr-reel { position: relative; }
+.pr-reel__track {
+  display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+  padding-inline: var(--band-pad); scroll-padding-inline: var(--band-pad);
+}
+.pr-reel__track::-webkit-scrollbar { display: none; }
+.pr-reel__track li { flex: none; scroll-snap-align: start; }
+.pr-reel__track img { display: block; width: auto; height: clamp(320px, 62vh, 720px); background: #f2f2f2; }
+.pr-reel__step {
+  position: absolute; top: 50%; translate: 0 -50%; display: grid; place-items: center;
+  width: 48px; height: 48px; border-radius: 999px; border: 0; cursor: pointer;
+  background: rgb(0 0 0 / .55); color: #fff; transition: background-color .3s;
+}
+.pr-reel__step:hover { background: rgb(0 0 0 / .8); }
+.pr-reel__step:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 2px; }
+.pr-reel__step svg { width: 18px; height: 18px; }
+.pr-reel__step--prev { left: 16px; }
+.pr-reel__step--next { right: 16px; }
+.pr-reel__step[disabled] { opacity: 0; pointer-events: none; }
+@media (max-width: 48rem) {
+  .pr-story { min-height: max(30rem, 88svh); }
+  .pr-reel__track img { height: 56vh; }
+  .pr-reel__step { display: none; }
+}
+
+/* ── a listing, as ferrari.com/news: the two latest side
+   by side, two thirds and one third, the title on the photograph; the rest
+   three across, photograph, date and category, title ─────────────────── */
+/* the heading is the stock list's (inventory.css .pr-srp): marker, then the title */
+.pr-list { background: #fff; color: var(--pr-ink); padding-block: calc(var(--head-h) + 64px) clamp(4rem, 6.67vw, 128px); }
+.pr-list__h { margin-block: 24px 48px; font-size: 32px; line-height: 40px; font-weight: 500; text-wrap: balance; }
+.pr-list__lead { display: grid; grid-template-columns: 2fr 1fr; gap: 32px; }
+.pr-list__lead:has(> li:only-child) { grid-template-columns: 1fr; }
+.pr-list__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 56px 32px; margin-block-start: 64px; }
+.pr-tile { display: block; color: inherit; text-decoration: none; }
+.pr-tile__img { display: block; overflow: hidden; background: #f2f2f2; }
+.pr-tile__img img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.22, 1, .36, 1); }
+.pr-tile:hover .pr-tile__img img { transform: scale(1.03); }
+.pr-tile:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 4px; }
+.pr-tile__title { display: block; font-size: 16px; line-height: 1.4; font-weight: 500; text-transform: uppercase; }
+
+/* the two latest: the copy on the photograph, under a bottom shade */
+.pr-list__big .pr-tile { position: relative; height: clamp(320px, 31vw, 600px); color: #fff; }
+.pr-list__big .pr-tile__img { position: absolute; inset: 0; }
+.pr-list__big .pr-tile__img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgb(0 0 0 / .85) 0%, rgb(0 0 0 / .55) 35%, rgb(0 0 0 / 0) 65%); }
+.pr-list__big .pr-tile__copy { position: absolute; inset: auto 24px 32px; display: grid; gap: 16px; }
+.pr-list__big .pr-record { color: #fff; }
+.pr-list__big .pr-tile__title { font-size: clamp(18px, 1.4vw, 24px); line-height: 1.25; }
+
+/* the rest: photograph, then the copy under it */
+.pr-list__card .pr-tile__img { aspect-ratio: 16 / 10; }
+.pr-list__card .pr-tile__copy { display: grid; gap: 16px; margin-block-start: 20px; }
+.pr-list__card .pr-record { color: var(--rosso-corsa); }
+
+@media (max-width: 64rem) {
+  .pr-list__h { font-size: 24px; line-height: 30px; }
+  .pr-list__lead { grid-template-columns: 1fr; }
+  .pr-list__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 48rem) {
+  .pr-list__grid { grid-template-columns: 1fr; gap: 40px; }
+  /* on a phone the two latest read as the others: the copy under the photograph */
+  .pr-list__lead { gap: 40px; }
+  .pr-list__big .pr-tile { height: auto; color: inherit; }
+  .pr-list__big .pr-tile__img { position: relative; aspect-ratio: 16 / 10; }
+  .pr-list__big .pr-tile__img::after { content: none; }
+  .pr-list__big .pr-tile__copy { position: static; margin-block-start: 20px; }
+  .pr-list__big .pr-record { color: var(--rosso-corsa); }
+  .pr-list__big .pr-tile__title { font-size: 16px; line-height: 1.4; }
+}
+@media (prefers-reduced-motion: reduce) { .pr-tile__img img { transition: none; } }
+
+/* ── an article, as ferrari.com/news: head and text in one 800px column,
+   the photograph and the reel the width of the page ─────────────────── */
+.pr-read__head, .pr-read__body { max-width: calc(800px + 2 * var(--band-pad)); margin-inline: auto; padding-inline: var(--band-pad); }
+.pr-read__title { margin-block-start: 16px; font-size: clamp(28px, 2.8vw, 40px); line-height: 1.08; font-weight: 500; text-transform: uppercase; text-wrap: balance; }
+.pr-read__hero { max-width: calc(1408px + 2 * var(--band-pad)); margin: 32px auto 0; padding-inline: var(--band-pad); }
+.pr-read__hero img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #f2f2f2; }
+.pr-read__body { padding-block: 56px 48px; }
+.pr-read__by { font-size: 20px; line-height: 1.4; font-weight: 500; }
+.pr-read__lead { font-size: 18px; line-height: 1.6; }
+.pr-reel { max-width: calc(1408px + 2 * var(--band-pad)); margin-inline: auto; padding-inline: var(--band-pad); }
+.pr-reel__track { padding-inline: 0; scroll-padding-inline: 0; }
+.pr-reel__step--prev { left: calc(var(--band-pad) + 16px); }
+.pr-reel__step--next { right: calc(var(--band-pad) + 16px); }
+.pr-reel__track img { height: clamp(300px, 34vw, 600px); }
+@media (max-width: 48rem) { .pr-read__hero img { aspect-ratio: 4 / 3; } .pr-reel__track img { height: 52vh; } }
