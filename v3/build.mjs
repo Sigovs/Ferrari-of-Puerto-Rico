@@ -75,7 +75,8 @@ const CARS = INV.cars.map(c => ({ ...c, description: (c.description || '').repla
 /* three listings carry only the source's "Photos coming soon" frames
    (checked by eye, 22 Oct 2026): show the one with the horse, once */
 const soon = c => c.photo_count <= 6;
-const shots = c => soon(c) ? c.photos.slice(0, 1) : c.photos;
+/* the first half of each car's photographs, for a lighter page */
+const shots = c => soon(c) ? c.photos.slice(0, 1) : c.photos.slice(0, Math.ceil(c.photos.length / 2));
 /* the model as the dealer names it: "Scuderia" + "16M Spider"; "Base" stays off */
 const modelOf = c => (c.trim && c.trim !== 'Base' ? `${c.model} ${c.trim}` : c.model);
 const nameOf = c => `Ferrari ${modelOf(c)}`;
@@ -447,8 +448,8 @@ const blogCard = (p, cls = '') => postCard({ ...p, href: blogHref(p), img: `img/
 
 /* ── the photo albums: the same two events, more of each (img/gallery) ── */
 const GALLERY = [
-  { slug: 'amalfi-evening', photos: [[500, 700], [500, 700], [467, 700], [467, 700], [467, 700], [500, 700], [467, 700], [700, 467], [500, 700], [500, 700], [500, 700], [500, 700], [700, 467], [500, 700], [500, 700], [700, 467], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [500, 700], [500, 700], [500, 700], [467, 700], [467, 700], [500, 700], [467, 700], [500, 700], [500, 700], [467, 700], [467, 700], [467, 700], [467, 700], [500, 700], [500, 700], [500, 700], [500, 700], [467, 700], [467, 700]] },
-  { slug: 'coffee-event', photos: [[467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [700, 467], [467, 700], [467, 700], [700, 467], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [700, 467], [467, 700], [467, 700], [467, 700], [467, 700]] },
+  { slug: 'amalfi-evening', photos: [[700, 467], [467, 700], [467, 700], [500, 700], [467, 700], [500, 700], [500, 700], [467, 700], [467, 700], [467, 700], [500, 700], [500, 700]] },
+  { slug: 'coffee-event', photos: [[700, 467], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700], [467, 700]] },
 ].map(a => ({ ...BLOG.find(p => p.slug === a.slug), ...a }));
 const albumHref = a => `gallery-${a.slug}.html`;
 const albumCard = a => postCard({ ...a, cat: 'Photo album', href: albumHref(a), img: `img/blog/${a.slug}/cover-860.webp`,
