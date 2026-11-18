@@ -1,6 +1,6 @@
 /* The home page's two motions, on the inner pages (Alex, 18 Nov 2026: "move
    what the site already has onto every inner page, invent nothing"):
-   1 · pinned chapters (home.js § 1, the retailer's rule): a full-image
+   1 · pinned chapters (home.js § 1, the retailer's rule), only where no copy is lost: a full-image
        chapter holds while the next section slides over it; one taller than
        the screen first scrolls to its own bottom.
    2 · rising titles (home.js § 4, ferrari.com's f-title): a chapter title's
@@ -18,14 +18,25 @@
   if (!main) return;
   root.classList.add('pr-mo');
 
-  /* 1 · pinned full-image chapters */
-  var pins = [].slice.call(main.querySelectorAll(':scope > .pr-full, :scope > .pr-open, :scope > .pr-feature--band, :scope > .pr-chal__full'));
-  pins.forEach(function (p) { p.classList.add('pr-pinned'); });
+  /* 1 · pinned chapters — only where nothing is left unread: a photograph
+     with no copy, or a full-image chapter whose copy sits in its upper part
+     and which fits the screen whole, so the next section, rising from the
+     foot, reaches the words last. A chapter with its copy at the foot, or
+     taller than the screen, never pins (Alex, 18 Nov 2026: the next section
+     covered the text before it could be read). Decided again on resize. */
+  var cands = [].slice.call(main.querySelectorAll(':scope > .pr-full, :scope > .pr-chal__full'));
+  var pins = cands;
   var setPins = function () {
-    var vh = window.innerHeight;
-    pins.forEach(function (s) {
-      var h = s.offsetHeight;
-      s.style.top = (h > vh ? vh - h : 0) + 'px';
+    var vh = window.innerHeight, head = parseFloat(getComputedStyle(root).getPropertyValue('--stick-h')) || 80;
+    cands.forEach(function (s) {
+      s.classList.remove('pr-pinned'); s.style.top = '';
+      var h = s.offsetHeight, copy = s.querySelector('.pr-full__body');
+      var ok = h <= vh - 8;
+      if (ok && copy) {
+        var r = s.getBoundingClientRect(), c = copy.getBoundingClientRect();
+        ok = (c.bottom - r.top) / h < 0.62;          /* the copy ends in the upper 62% */
+      }
+      if (ok) { s.classList.add('pr-pinned'); s.style.top = Math.max(0, Math.min(head, vh - h)) + 'px'; }
     });
   };
   setPins();

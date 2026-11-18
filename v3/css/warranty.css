@@ -47,3 +47,7 @@
   .pr-rows .pr-row { padding-block: 32px; }
 }
 .pr-warranty + .pr-dealer { margin-block-start: 0; border-block-start: 1px solid rgb(243 244 246 / .12); }
+
+/* rows that follow a photo band start on the photograph's own edge: no
+   hairline over the first row (Alex, 18 Nov 2026) */
+.pr-feature--band + .pr-progs-wrap .pr-rows > .pr-row:first-child { border-block-start: 0; }
