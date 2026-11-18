@@ -1,0 +1,44 @@
+/* Our Racing Pedigree (racing-pedigree.html), DRAFT — on the components already
+   set: hero and welcome (approved.css), editorial pair (ccgt.css), rows
+   (corso.css), Ferrari's form (form.css). Set here: the hero frame, the quotes,
+   the list of titles. */
+
+/* hero: the 488 GT3 small and fast right of centre; the title on the open
+   asphalt at the lower left */
+.pr-ped__hero .fa-hero__bg img { object-position: 50% 50%; }
+@media (max-aspect-ratio: 5/4) { .pr-ped__hero .fa-hero__bg img { object-position: 78% 50%; } }
+.pr-ped__hero .btn { width: auto; min-width: 208px; white-space: nowrap; }
+
+/* the quotes: the words, then who said them and where, in small caps */
+.pr-ped__quote { max-width: 52ch; margin: 40px auto 0; }
+.pr-ped__quote p { margin: 0; font-size: clamp(18px, .6vw + 14px, 22px); line-height: 1.45; font-weight: 500; color: #fff; text-wrap: balance; }
+.pr-ped__quote footer { margin-block-start: 12px; font-size: 12px; line-height: 18px; letter-spacing: .6px; text-transform: uppercase; color: var(--ink-55); }
+.pr-ped__quote--dark { margin: 32px 0 0; }
+.pr-ped__quote--dark p { font-size: 18px; }
+
+/* 1 · titles: the marker over the pair; year in red caps, then the series and
+   the title, ruled like the site's lists */
+.pr-ped__titles { padding-block-start: var(--pad-top); }
+.pr-ped__titles > .pr-shell:first-child { margin-block-end: 48px; }
+.pr-ped__titles .pr-ed__title { margin-block-start: 24px; }
+.pr-ped__titles .pr-ed__in { align-items: start; }
+.pr-ped__list { display: grid; width: 100%; margin: 32px 0 0; border-block-start: 1px solid var(--rule); }
+.pr-ped__list > div { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr); gap: 16px; padding-block: 16px; border-block-end: 1px solid var(--rule); }
+.pr-ped__list dt { font-size: 12px; line-height: 22px; letter-spacing: .6px; color: var(--rosso-corsa); }
+.pr-ped__list dd { display: grid; gap: 4px; margin: 0; }
+.pr-ped__list strong { font-size: 16px; line-height: 1.4; font-weight: 500; color: #fff; }
+.pr-ped__list span { font-size: 14px; line-height: 1.5; color: rgb(243 244 246 / .75); }
+.pr-ped__note { margin: 20px 0 0; max-width: 52ch; font-size: 14px; line-height: 1.6; color: var(--ink-55); }
+
+/* 2 · race with us: the kind of programme in the first column */
+.pr-ped__racing .pr-cal__row { grid-template-columns: 16rem minmax(0, 1fr) auto; }
+.pr-ped__racing .pr-cal__date { white-space: normal; padding-inline-end: 24px; }
+@media (max-width: 48rem) {
+  .pr-ped__racing .pr-cal__row { grid-template-columns: minmax(0, 1fr) auto; }
+  .pr-ped__titles > .pr-shell:first-child { margin-block-end: 32px; }
+}
+
+/* the full-width photograph after the welcome (challenge.css .pr-chal__full, not
+   loaded here): Le Castellet at dusk, whole */
+.pr-ped__band { margin: 0; background: #181818; }
+.pr-ped__band img { display: block; width: 100%; height: auto; }

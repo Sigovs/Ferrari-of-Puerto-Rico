@@ -485,7 +485,7 @@ const NAV = [
     ['Ferrari Corso Pilota', 'corso-pilota.html'], ['Ferrari Challenge', 'ferrari-challenge.html'], ['Club Competizioni GT', 'club-competizioni-gt.html'],
     /* extra: the Club's own car, not in the client's sitemap */
     ['296 GT Modificata', '296-gt-modificata.html'],
-    ['Ferrari Club Challenge', 'club-challenge.html'], ['XX Programme', 'xx-programme.html'], ['Our Racing Pedigree', '#'],
+    ['Ferrari Club Challenge', 'club-challenge.html'], ['XX Programme', 'xx-programme.html'], ['Our Racing Pedigree', 'racing-pedigree.html'],
   ]],
   ['Owners', '#', [
     ['Owner Resources', '#'], ["Owner’s Manuals", 'owners-manuals.html'], ['Hybrid Recharge Guide', 'hybrid-recharge-guide.html'],
@@ -906,6 +906,17 @@ const PAGES = [
     PAGE_CSS: INV_CSS + '<link rel="stylesheet" href="css/approved.css">\n<link rel="stylesheet" href="css/home.css">\n<link rel="stylesheet" href="css/news.css">\n<link rel="stylesheet" href="css/drive.css">\n<link rel="stylesheet" href="css/sell.css">\n<link rel="stylesheet" href="css/dropdown.css">\n<link rel="stylesheet" href="css/warranty.css">\n<link rel="stylesheet" href="css/corso.css">\n<link rel="stylesheet" href="css/chapnav.css">\n<link rel="stylesheet" href="css/ccgt.css">\n<link rel="stylesheet" href="css/xx.css">\n<link rel="stylesheet" href="css/motion.css">\n',
     PAGE_JS: '<script src="js/dropdown.js" defer></script>\n<script src="js/interest.js" defer></script>\n<script src="js/gallery.js" defer></script>\n<script src="js/corso.js" defer></script>\n<script src="js/chapnav.js" defer></script>\n<script src="js/motion.js" defer></script>\n',
     main: () => read('_xx.html') + '\n' + DEALER,
+  },
+  {
+    /* Our Racing Pedigree — DRAFT: Ronnie Vogel from public record only (Maxim 2019,
+       ferrarifl.com 2019); tools/pages/pedigree_page.py */
+    out: 'racing-pedigree.html',
+    TITLE: 'Our Racing Pedigree — Ferrari of Puerto Rico',
+    DESC: 'Ronnie Vogel and the championships won under his management, and every Ferrari racing programme for owners, at Ferrari of Puerto Rico in San Juan.',
+    PRELOAD: '<link rel="preload" href="img/pedigree/hero-1920.webp" as="image" imagesrcset="img/pedigree/hero-800.webp 800w, img/pedigree/hero-1280.webp 1280w, img/pedigree/hero-1920.webp 1920w" imagesizes="100vw">\n',
+    PAGE_CSS: INV_CSS + '<link rel="stylesheet" href="css/approved.css">\n<link rel="stylesheet" href="css/home.css">\n<link rel="stylesheet" href="css/news.css">\n<link rel="stylesheet" href="css/drive.css">\n<link rel="stylesheet" href="css/sell.css">\n<link rel="stylesheet" href="css/dropdown.css">\n<link rel="stylesheet" href="css/warranty.css">\n<link rel="stylesheet" href="css/corso.css">\n<link rel="stylesheet" href="css/chapnav.css">\n<link rel="stylesheet" href="css/ccgt.css">\n<link rel="stylesheet" href="css/pedigree.css">\n<link rel="stylesheet" href="css/motion.css">\n',
+    PAGE_JS: '<script src="js/dropdown.js" defer></script>\n<script src="js/interest.js" defer></script>\n<script src="js/gallery.js" defer></script>\n<script src="js/corso.js" defer></script>\n<script src="js/chapnav.js" defer></script>\n<script src="js/motion.js" defer></script>\n',
+    main: () => read('_pedigree.html') + '\n' + DEALER,
   },
   {
     /* Owner's Manuals — Ferrari's Smart Guides (ferrari.com/en-US/auto/smart-guide-ferrari)
