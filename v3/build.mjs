@@ -488,7 +488,7 @@ const NAV = [
     ['Ferrari Club Challenge', 'club-challenge.html'], ['XX Programme', 'xx-programme.html'], ['Our Racing Pedigree', '#'],
   ]],
   ['Owners', '#', [
-    ['Owner Resources', '#'], ["Owner’s Manuals", 'owners-manuals.html'], ['Hybrid Recharge Guide', '#'],
+    ['Owner Resources', '#'], ["Owner’s Manuals", 'owners-manuals.html'], ['Hybrid Recharge Guide', 'hybrid-recharge-guide.html'],
     ['Personalization', '#'], ['My Ferrari App', '#'],
   ]],
   ['About Us', '#', [['Our Story', '#'], ['Our Team', 'our-team.html'], ['Contact Us', '#']]],
@@ -918,6 +918,18 @@ const PAGES = [
     PAGE_CSS: INV_CSS + '<link rel="stylesheet" href="css/approved.css">\n<link rel="stylesheet" href="css/home.css">\n<link rel="stylesheet" href="css/news.css">\n<link rel="stylesheet" href="css/drive.css">\n<link rel="stylesheet" href="css/sell.css">\n<link rel="stylesheet" href="css/dropdown.css">\n<link rel="stylesheet" href="css/warranty.css">\n<link rel="stylesheet" href="css/corso.css">\n<link rel="stylesheet" href="css/chapnav.css">\n<link rel="stylesheet" href="css/ccgt.css">\n<link rel="stylesheet" href="css/owners.css">\n<link rel="stylesheet" href="css/motion.css">\n',
     PAGE_JS: '<script src="js/interest.js" defer></script>\n<script src="js/chapnav.js" defer></script>\n<script src="js/motion.js" defer></script>\n',
     main: () => read('_owners.html') + '\n' + DEALER,
+  },
+  {
+    /* Hybrid Recharge Guide — Ferrari of Fort Lauderdale's owner's guide (procedures)
+       and Ferrari's own words and figures; tools/pages/hybrid_page.py, images
+       tools/pages/hybrid_imgs.py */
+    out: 'hybrid-recharge-guide.html',
+    TITLE: 'Hybrid Recharge Guide — Ferrari of Puerto Rico',
+    DESC: 'How to charge a Ferrari plug-in hybrid — 296, SF90, SF90 XX and 849 Testarossa: the steps, the indicator lights, home charging, Long Parking Mode and the eManettino, at Ferrari of Puerto Rico in San Juan.',
+    PRELOAD: '<link rel="preload" href="img/hybrid/hero-1920.webp" as="image" imagesrcset="img/hybrid/hero-800.webp 800w, img/hybrid/hero-1280.webp 1280w, img/hybrid/hero-1920.webp 1920w" imagesizes="100vw" media="(min-aspect-ratio: 5/4)">\n',
+    PAGE_CSS: INV_CSS + '<link rel="stylesheet" href="css/approved.css">\n<link rel="stylesheet" href="css/home.css">\n<link rel="stylesheet" href="css/news.css">\n<link rel="stylesheet" href="css/drive.css">\n<link rel="stylesheet" href="css/sell.css">\n<link rel="stylesheet" href="css/dropdown.css">\n<link rel="stylesheet" href="css/warranty.css">\n<link rel="stylesheet" href="css/corso.css">\n<link rel="stylesheet" href="css/chapnav.css">\n<link rel="stylesheet" href="css/ccgt.css">\n<link rel="stylesheet" href="css/hybrid.css">\n<link rel="stylesheet" href="css/motion.css">\n',
+    PAGE_JS: '<script src="js/dropdown.js" defer></script>\n<script src="js/interest.js" defer></script>\n<script src="js/corso.js" defer></script>\n<script src="js/chapnav.js" defer></script>\n<script src="js/motion.js" defer></script>\n',
+    main: () => read('_hybrid.html') + '\n' + DEALER,
   },
   {
     /* 296 GT Modificata — our Cauley page (cauleyferrari.com) ported by

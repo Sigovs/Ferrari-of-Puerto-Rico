@@ -1,0 +1,55 @@
+/* Hybrid Recharge Guide (hybrid-recharge-guide.html) — on the components already
+   set: hero and welcome (approved.css), white chapter, large accordion and rows
+   (corso.css), editorial pair and caps list (ccgt.css), Ferrari's form (form.css).
+   Set here: the hero frame, what the accordion panels hold (numbered steps, the
+   key-and-meaning rows), the four eManettino modes. */
+
+/* hero: the charging flap and the yellow cable right of centre, the title on
+   the dark at the left */
+.pr-hy__hero .fa-hero__bg img { object-position: 60% 50%; }
+@media (max-aspect-ratio: 5/4) { .pr-hy__hero .fa-hero__bg img { object-position: 50% 40%; } }
+.pr-hy__hero .btn { width: auto; min-width: 208px; white-space: nowrap; }
+.pr-hy__go { margin: 40px 0 0; }
+
+/* accordion panels: steps, rows of key and meaning, a closing note */
+.pr-hy .pr-acc__panel > div > * + * { margin-block-start: 16px; }
+.pr-hy__ol, .pr-hy__ul { max-width: 64ch; margin: 0; padding: 0 0 24px 1.25em; font-size: 16px; line-height: 1.6; color: #303030; }
+.pr-hy__ol li + li, .pr-hy__ul li + li { margin-block-start: 8px; }
+.pr-hy__ol strong { font-weight: 500; color: var(--pr-ink); }
+.pr-hy__dl { display: grid; max-width: 880px; margin: 0; padding-block-end: 24px; }
+.pr-hy__dl > div { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: 8px 32px; padding-block: 14px; border-block-start: 1px solid #d2d2d2; }
+.pr-hy__dl > div:last-child { border-block-end: 1px solid #d2d2d2; }
+.pr-hy__dl dt { font-size: 12px; line-height: 20px; letter-spacing: .6px; text-transform: uppercase; color: var(--pr-ink); }
+.pr-hy__dl dd { margin: 0; font-size: 16px; line-height: 1.6; color: #303030; }
+.pr-hy .pr-acc__panel .pr-hy__dl + p { padding-block-start: 8px; }
+
+/* 2 · while you drive: the marker over the pair; the four modes as Ferrari's
+   caps label over its line */
+.pr-hy__drive { padding-block-start: var(--pad-top); }
+.pr-hy__drive > .pr-shell:first-child { margin-block-end: 48px; }
+.pr-hy__drive .pr-ed__title { margin-block-start: 24px; }
+.pr-hy__modes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px clamp(2rem, 4vw, 4rem); margin-block: 72px 0; }
+@media (max-width: 64rem) { .pr-hy__modes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 48rem) { .pr-hy__modes { grid-template-columns: 1fr; gap: 28px; margin-block-start: 48px; } }
+.pr-hy__modes dt { font-size: 12px; line-height: 15px; letter-spacing: .6px; text-transform: uppercase; color: var(--rosso-corsa); }
+.pr-hy__modes dd { margin: 6px 0 0; max-width: 52ch; font-size: 16px; line-height: 1.6; color: rgb(243 244 246 / .9); }
+.pr-hy__src { margin: 32px auto 0; font-size: 12px; line-height: 18px; letter-spacing: .6px; text-transform: uppercase; color: var(--ink-55); }
+
+/* 3 · the plug-in hybrids: the body style in the date column, wider than a date */
+.pr-hy__models .pr-cal__row { grid-template-columns: 12rem minmax(0, 1fr) auto; }
+.pr-hy__list { width: 100%; margin-block-start: 32px; }
+
+@media (max-width: 48rem) {
+  .pr-hy__dl > div { grid-template-columns: 1fr; gap: 4px; }
+  .pr-hy__models .pr-cal__row { grid-template-columns: minmax(0, 1fr) auto; }
+  .pr-hy__drive > .pr-shell:first-child { margin-block-end: 32px; }
+}
+
+/* the site resets list markers; the steps keep their numbers, the tips a dash */
+.pr-hy__ol { list-style: decimal; padding-inline-start: 1.5em; }
+.pr-hy__ol li::marker { font-weight: 500; color: var(--rosso-corsa); }
+
+/* the full-width photograph between chapters 1 and 2 (challenge.css .pr-chal__full,
+   not loaded here): the whole powertrain, never cropped — no height cap */
+.pr-hy__band { margin: 0; background: #181818; }
+.pr-hy__band img { display: block; width: 100%; height: auto; }

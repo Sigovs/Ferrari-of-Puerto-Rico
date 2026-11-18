@@ -144,8 +144,7 @@
     set(false);
     b.addEventListener('click', function () { set(b.getAttribute('aria-expanded') !== 'true'); });
   });
-  var acc = document.querySelector('.pr-acc');
-  if (acc) acc.classList.add('is-ready');
+  [].forEach.call(document.querySelectorAll('.pr-acc'), function (a) { a.classList.add('is-ready'); });
 
   var sw = document.querySelector('.pr-switch');
   var turns = document.querySelector('.pr-circuit__turns');
