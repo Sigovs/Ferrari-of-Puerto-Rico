@@ -3,7 +3,8 @@
    rows; a row's arrow fills the interest form with that course and venue
    (site.js scrolls there smoothly). Rails (the cars, the slideshow): the
    arrows step the rail — one car, or most of a screen of photographs — and
-   the bar shows how far along it is. Accordion: Ferrari's large rows, the
+   the bar shows how far along it is; the mouse drags the rail and the bar
+   is a scrubber, both settling on a slide. Accordion: Ferrari's large rows, the
    text opening in place (all open without script). Switch: the turns layer
    of the Fiorano map. */
 (function () {
@@ -58,6 +59,78 @@
     rail.addEventListener('scroll', upd, { passive: true });
     window.addEventListener('resize', upd);
     upd();
+
+    /* the snap points: each slide's leading edge, less the rail's scroll padding */
+    var stops = function () {
+      var pad = parseFloat(getComputedStyle(rail).scrollPaddingInlineStart) || 0;
+      var r0 = rail.getBoundingClientRect().left - rail.scrollLeft + pad;
+      var max = rail.scrollWidth - rail.clientWidth;
+      return [].map.call(rail.children, function (c) { return Math.min(max, Math.max(0, c.getBoundingClientRect().left - r0)); });
+    };
+    /* after a drag, settle on the slide nearest where the throw would land */
+    var settle = function (aim) {
+      var s = stops(), best = s[0] || 0;
+      s.forEach(function (x) { if (Math.abs(x - aim) < Math.abs(best - aim)) best = x; });
+      rail.scrollTo({ left: best, behavior: still ? 'auto' : 'smooth' });
+      var done = function () { rail.classList.remove('is-dragging'); bar.parentNode.classList.remove('is-scrub'); };
+      if ('onscrollend' in window && !still) {
+        var t = setTimeout(done, 900);
+        rail.addEventListener('scrollend', function () { clearTimeout(t); done(); }, { once: true });
+      } else done();
+    };
+
+    /* 1 · the photographs drag with the mouse as they do under a finger;
+       a drag never counts as a click on a photograph */
+    var drag = null, moved = false;
+    rail.addEventListener('pointerdown', function (e) {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      drag = { x: e.clientX, left: rail.scrollLeft, lx: e.clientX, lt: e.timeStamp, v: 0 }; moved = false;
+    });
+    window.addEventListener('pointermove', function (e) {
+      if (!drag) return;
+      var dx = e.clientX - drag.x;
+      if (!moved && Math.abs(dx) > 5) { moved = true; rail.classList.add('is-dragging'); }
+      if (!moved) return;
+      rail.scrollLeft = drag.left - dx;
+      var dt = e.timeStamp - drag.lt;
+      if (dt > 0) { drag.v = (e.clientX - drag.lx) / dt; drag.lx = e.clientX; drag.lt = e.timeStamp; }
+    });
+    window.addEventListener('pointerup', function () {
+      if (!drag) return;
+      var v = drag.v; drag = null;
+      if (!moved) return;
+      settle(rail.scrollLeft - v * 220);           /* a quick throw carries on a little */
+      setTimeout(function () { moved = false; }, 0);  /* after the drag's own click */
+    });
+    rail.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+    rail.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
+    /* 2 · the progress bar is a scrubber: take the dark segment and slide it,
+       or press anywhere on the line to bring the segment there */
+    var track = bar.parentNode, grab = 0;
+    track.addEventListener('pointerdown', function (e) {
+      if (e.button !== 0) return;
+      var tr = track.getBoundingClientRect(), br = bar.getBoundingClientRect();
+      grab = (e.clientX >= br.left && e.clientX <= br.right) ? e.clientX - br.left : br.width / 2;
+      track.setPointerCapture(e.pointerId);
+      track.classList.add('is-scrub'); rail.classList.add('is-dragging');
+      scrub(e, tr, br.width);
+      e.preventDefault();
+    });
+    var scrub = function (e, tr, bw) {
+      tr = tr || track.getBoundingClientRect(); bw = bw || bar.getBoundingClientRect().width;
+      var room = tr.width - bw;
+      var at = room > 0 ? Math.min(1, Math.max(0, (e.clientX - tr.left - grab) / room)) : 0;
+      rail.scrollLeft = at * (rail.scrollWidth - rail.clientWidth);
+    };
+    track.addEventListener('pointermove', function (e) { if (track.hasPointerCapture(e.pointerId)) scrub(e); });
+    var release = function (e) {
+      if (!track.hasPointerCapture(e.pointerId)) return;
+      track.releasePointerCapture(e.pointerId);
+      settle(rail.scrollLeft);
+    };
+    track.addEventListener('pointerup', release);
+    track.addEventListener('pointercancel', release);
   });
 
   [].forEach.call(document.querySelectorAll('.pr-acc__btn'), function (b) {

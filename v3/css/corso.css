@@ -215,6 +215,22 @@
 .pr-show__step:disabled { opacity: .3; cursor: default; }
 .pr-show__bar { position: relative; flex: 1; height: 1px; background: #d2d2d2; }
 .pr-show__bar span { position: absolute; left: 0; top: -1px; height: 3px; width: 20%; background: var(--pr-ink); transition: transform .3s; }
+/* the bar is a scrubber (corso.js): a 44px band of reach round the hairline,
+   the segment follows the hand with no lag while it is held */
+.pr-show__bar { cursor: pointer; touch-action: pan-y; }
+.pr-show__bar::before { content: ""; position: absolute; inset: -22px 0; }
+.pr-show__bar span { cursor: grab; }
+.pr-show__bar.is-scrub, .pr-show__bar.is-scrub span { cursor: grabbing; }
+.pr-show__bar.is-scrub span { transition: none; }
+/* the rails drag with the mouse (as home.js § 2): a hand over them, a closed
+   hand and no snapping while they move */
+@media (hover: hover) and (pointer: fine) {
+  .pr-show__rail, .pr-rail { cursor: grab; }
+  .pr-show__rail.is-dragging, .pr-rail.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+  .pr-show__rail.is-dragging a, .pr-rail.is-dragging a, .pr-show__rail.is-dragging button { pointer-events: none; }
+  .pr-show__rail img, .pr-rail img { -webkit-user-drag: none; }
+}
+.pr-show__rail.is-dragging, .pr-rail.is-dragging { scroll-snap-type: none; }
 .pr-corso + .pr-dealer { margin-block-start: 0; }
 
 /* below 1440 the copy no longer clears the car (nose ~44% across), so the
