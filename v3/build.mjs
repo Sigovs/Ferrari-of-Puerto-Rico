@@ -493,10 +493,10 @@ const NAV = [
   ]],
   ['About Us', '#', [['Our Story', '#'], ['Our Team', 'our-team.html'], ['Contact Us', '#']]],
   ['Events & Media', '#', [
-    ['Event Schedule', '#'], ['Event Recaps', '#'], ['Gallery', 'gallery.html'],
-    /* extra, not in the client's sitemap: the dealer's own blog (name to be decided) and
-       Ferrari's own news (feeds the home page block) */
-    ['Blog', 'blog.html'], ['News & Events', 'news.html'],
+    /* Event Recaps is the blog the client asked for (blog.html) */
+    ['Event Schedule', '#'], ['Event Recaps', 'blog.html'], ['Gallery', 'gallery.html'],
+    /* extra, not in the client's sitemap: Ferrari's own news (feeds the home page block) */
+    ['News & Events', 'news.html'],
   ]],
 ];
 const navLink = ([label, href]) => `<a href="${href}">${esc(label)}</a>`;
@@ -618,7 +618,7 @@ ${items.slice(2).map(p => listTile(p, 'pr-list__card')).join('\n')}
   </div>
 </main>`;
 const newsroom = () => listing(NEWS.map(newsStory), 'News & Events', 'The latest from Ferrari');
-const blogroom = () => listing(BLOG.map(blogStory), 'Blog', 'Life at Ferrari Puerto Rico');
+const blogroom = () => listing(BLOG.map(blogStory), 'Event Recaps', 'Life at Ferrari Puerto Rico');
 const article = n => readPage(newsStory(n), {
   backHref: 'news.html',
   by: `${esc(n.date)} / Source: Ferrari S.p.A.`,
@@ -634,7 +634,7 @@ const blogPost = p => readPage(blogStory(p), {
   after: `  <section class="pr-shell pr-photos" aria-label="Photographs">
 ${photoGrid(`img/gallery/${p.slug}`, GALLERY.find(a => a.slug === p.slug).photos, p.title, 1400)}
   </section>`,
-  ctas: `<a class="btn btn--outline-dark btn--auto" href="blog.html">More from the blog</a>`,
+  ctas: `<a class="btn btn--outline-dark btn--auto" href="blog.html">More event recaps</a>`,
 });
 
 const INV_CSS = '<link rel="stylesheet" href="css/inventory.css">\n<link rel="stylesheet" href="css/form.css">\n';
@@ -964,14 +964,14 @@ const PAGES = [
   })),
   {
     out: 'blog.html',
-    TITLE: 'Blog — Ferrari of Puerto Rico',
+    TITLE: 'Event Recaps — Ferrari of Puerto Rico',
     DESC: 'Events and stories from Ferrari Puerto Rico, the official Ferrari dealer in San Juan.',
     PRELOAD: '', PAGE_CSS: '<link rel="stylesheet" href="css/news.css">\n', PAGE_JS: '',
     main: blogroom,
   },
   ...BLOG.map(p => ({
     out: blogHref(p),
-    TITLE: `${p.title} — Blog | Ferrari of Puerto Rico`,
+    TITLE: `${p.title} — Event Recaps | Ferrari of Puerto Rico`,
     DESC: p.summary,
     PRELOAD: `<link rel="preload" href="img/blog/${p.slug}/cover-1200.jpg" as="image">\n`,
     PAGE_CSS: '<link rel="stylesheet" href="css/news.css">\n', PAGE_JS: '<script src="js/gallery.js" defer></script>\n',
