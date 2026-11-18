@@ -1,0 +1,83 @@
+/* Ferrari's enrolment form (ferrari.com, Corso Pilota Sport → Request
+   information), measured: one column, every field the full width of the
+   column; inputs 48px on a 1px #8f8f8f rule, 16px type, the label 14px in
+   #8f8f8f inside the field; an 82px pitch (34px between fields); Message a
+   100px box on the same 1px line; the consent in caps; SUBMIT red, 200 × 56,
+   12px caps, at the left. Opt-in: only forms with .pr-fform take it (the
+   demo drive keeps its own). The dropdown keeps Ferrari's f-dropdown list
+   (js/dropdown.js); in this form its field is drawn like the others. */
+
+.pr-fform { gap: 34px; padding-inline: 0; }
+.pr-fform .pr-lead__pair { grid-template-columns: 1fr; gap: 34px; }
+
+.pr-fform .pr-field input,
+.pr-fform .pr-field select {
+  height: 48px; padding: 18px 5px 4px; border-bottom: 1px solid #8f8f8f;
+  font-size: 16px; line-height: 18.4px; letter-spacing: 0; color: var(--pr-ink);
+}
+.pr-fform .pr-field label {
+  top: 16px; left: 5px; font-size: 14px; line-height: 22.4px; letter-spacing: 0; color: #8f8f8f;
+  transform-origin: 0 0; transition: transform .3s;
+}
+.pr-fform .pr-field :focus + label,
+.pr-fform .pr-field :not(:placeholder-shown) + label,
+.pr-fform .pr-field--fixed label { transform: translateY(-17px) scale(.8); }
+.pr-fform .pr-field input:focus-visible, .pr-fform .pr-field select:focus-visible { border-bottom: 2px solid rgb(246 229 0); }
+.pr-fform .pr-field input.is-invalid, .pr-fform .pr-field select.is-invalid { border-bottom: 2px solid var(--rosso-corsa); }
+.pr-fform .pr-field textarea {
+  height: 100px; padding: 30px 10px 8px; border: 1px solid #8f8f8f;
+  font-size: 16px; line-height: 1.4; letter-spacing: 0; color: var(--pr-ink); resize: vertical;
+}
+/* in the box the label stays put, top left, whatever the field holds */
+.pr-fform .pr-field textarea + label,
+.pr-fform .pr-field textarea:focus + label,
+.pr-fform .pr-field textarea:not(:placeholder-shown) + label { top: 6px; left: 10px; transform: none; }
+.pr-fform .pr-field textarea:focus-visible { border: 2px solid rgb(246 229 0); }
+.pr-fform .pr-field textarea.is-invalid { border: 2px solid var(--rosso-corsa); }
+
+/* the f-dropdown as one of the form's fields: the rule, not the frame */
+.pr-fform .pr-dd__frame { height: 48px; border-bottom: 1px solid #8f8f8f; }
+.pr-fform .pr-dd__frame::before, .pr-fform .pr-dd__frame::after { display: none; }
+.pr-fform .pr-dd__label { left: 0; padding: 0 5px; font-size: 14px; letter-spacing: 0; text-transform: none; color: #8f8f8f; }
+.pr-fform .pr-dd__label-text { line-height: 22.4px; transform: translateY(16px); transform-origin: 0 0; }
+.pr-fform .pr-dd.is-selected .pr-dd__label { position: absolute; }
+.pr-fform .pr-dd.is-selected .pr-dd__label-text { transform: translateY(-1px) scale(.8); }
+.pr-fform .pr-dd__value { padding: 0 40px 0 5px; font-size: 16px; line-height: 18.4px; padding-block-start: 23px; }
+.pr-fform .pr-dd__arrow { right: 5px; }
+@media (hover: hover) { .pr-fform .pr-dd__toggler:hover .pr-dd__frame { border-color: var(--rosso-corsa); } }
+.pr-fform .pr-dd.is-open .pr-dd__frame { border-color: var(--pr-ink); }
+.pr-fform .pr-dd.is-invalid .pr-dd__frame { border-bottom: 2px solid var(--rosso-corsa); }
+
+/* consent and submit */
+.pr-fform .pr-check { align-items: center; gap: 16px; font-size: 12px; line-height: 18px; letter-spacing: .6px; text-transform: uppercase; color: var(--pr-ink); }
+.pr-fform .pr-check input { width: 18px; height: 18px; margin: 0; border: 1px solid #8f8f8f; }
+.pr-fform .pr-drawer__actions { justify-content: flex-start; margin-block-start: 8px; }
+.pr-fform .pr-drawer__actions .btn { width: auto; min-width: 200px; height: 56px; padding: 0 32px; font-size: 12px; letter-spacing: .6px; }
+.pr-fform .pr-drawer__actions .btn__chev { display: none; }
+.pr-fform .pr-pop__sent:empty { display: none; }
+
+/* the bold line Ferrari opens the form with */
+.pr-fform__intro { margin: 0; font-size: 16px; line-height: 22.8px; font-weight: 500; color: #000; }
+.pr-fform__req { margin: -18px 0 0; font-size: 12px; line-height: 1.5; color: #8f8f8f; }
+.pr-fform > .pr-fform__req:first-child { margin-block-start: 0; }
+
+/* a form on the page (Corso Pilota, Challenge, Sell or Consign): white;
+   the marker, then title and text centred, then the form as one column */
+.pr-formsec { padding-block: 128px; }
+.pr-formsec__head { display: grid; justify-items: center; max-width: 880px; margin: 0 auto; text-align: center; }
+.pr-formsec__title {
+  margin: 24px 0 0; font-size: clamp(1.625rem, 1.5vw + 1.1rem, 2.5rem); line-height: 1.1;
+  font-weight: 500; text-transform: uppercase; text-wrap: balance; color: var(--pr-ink);
+}
+.pr-formsec__text { margin: 24px 0 0; font-size: 16px; line-height: 1.6; color: #303030; text-wrap: pretty; }
+.pr-formsec__text + .pr-formsec__text { margin-block-start: 16px; }
+.pr-formsec .pr-fform { max-width: 720px; margin: 80px auto 0; }
+
+@media (max-width: 48rem) {
+  .pr-formsec { padding-block: 72px; }
+  .pr-formsec .pr-fform { margin-block-start: 48px; }
+  .pr-fform .pr-drawer__actions .btn { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pr-fform .pr-field label, .pr-fform .pr-dd__label-text { transition: none; }
+}

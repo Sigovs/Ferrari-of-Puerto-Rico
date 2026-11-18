@@ -322,6 +322,17 @@ ol.fa-list li::before {
 .fa-disclaimer .fa-shell { display: grid; gap: var(--space-3); }
 .fa-disclaimer__text { max-width: 110ch; font-size: 14px; line-height: 1.7; letter-spacing: .015em; color: var(--ink-55); }
 
+/* ── the client's three chapters (What it is · Why it matters · How it
+   works): 1 opens straight on the copy, 2 carries Ferrari's reasons and the
+   figures, then 3 is the tiles and the chapters as before ────────────── */
+.fa-details__body--first { margin-block-start: var(--space-8); }
+.fa-why { padding-block: 0 clamp(4rem, 8vw, 8rem); }
+.fa-why__copy { display: grid; gap: var(--space-5); max-width: 58ch; margin-block-start: var(--space-8); }
+.fa-why__lead { font-size: 18px; line-height: 1.5; color: var(--ink); text-wrap: balance; }
+.fa-why .fa-figures { margin-block-end: 0; }
+/* two figures to a row on a phone: "24 months" must fit its half (it ran past the edge at 28) */
+@media (max-width: 30rem) { .fa-figure dd { font-size: 22px; line-height: 28px; } }
+
 /* ── reduced motion ────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .fa-tile:hover .fa-tile__img { transform: none; }

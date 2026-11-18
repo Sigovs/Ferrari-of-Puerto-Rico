@@ -1,0 +1,252 @@
+/* Ferrari Corso Pilota (corso-pilota.html), v4 — rebuilt on Ferrari's own
+   corso-pilota-sport page, chapter by chapter. From the site: the one hero
+   and the welcome (approved.css), the accordion rows (warranty.css), the
+   feature band (home.css), the form layout (sell.css), Ferrari's dropdown,
+   tabs (tabs.css) and chapter dots (chapnav.css). Set here, each after
+   Ferrari's component of the same job: the chapter opener, the white
+   chapter with large accordion rows, the full image with its copy high on
+   the left, the focus-on slider, the circuit map with its turns switch and
+   figures strip, the calendar, the slideshow. */
+
+.pr-corso { background: #181818; }
+.pr-corso [id] { scroll-margin-top: calc(var(--stick-h, 80px) + 24px); }
+
+/* hero: the car in the upper half of Ferrari's frame — keep it below the
+   header (landscape), Ferrari's portrait cut for tall screens and phones */
+.pr-corso__hero .fa-hero__bg img { object-position: 50% 30%; }
+@media (max-aspect-ratio: 5/4) { .pr-corso__hero .fa-hero__bg img { object-position: 50% 45%; } }
+@media (max-width: 48rem) { .pr-corso__hero .fa-hero__bg img { object-position: 50% 40%; } }
+.pr-corso__hero .btn { width: auto; min-width: 208px; white-space: nowrap; }
+
+/* the site's rule: marker, 24px, the heading or the first line */
+.pr-corso__intro { max-width: 72ch; margin: 24px 0 0; font-size: 16px; line-height: 1.6; color: rgb(243 244 246 / .9); }
+.pr-corso__h { margin: 24px 0 0; }
+
+/* one display step for every chapter title Ferrari sets in capitals —
+   no larger than the hero's own title */
+.pr-open__title, .pr-off__title, .pr-full__title, .pr-focus__title {
+  margin: 24px 0 0; font-size: clamp(1.625rem, 1.5vw + 1.1rem, 2.5rem); line-height: 1.1;
+  font-weight: 500; text-transform: uppercase; text-wrap: balance;
+}
+
+/* 1 · programmes: marker and Ferrari's line, then the three course rows */
+.pr-progs-wrap.pr-corso__courses { padding-block: var(--pad-top) 128px; }
+.pr-corso__courses .pr-rows { margin-block-start: 48px; }
+
+/* chapter opener (Ferrari's extended Intro): the photograph from the top of
+   the chapter, its foot already run into the ground; marker, title and
+   text centred over that dark foot */
+.pr-open { position: relative; isolation: isolate; overflow: hidden; padding-block: 58vw 0; background: #181818; }
+.pr-open__bg { position: absolute; inset: 0; z-index: -1; }
+.pr-open__bg img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
+.pr-open__bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, #181818 0%, rgb(24 24 24 / 0) 38%); }
+.pr-open__body { display: grid; justify-items: center; text-align: center; }
+.pr-open__marker { justify-content: center; margin-inline: 0; }
+.pr-open__title { color: #fff; max-width: 24ch; }
+.pr-open__text { max-width: 72ch; margin: 24px 0 0; font-size: 16px; line-height: 1.6; color: rgb(243 244 246 / .9); text-wrap: pretty; }
+.pr-open__text + .pr-open__text { margin-block-start: 8px; }
+.pr-open__note { max-width: 72ch; margin: 24px 0 0; font-size: 14px; line-height: 1.6; color: var(--ink-55); }
+.pr-open__note a { color: #fff; text-underline-offset: 3px; }
+/* phones: Ferrari's portrait cut (3:4) held at its own height from the
+   top, so its dark foot — not the grass — is where the marker lands */
+@media (max-width: 48rem) {
+  .pr-open { padding-block-start: 110vw; }
+  .pr-open__bg { inset: 0 0 auto; height: 133.34vw; }
+}
+
+/* 2 · activity: Ferrari's tabs under the opener */
+.pr-corso__tabs { padding-block: 72px 128px; }
+
+/* 3 · off-track: Ferrari's white chapter — title and text centred, then
+   large rows that open in place; the + turns to × (0.5s, Ferrari's ease) */
+.pr-off { padding-block: var(--pad-top) 128px; }
+.pr-off__head { display: grid; justify-items: center; max-width: 880px; margin: 0 auto; text-align: center; }
+.pr-off__title { color: var(--pr-ink); }
+.pr-off__text { margin: 24px 0 0; font-size: 16px; line-height: 1.6; color: #303030; text-wrap: pretty; }
+.pr-acc { margin-block-start: 80px; }
+.pr-acc__h { margin: 0; }
+.pr-acc__btn {
+  display: flex; align-items: center; justify-content: space-between; gap: 24px; width: 100%;
+  padding-block: 16px; border: 0; background: none; cursor: pointer; text-align: start;
+  font: inherit; font-size: clamp(1.375rem, 1.2vw + .8rem, 2rem); line-height: 1.2; font-weight: 500; color: var(--pr-ink);
+}
+.pr-acc__btn:focus-visible { outline: 2px solid var(--pr-ink); outline-offset: 4px; }
+.pr-acc__icon { position: relative; flex: none; width: 24px; height: 24px; transition: transform .5s ease-out; }
+.pr-acc__icon::before, .pr-acc__icon::after { content: ""; position: absolute; left: 0; top: 11px; width: 24px; height: 1.5px; background: currentColor; }
+.pr-acc__icon::after { transform: rotate(90deg); }
+.pr-acc__btn[aria-expanded="true"] .pr-acc__icon { transform: rotate(45deg); }
+.pr-acc__panel { display: grid; grid-template-rows: 1fr; }
+.pr-acc.is-ready .pr-acc__panel { grid-template-rows: 0fr; transition: grid-template-rows .5s ease-out; }
+.pr-acc.is-ready .pr-acc__panel.is-open { grid-template-rows: 1fr; }
+.pr-acc__panel > div { overflow: hidden; }
+.pr-acc__panel p { max-width: 64ch; margin: 0; padding-block: 0 24px; font-size: 16px; line-height: 1.6; color: #303030; }
+
+/* full image (Ferrari's FullImage): the copy high on the left over the
+   photograph's quiet side; on a phone the car's own portrait cut */
+.pr-full {
+  position: relative; isolation: isolate; display: flex; flex-direction: column;
+  min-height: max(40rem, min(100svh, 56.25vw)); padding-block: clamp(4rem, 8vw, 128px);
+  background: #181818;
+}
+.pr-full__bg, .pr-full__bg img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; }
+.pr-full__bg img { object-fit: cover; object-position: 50% 50%; }
+.pr-full__shade { position: absolute; inset: 0; z-index: -1; }
+.pr-full__body { display: grid; justify-items: start; }
+.pr-full__title { color: #fff; max-width: 14ch; }
+.pr-full__body > .pr-full__title:first-child { margin-block-start: 0; }
+.pr-full__text { max-width: 46ch; margin: 24px 0 0; font-size: 16px; line-height: 1.6; color: #fff; text-wrap: pretty; }
+/* the copy ends before the car begins (the car's nose at ~44% of the frame) */
+.pr-full--car .pr-full__text, .pr-full--casa .pr-full__text { max-width: 34ch; }
+@media (min-width: 90rem) and (max-width: 100rem) { .pr-full--car .pr-full__text, .pr-full--casa .pr-full__text { max-width: 30ch; } }
+.pr-full--car .pr-full__shade {
+  background: linear-gradient(to right, rgb(24 24 24 / .7) 0%, rgb(24 24 24 / 0) 55%),
+              linear-gradient(to bottom, rgb(24 24 24 / .5) 0%, rgb(24 24 24 / 0) 40%);
+}
+.pr-full--casa { min-height: max(36rem, min(100svh, 56.25vw)); }
+.pr-full--casa .pr-full__shade {
+  background: linear-gradient(to right, rgb(24 24 24 / .9) 0%, rgb(24 24 24 / .82) 36%, rgb(24 24 24 / 0) 62%),
+              linear-gradient(to top, #181818 0%, rgb(24 24 24 / 0) 18%);
+}
+
+/* the cars — Ferrari's focus-on slider (Discover more), on the page:
+   copy left, photograph right, one car to a screen, the rail's navigator */
+.pr-cars { padding-block: 96px 128px; overflow-x: clip; }
+.pr-rail { scrollbar-width: none; }
+.pr-rail::-webkit-scrollbar { display: none; }
+.pr-cars__rail { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; }
+.pr-cars__rail:focus-visible { outline: 2px solid var(--pr-ink); outline-offset: -2px; }
+.pr-focus {
+  flex: 0 0 100%; scroll-snap-align: start;
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(2rem, 5vw, 6rem); align-items: center;
+  padding-inline: max(var(--band-pad), calc((100vw - 1408px) / 2));
+}
+.pr-focus__copy { display: grid; justify-items: start; }
+.fa-record--ink { color: var(--pr-ink); }
+.pr-focus__title { color: var(--pr-ink); max-width: 16ch; }
+.pr-focus__text { max-width: 52ch; margin: 24px 0 0; font-size: 16px; line-height: 1.6; color: #303030; }
+.pr-focus__text + .pr-focus__text { margin-block-start: 16px; }
+.pr-focus__img { display: block; width: 100%; height: auto; }
+.pr-cars__nav { margin-block-start: 48px; }
+
+/* the circuit: Ferrari's map with the turns layer over it, the switch at
+   the right; the figures on the track texture */
+.pr-circuit { padding-block-start: 96px; background: #181818; }
+.pr-circuit__in { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 48px; }
+.pr-circuit__map { position: relative; max-width: 1030px; margin: 0; }
+.pr-circuit__map img { display: block; width: 100%; height: auto; }
+.pr-circuit__turns { position: absolute; inset: 0 0 auto; transition: opacity .3s; }
+.pr-circuit__turns.is-off { opacity: 0; }
+.pr-switch {
+  display: inline-flex; align-items: center; gap: 16px; min-height: 44px; padding: 0; border: 0; background: none; cursor: pointer;
+  font: inherit; font-size: 12px; line-height: 15px; letter-spacing: 1px; text-transform: uppercase; color: #fff;
+}
+.pr-switch__track { position: relative; width: 48px; height: 26px; border: 2px solid #fff; border-radius: 999px; }
+.pr-switch__track::after {
+  content: ""; position: absolute; top: 6px; left: 6px; width: 10px; height: 10px; border-radius: 50%; background: #fff;
+  transition: transform .3s;
+}
+.pr-switch[aria-checked="true"] .pr-switch__track::after { transform: translateX(22px); }
+.pr-switch:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 4px; }
+.pr-circuit__strip { margin-block-start: 64px; padding-block: 48px; background: #2b2b2b url("../img/corso/texture-1920.webp") center / cover; }
+.pr-circuit__figures { margin-block: 0; }
+.pr-circuit__figures .fa-figure { flex-direction: column; }
+.pr-circuit__figures dd { margin: 0; font-size: clamp(28px, 1.6vw + 16px, 40px); line-height: 1.15; }
+
+/* lifestyle: Ferrari's two focus items under the full image */
+.pr-life { padding-block: 72px 128px; }
+.pr-life__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(2rem, 5vw, 6rem); }
+.pr-life__item { display: grid; align-content: start; }
+.pr-life__item img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
+.pr-life__title { margin: 32px 0 16px; font-size: 22px; line-height: 1.25; font-weight: 500; text-transform: uppercase; color: #fff; }
+.pr-life__item .copy { max-width: 56ch; }
+
+/* 6 · schedule — Ferrari's calendar page: white, one centred column, the
+   CATEGORY dropdown at the right of the heading, one row per course: the
+   date in grey caps, the course and venue, the round arrow at the end */
+.pr-cal { padding-block: 128px; }
+.pr-cal__in { max-width: 880px; margin: 0 auto; }
+.pr-cal__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px 48px; }
+.pr-cal__head > div:first-child { flex: 1 1 360px; min-width: 0; }
+.pr-cal__filter { flex: none; width: 240px; }
+.pr-cal__note { max-width: 56ch; margin: 16px 0 0; font-size: 14px; line-height: 1.7; color: var(--pr-ink); }
+.pr-cal__list { margin: 48px 0 0; padding: 0; list-style: none; border-block-start: 1px solid #e5e5e5; }
+.pr-cal__row { display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; align-items: center; gap: 24px; padding-block: 18px; border-block-end: 1px solid #e5e5e5; }
+.pr-cal__row[hidden] { display: none; }
+.pr-cal__date { font-size: 12px; line-height: 15px; letter-spacing: 1px; text-transform: uppercase; color: var(--pr-grey); white-space: nowrap; }
+.pr-cal__what { display: grid; gap: 4px; }
+.pr-cal__course { font-size: 14px; line-height: 1.3; letter-spacing: .6px; text-transform: uppercase; color: var(--pr-ink); }
+.pr-cal__venue { font-size: 13px; line-height: 1.4; color: #555; }
+.pr-cal__go { color: var(--pr-ink); }
+.pr-cal__go:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 2px; border-radius: 999px; }
+.pr-cal__empty { margin: 24px 0 0; font-size: 14px; color: var(--pr-grey); }
+.pr-cal .pr-corso__more .pr-link { color: var(--pr-ink); }
+.pr-corso__more { margin: 56px 0 0; }
+.pr-row__out { margin-block-start: 8px; color: #fff; }
+
+/* 8 · further details and the form on white between dark bands */
+.pr-corso .pr-sell__value { padding-block: 128px; }
+.pr-corso .pr-sell__value-head .pr-sell__body + .pr-sell__body { margin-block-start: 16px; }
+
+/* 9 · gallery — Ferrari's image slideshow: title centred, a rail of
+   photographs at their own proportions (360 wide, 285 on a phone), bottom-
+   aligned, running past the right edge; full-screen button on each; the
+   navigator (arrows and progress) below */
+.pr-show { padding-block: 128px; overflow-x: clip; }
+.pr-show__title { margin: 24px 0 0; text-align: center; }
+.pr-show__rail {
+  display: flex; align-items: flex-end; gap: 24px; margin-block-start: 64px;
+  padding-inline: max(var(--band-pad), calc((100vw - 1408px) / 2)); scroll-padding-inline: max(var(--band-pad), calc((100vw - 1408px) / 2));
+  overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain;
+}
+.pr-show__rail::-webkit-scrollbar { display: none; }
+.pr-show__rail:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 4px; }
+.pr-show__slide { position: relative; flex: 0 0 360px; margin: 0; scroll-snap-align: start; }
+.pr-show__slide > img { display: block; width: 100%; height: auto; }
+.pr-show__full {
+  position: absolute; right: 8px; bottom: 8px; display: grid; place-items: center; width: 48px; height: 48px;
+  padding: 0; border: 0; background: none; color: #fff; cursor: pointer; transition: transform .2s;
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / .5));
+}
+.pr-show__full svg { width: 24px; height: 24px; }
+.pr-show__full:hover { transform: scale(1.03); }
+.pr-show__full:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 0; }
+.pr-show__nav { display: flex; align-items: center; gap: 24px; margin-block-start: 48px; }
+.pr-show__step { padding: 0; border: 0; background: none; color: var(--pr-ink); cursor: pointer; }
+.pr-show__step:disabled { opacity: .3; cursor: default; }
+.pr-show__bar { position: relative; flex: 1; height: 1px; background: #d2d2d2; }
+.pr-show__bar span { position: absolute; left: 0; top: -1px; height: 3px; width: 20%; background: var(--pr-ink); transition: transform .3s; }
+.pr-corso + .pr-dealer { margin-block-start: 0; }
+
+/* below 1440 the copy no longer clears the car (nose ~44% across), so the
+   frame becomes a band, the car whole, the copy on the ground below it */
+@media (max-width: 89.9375rem) {
+  .pr-full, .pr-full--casa { min-height: 0; padding-block: calc(56.25vw + 40px) 0; }
+  .pr-full__bg, .pr-full__bg img { inset: 0 0 auto; height: 56.25vw; }
+  .pr-full--car .pr-full__shade, .pr-full--casa .pr-full__shade { inset: 0 0 auto; height: calc(56.25vw + 1px); background: linear-gradient(to top, #181818 0%, rgb(24 24 24 / 0) 30%); }
+  .pr-full--car .pr-full__text, .pr-full--casa .pr-full__text { max-width: 64ch; }
+  .pr-full__title { max-width: none; }
+  .pr-full--car { padding-block-end: 72px; }
+}
+
+@media (max-width: 64rem) {
+  .pr-focus { grid-template-columns: 1fr; gap: 32px; align-items: start; }
+  .pr-focus__img { order: -1; }
+  .pr-circuit__in { grid-template-columns: 1fr; justify-items: start; gap: 24px; }
+  .pr-life__grid { grid-template-columns: 1fr; gap: 64px; }
+}
+@media (max-width: 48rem) {
+  .pr-cal, .pr-show, .pr-corso .pr-sell__value, .pr-off, .pr-corso__tabs, .pr-life { padding-block-end: 72px; }
+  .pr-cal, .pr-show, .pr-corso .pr-sell__value { padding-block-start: 72px; }
+  .pr-cars { padding-block: 64px 72px; }
+  .pr-acc { margin-block-start: 48px; }
+  .pr-cal__row { grid-template-columns: minmax(0, 1fr) auto; gap: 8px 16px; }
+  .pr-cal__date { grid-column: 1 / -1; }
+  .pr-cal__filter { width: 100%; }
+  .pr-show__slide { flex-basis: 285px; }
+  .pr-show__rail { gap: 16px; margin-block-start: 40px; }
+  .pr-circuit { padding-block-start: 56px; }
+  .pr-circuit__strip { margin-block-start: 40px; padding-block: 32px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pr-acc.is-ready .pr-acc__panel, .pr-acc__icon, .pr-circuit__turns, .pr-switch__track::after, .pr-show__bar span { transition: none; }
+}

@@ -1,0 +1,49 @@
+/* Ferrari Warranty & Power (warranty-and-power.html). Nothing invented:
+   the site's one hero, Approved's welcome (approved.css), the home page's
+   full-bleed feature as each group's visual break (home.css .pr-feature),
+   then the programmes as cards — Ferrari's and cauleyferrari.com's order:
+   a cover per group, the programmes under it, the detail folded. */
+
+/* the hero frame: landscape 0.22–0.77 across; portrait (≤ 5:4) Ferrari's own
+   portrait cut; phone band — the car whole under the header every time */
+.pr-warranty__hero .fa-hero__bg img { object-position: 50% 50%; }
+@media (max-aspect-ratio: 5/4) { .pr-warranty__hero .fa-hero__bg img { object-position: 50% 70%; } }
+@media (max-width: 48rem) { .pr-warranty__hero .fa-hero__bg img { object-position: 50% 47%; } }
+.pr-warranty__hero .btn { width: auto; min-width: 208px; white-space: nowrap; }   /* "Power Contract" on one line */
+
+/* ── group covers: the home feature, shaded top (marker) and foot (copy) ── */
+/* the cards follow the cover's copy: its foot is the cards' top, not a second gap */
+@media (min-width: 48.0625rem) { .pr-feature--band { padding-block-end: 48px; } }
+.pr-feature--band .pr-feature__shade {
+  background:
+    linear-gradient(to top, #181818 0%, rgb(24 24 24 / 0) 45%),
+    linear-gradient(to bottom, rgb(24 24 24 / .7) 0%, rgb(24 24 24 / 0) 30%);
+}
+@media (max-width: 48rem) {
+  /* a phone gets the frame as a band, the car whole, the copy below it */
+  .pr-feature--band { min-height: 0; padding-block: calc(56.25vw + 16px) 2rem; }
+  .pr-feature--band .pr-feature__top { margin-block-end: 32px; }
+  .pr-feature--band .pr-cover, .pr-feature--band .pr-cover img { inset: 0 0 auto; height: 56.25vw; }
+  .pr-feature--band .pr-feature__shade {
+    inset: 0 0 auto; height: calc(56.25vw + 1px);
+    background: linear-gradient(to top, #181818 0%, rgb(24 24 24 / 0) 35%), linear-gradient(to bottom, rgb(24 24 24 / .64) 0%, rgb(24 24 24 / 0) 30%);
+  }
+  .pr-feature--band .pr-body { max-width: none; }
+}
+
+/* ── the programmes as Ferrari's and Cauley's accordion rows, in Approved's
+   chapter frame: record and title left, Ferrari's first line right, the
+   rest folded under Read more (approved.js — the row opens in place, the
+   height running on Ferrari's own curve; nothing slides in) ── */
+.pr-progs-wrap { background: #181818; padding-block: 24px 128px; }
+.pr-rows .pr-row { padding-block: 40px; }
+.pr-rows .pr-row:last-child { border-block-end: 1px solid var(--rule); }
+.pr-row__lead { margin: 0; max-width: 64ch; font-size: 16px; line-height: 1.6; color: rgb(243 244 246 / .9); }
+.pr-row .fa-chapter__more-inner { display: grid; gap: 16px; padding-block-start: 8px; }
+.pr-row .fa-subhead { margin-block-start: 8px; }
+.pr-warranty__out { color: #fff; }
+@media (max-width: 48rem) {
+  .pr-progs-wrap { padding-block: 8px 96px; }
+  .pr-rows .pr-row { padding-block: 32px; }
+}
+.pr-warranty + .pr-dealer { margin-block-start: 0; border-block-start: 1px solid rgb(243 244 246 / .12); }

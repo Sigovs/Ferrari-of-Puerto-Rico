@@ -1,0 +1,125 @@
+/* Schedule a Demo Drive (demo-drive.html).
+   Heading as the stock list and the newsroom (marker, 32/40 title). Step 1:
+   the ten models of the range as one radio choice — photograph, name under
+   it (never on the car); the chosen one takes a Rosso Corsa frame. Step 2:
+   the form (the Inquire drawer's fields) beside a dark panel that keeps the
+   chosen car in view — the drawer's own dark band, made a column. */
+
+.pr-drive { padding-block: calc(var(--head-h) + 64px) 128px; }
+.pr-drive + .pr-dealer { margin-block-start: 0; }
+.pr-drive__h { margin-block-end: 16px; }
+.pr-drive__lead { max-width: 568px; margin: 0; font-size: 14px; line-height: 1.8; letter-spacing: .195px; color: var(--pr-ink); }
+.pr-drive__form { margin-block-start: 64px; }
+.pr-drive fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+
+/* step titles: a red step number, then the title, 20/28 medium */
+.pr-drive__legend {
+  display: flex; align-items: baseline; gap: 16px; padding: 0; margin-block-end: 32px;
+  font-size: 20px; line-height: 28px; font-weight: 500;
+}
+.pr-drive__n { flex: none; font-size: 12px; line-height: 15px; letter-spacing: .6px; text-transform: uppercase; color: var(--rosso-corsa); }
+
+/* ── step 1: the range ── */
+.pr-picks { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 40px 24px; margin: 0; padding: 0; list-style: none; }
+.pr-pick { position: relative; display: block; cursor: pointer; }
+.pr-pick input { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.pr-pick__img { position: relative; display: block; aspect-ratio: 1; overflow: hidden; background: #f2f2f2; }
+.pr-pick__img img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.22, 1, .36, 1); }
+.pr-pick__img::after {
+  content: ""; position: absolute; inset: 0; border: 3px solid var(--rosso-corsa);
+  opacity: 0; transition: opacity .2s;
+}
+.pr-pick__name {
+  display: flex; align-items: flex-start; gap: 10px; margin-block-start: 16px;
+  font-size: 14px; line-height: 18px; letter-spacing: .6px; text-transform: uppercase; color: var(--pr-ink);
+}
+/* the check: an empty 16px ring, filled red when chosen (Ferrari radio) */
+.pr-pick__name::before {
+  content: ""; flex: none; width: 16px; height: 16px; margin-block-start: 1px; box-sizing: border-box; border-radius: 50%;
+  border: 2px solid var(--pr-grey); background: radial-gradient(circle, var(--pr-ink) 0 3.5px, transparent 4px) center / 0 0 no-repeat;
+  transition: border-color .2s;
+}
+@media (hover: hover) {
+  .pr-pick:hover .pr-pick__img img { transform: scale(1.03); }
+  .pr-pick:hover .pr-pick__name::before { border-color: var(--rosso-corsa); }
+}
+.pr-pick input:checked ~ .pr-pick__img::after { opacity: 1; }
+.pr-pick input:checked ~ .pr-pick__name::before { border-color: var(--pr-ink); background-size: 100% 100%; }
+.pr-pick input:focus-visible ~ .pr-pick__img { outline: 2px solid rgb(246 229 0); outline-offset: 3px; }
+.pr-drive__models.is-invalid .pr-pick__name::before { border-color: var(--rosso-corsa); }
+
+/* pre-owned starts from the car itself (every VDP and stock card opens the
+   form with the car filled in) — here only a quiet way there */
+.pr-drive__used { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 32px; margin: 48px 0 0; padding-block-start: 32px; border-top: 1px solid #e5e5e5; font-size: 14px; line-height: 1.6; color: var(--pr-ink); }
+.pr-drive__err { display: block; min-height: 0; margin: 0; font-size: 13px; line-height: 1.5; color: var(--rosso-corsa); }
+.pr-drive__err:not(:empty) { margin-block-start: 16px; }
+.pr-field .pr-drive__err:not(:empty) { margin-block-start: 8px; }
+
+/* ── step 2: the car stays in view beside the form ── */
+.pr-drive__split {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 64px;
+  align-items: start; margin-block-start: 96px;
+}
+.pr-drive__car {
+  position: sticky; top: calc(var(--stick-h, 80px) + 32px);
+  display: grid; gap: 16px; padding: 32px; background: var(--pr-ink); color: #fff;
+}
+.pr-drive__label { margin: 0; font-size: 11px; line-height: 16.5px; letter-spacing: .275px; text-transform: uppercase; color: var(--pr-light); }
+.pr-drive__img { display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--pr-line); }
+/* nothing chosen yet: no empty frame, only the prompt */
+.pr-drive__car:not(.is-set) .pr-drive__img { display: none; }
+.pr-drive__img img { display: block; width: 100%; height: 100%; object-fit: cover; animation: pr-drive-in .4s ease both; }
+@keyframes pr-drive-in { from { opacity: 0; } }
+.pr-drive__model { margin: 8px 0 0; font-size: 24px; line-height: 30px; font-weight: 500; text-transform: uppercase; }
+.pr-drive__car:not(.is-set) .pr-drive__model { color: var(--pr-grey); }
+.pr-drive__where { margin: 0; font-size: 13px; line-height: 1.8; color: var(--pr-light); }
+
+/* a legend sits outside the fieldset's flow: float it so it takes its own line */
+.pr-drive__legend { float: left; width: 100%; }
+.pr-picks, .pr-drive__fields { clear: both; }
+.pr-drive__fields { display: flex; flex-direction: column; gap: 32px; }
+.pr-drive__req { margin: -8px 0 0; font-size: 11px; line-height: 1.5; letter-spacing: .015em; }
+.pr-drive__you .pr-drawer__actions { margin-block-start: 0; }
+.pr-drive__you .pr-pop__sent { margin: 0; }
+.pr-drive__you .pr-pop__sent:empty { display: none; }
+
+/* date and time: their labels stay lifted (a date field always shows its mask) */
+.pr-field--fixed label { transform: translateY(-24px); }
+.pr-field select {
+  display: block; width: 100%; height: 52px; padding: 24px 28px 8px 2px; appearance: none;
+  border: 0; border-bottom: 1px solid var(--pr-grey); border-radius: 0; outline: none; cursor: pointer;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23181818' stroke-width='1.5'/%3E%3C/svg%3E") right 4px bottom 14px / 12px 8px no-repeat;
+  font: inherit; font-size: 13px; letter-spacing: .015em; color: var(--pr-ink);
+}
+.pr-field input[type=date] { cursor: pointer; }
+.pr-field input[type=date]:invalid:not(:focus) { color: var(--pr-grey); }
+.pr-field select:focus-visible { border-bottom: 2px solid rgb(246 229 0); }
+.pr-field select.is-invalid { border-bottom: 2px solid var(--rosso-corsa); }
+
+@media (max-width: 64rem) {
+  .pr-drive__split { grid-template-columns: 1fr; gap: 48px; margin-block-start: 72px; }
+  /* one column: the panel becomes a slim summary row above the form */
+  .pr-drive__car:not(.is-set) { grid-template-columns: 1fr; grid-template-areas: "label" "model" "where"; }
+  .pr-drive__car { position: static; grid-template-columns: 160px minmax(0, 1fr); grid-template-areas: "img label" "img model" "img where"; column-gap: 24px; row-gap: 4px; padding: 24px; align-items: start; }
+  .pr-drive__label { grid-area: label; }
+  .pr-drive__img { grid-area: img; }
+  .pr-drive__model { grid-area: model; margin: 0; font-size: 20px; line-height: 26px; }
+  .pr-drive__where { grid-area: where; }
+}
+@media (max-width: 48rem) {
+  .pr-drive { padding-block-end: 96px; }
+  .pr-picks { gap: 32px 16px; }
+  .pr-pick__name { margin-block-start: 12px; font-size: 13px; line-height: 17px; letter-spacing: .4px; }
+}
+@media (max-width: 37.5rem) {
+  .pr-drive__form { margin-block-start: 48px; }
+  .pr-picks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pr-drive__car { grid-template-columns: 112px minmax(0, 1fr); padding: 16px; column-gap: 16px; }
+  .pr-drive__model { font-size: 16px; line-height: 22px; }
+  .pr-drive__where { font-size: 12px; line-height: 1.6; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pr-pick__img img { transition: none; }
+  .pr-pick:hover .pr-pick__img img { transform: none; }
+  .pr-drive__img img { animation: none; }
+}

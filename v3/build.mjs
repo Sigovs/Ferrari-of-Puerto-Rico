@@ -469,20 +469,20 @@ const NAV = [
   ['New Model Range', '#', [
     ['Current Range', '#'], ['Amalfi', '#', 'model'], ['Amalfi Spider', '#', 'model'], ['849 Testarossa', '#', 'model'],
     ['849 Testarossa Spider', '#', 'model'], ['12Cilindri', '#', 'model'], ['12Cilindri Spider', '#', 'model'], ['Purosangue', '#', 'model'],
-    ['Luce', '#', 'model'], ['296 GTB', '#', 'model'], ['296 GTS', '#', 'model'], ['Configure Your Ferrari', '#'], ['Schedule a Demo Drive', '#'],
+    ['Luce', '#', 'model'], ['296 GTB', '#', 'model'], ['296 GTS', '#', 'model'], ['Configure Your Ferrari', '#'], ['Schedule a Demo Drive', 'demo-drive.html'],
   ]],
   ['Pre-Owned', 'pre-owned.html', [
     ['Pre-Owned Inventory', 'pre-owned.html'], ['Ferrari Approved Inventory', 'pre-owned.html'],
-    ['Ferrari Approved Program', 'ferrari-approved.html'], ['Sell or Consign Your Ferrari', '#'],
-    ['How Consignment Works', '#'], ['Value Your Ferrari', '#'], ['Recently Sold', '#'],
+    ['Ferrari Approved Program', 'ferrari-approved.html'], ['Sell or Consign Your Ferrari', 'sell-or-consign.html'],
+    ['How Consignment Works', 'sell-or-consign.html#how'], ['Value Your Ferrari', 'sell-or-consign.html#value'], ['Recently Sold', 'sell-or-consign.html#sold'],
   ]],
   ['Service', '#', [
-    ['Schedule Service', '#'], ['Ferrari Warranty & Power', '#'], ['Ferrari Classiche', '#'],
+    ['Schedule Service', '#'], ['Ferrari Warranty & Power', 'warranty-and-power.html'], ['Ferrari Classiche', '#'],
     ['Roadside Assistance', '#'], ['Parts & Accessories', '#'],
   ]],
   ['Financing', '#', [['Finance Center', '#'], ['Apply for Financing', '#']]],
   ['Motorsports', '#', [
-    ['Ferrari Corso Pilota', '#'], ['Ferrari Challenge', '#'], ['Club Competizioni GT', '#'],
+    ['Ferrari Corso Pilota', 'corso-pilota.html'], ['Ferrari Challenge', 'ferrari-challenge.html'], ['Club Competizioni GT', '#'],
     ['Ferrari Club Challenge', '#'], ['XX Programme', '#'], ['Our Racing Pedigree', '#'],
   ]],
   ['Owners', '#', [
@@ -491,7 +491,9 @@ const NAV = [
   ]],
   ['About Us', '#', [['Our Story', '#'], ['Our Team', 'our-team.html'], ['Contact Us', '#']]],
   ['Events & Media', '#', [
-    ['News & Events', 'news.html'], ['Blog (Ferrari Puerto Rico)', 'blog.html'], ['Event Schedule', '#'], ['Gallery', 'gallery.html'],
+    ['Event Schedule', '#'], ['Event Recaps', 'blog.html'], ['Gallery', 'gallery.html'],
+    /* extra, not in the client's sitemap: Ferrari's own news (feeds the home page block) */
+    ['News & Events', 'news.html'],
   ]],
 ];
 const navLink = ([label, href]) => `<a href="${href}">${esc(label)}</a>`;
@@ -613,7 +615,7 @@ ${items.slice(2).map(p => listTile(p, 'pr-list__card')).join('\n')}
   </div>
 </main>`;
 const newsroom = () => listing(NEWS.map(newsStory), 'News & Events', 'The latest from Ferrari');
-const blogroom = () => listing(BLOG.map(blogStory), 'Blog', 'Life at Ferrari Puerto Rico');
+const blogroom = () => listing(BLOG.map(blogStory), 'Event Recaps', 'Life at Ferrari Puerto Rico');
 const article = n => readPage(newsStory(n), {
   backHref: 'news.html',
   by: `${esc(n.date)} / Source: Ferrari S.p.A.`,
@@ -629,12 +631,215 @@ const blogPost = p => readPage(blogStory(p), {
   after: `  <section class="pr-shell pr-photos" aria-label="Photographs">
 ${photoGrid(`img/gallery/${p.slug}`, GALLERY.find(a => a.slug === p.slug).photos, p.title, 1400)}
   </section>`,
-  ctas: `<a class="btn btn--outline-dark btn--auto" href="blog.html">More from the blog</a>`,
+  ctas: `<a class="btn btn--outline-dark btn--auto" href="blog.html">More event recaps</a>`,
 });
 
-const INV_CSS = '<link rel="stylesheet" href="css/inventory.css">\n';
+const INV_CSS = '<link rel="stylesheet" href="css/inventory.css">\n<link rel="stylesheet" href="css/form.css">\n';
 const POP_JS = '<script src="js/pop.js" defer></script>\n<script src="js/inventory.js" defer></script>\n';
 const popups = () => read('_popups.html');
+
+/* ── Schedule a Demo Drive — the client's sitemap, New Model Range. The car
+   first, then the day: the ten models of the range as one choice (radios,
+   so it works without script), then the form beside a dark panel that keeps
+   the chosen car in view — the dark band the Inquire drawer opens with.
+   Dates follow the dealer's confirmed sales hours (closed on Sunday). ── */
+const pick = ([slug, name]) => `        <li><label class="pr-pick">
+          <input type="radio" name="model" value="Ferrari ${name}" data-slug="${slug}" required>
+          <span class="pr-pick__img"><img src="img/lineup-live/${slug}.webp" width="924" height="924" loading="lazy" alt=""></span>
+          <span class="pr-pick__name">${name}</span>
+        </label></li>`;
+const drive = () => `<main id="main" class="pr-drive pr-light">
+  <div class="pr-shell">
+    <p class="marker"><span>1</span><span class="marker__rule"></span><span>Demo drive</span></p>
+    <h1 class="pr-list__h pr-drive__h">Schedule a demo drive</h1>
+    <p class="pr-drive__lead">Choose your Ferrari, then a day and a time. We will confirm your demo drive by phone or email.</p>
+    <form class="pr-drive__form" id="pr-drive" novalidate>
+      <fieldset class="pr-drive__models">
+        <legend class="pr-drive__legend"><span class="pr-drive__n">Step 1</span>Choose your Ferrari</legend>
+        <ul class="pr-picks">
+${MODELS.map(pick).join('\n')}
+        </ul>
+        <p class="pr-drive__err" id="pr-drive-model-err" aria-live="polite"></p>
+        <p class="pr-drive__used">Looking for a pre-owned Ferrari? Each car in our inventory has its own Schedule test drive button.
+          <a class="pr-link pr-link--dark" href="pre-owned.html"><span class="pr-jumbo pr-jumbo--40">${ring40}${chev}</span><span>Browse pre-owned inventory</span></a></p>
+      </fieldset>
+      <div class="pr-drive__split">
+        <aside class="pr-drive__car" aria-live="polite">
+          <p class="pr-drive__label">Your demo drive</p>
+          <span class="pr-drive__img"><img src="" width="924" height="924" alt="" hidden></span>
+          <p class="pr-drive__model">Choose a model</p>
+          <p class="pr-drive__where">Ferrari Puerto Rico, San Juan<br>Sales: Monday to Saturday, 9:00am to 6:00pm</p>
+        </aside>
+        <fieldset class="pr-drive__you">
+          <legend class="pr-drive__legend"><span class="pr-drive__n">Step 2</span>Your details</legend>
+          <div class="pr-drive__fields">
+          <p class="pr-drive__req">*Required fields</p>
+          <div class="pr-lead__pair">
+            <div class="pr-field"><input type="text" id="dd-fname" name="fname" autocomplete="given-name" placeholder=" " required><label for="dd-fname">First Name*</label></div>
+            <div class="pr-field"><input type="text" id="dd-lname" name="lname" autocomplete="family-name" placeholder=" " required><label for="dd-lname">Last Name*</label></div>
+          </div>
+          <div class="pr-lead__pair">
+            <div class="pr-field"><input type="email" id="dd-email" name="email" autocomplete="email" placeholder=" " required><label for="dd-email">Email*</label></div>
+            <div class="pr-field"><input type="tel" id="dd-phone" name="phone" autocomplete="tel" placeholder=" " required><label for="dd-phone">Phone*</label></div>
+          </div>
+          <div class="pr-lead__pair">
+            <div class="pr-field pr-field--fixed"><input type="date" id="dd-date" name="date" required aria-describedby="dd-date-err"><label for="dd-date">Preferred date*</label><span class="pr-drive__err" id="dd-date-err" aria-live="polite"></span></div>
+            <div class="pr-field pr-field--fixed pr-field--select"><select id="dd-time" name="time" required>
+              <option value="" disabled selected hidden></option>
+              <option>Morning, 9:00am to 12:00pm</option>
+              <option>Afternoon, 12:00pm to 6:00pm</option>
+            </select><label for="dd-time">Preferred time*</label></div>
+          </div>
+          <div class="pr-field"><textarea id="dd-msg" name="message" placeholder=" "></textarea><label for="dd-msg">Message</label></div>
+          <label class="pr-check"><input type="checkbox" name="i_agree" value="1"><span>Please note that by completing this form, you agree to being contacted via text, phone and email.</span></label>
+          <div class="pr-drawer__actions">
+            <button class="btn btn--primary btn--auto" type="submit">Request demo drive <svg class="btn__chev" aria-hidden="true"><use href="#chev"/></svg></button>
+          </div>
+          <p class="pr-pop__sent" aria-live="polite"></p>
+          </div>
+        </fieldset>
+      </div>
+    </form>
+  </div>
+</main>
+${DEALER}`;
+
+/* ── Sell or Consign Your Ferrari — the client's sitemap, Pre-Owned: one
+   page, his three children as its chapters (#how · #value · #sold), the way
+   Ferrari Approved carries What / Why / How.
+   Patterns, not inventions (research 17 Nov 2026):
+   · the intro line is Ferrari's own, from preowned.ferrari.com Value your car;
+   · how consignment works = numbered steps (ferrarifl.com's six), set as the
+     Approved page's hairline list; consign first, an outright purchase as the
+     alternative — no dealer publishes fees, nor do we;
+   · the valuation form = Ferrari's fields (model, year, VIN, mileage mi/km,
+     notes; then the contact), on the demo-drive page's two steps;
+   · recently sold = SOLD cards with the price hidden (Cauley, Quebec) — no
+     sold list exists yet, so the chapter says so.
+   The consignment copy is a draft until the dealer confirms its process. ── */
+const CONSIGN_STEPS = ['Tell us about your Ferrari', 'Market valuation', 'Inspection and preparation',
+  'Photography and marketing', 'Viewings and negotiation', 'Sale and payout'];
+const SOLD_SAMPLE = ['FC168269', 'FC329737', 'FC263540'];
+const soldCard = c => `        <li class="pr-car pr-car--sold">
+          <div class="pr-car__media">
+            <span class="pr-car__photo"><img src="${pic(c, 1, 640)}" width="640" height="427" loading="lazy" alt="${esc(titleOf(c))}"></span>
+            <p class="pr-car__badges"><span class="pr-badge pr-badge--red">Sold</span></p>
+          </div>
+          <div class="pr-car__body">
+            <div class="pr-car__eyebrow"><span>${c.year}</span><span>${miles(c.mileage)}</span></div>
+            <h3 class="pr-car__name">${esc(nameOf(c))}</h3>
+            <div class="pr-car__price"><span>Sold</span></div>
+            <dl class="pr-car__colours">
+              <div><dt>Exterior Colour</dt><dd>${esc(c.exterior)}</dd></div>
+              <div><dt>Interior colour</dt><dd>${esc(c.interior)}</dd></div>
+            </dl>
+          </div>
+        </li>`;
+const sell = () => {
+  return `<main id="main" class="pr-sell">
+
+<!-- the site's one hero (Ferrari Approved's fa-hero, unchanged): full
+     screen, the lockup low left. The frame is chosen for it — the car whole,
+     right of centre, below the header; dark hedge and lawn on the left for
+     the type. Ferrari's own after-sales editorial (ferrari.com after-sales
+     home 2024, cdn.ferrari.com 66fe6b4c…), used nowhere else on the site. -->
+<section class="fa-hero pr-sell__hero" aria-labelledby="sell-title">
+  <picture class="fa-hero__bg">
+    <img src="img/sell/hero-296-1920.webp"
+         srcset="img/sell/hero-296-800.webp 800w, img/sell/hero-296-1280.webp 1280w, img/sell/hero-296-1920.webp 1920w"
+         sizes="100vw" width="1920" height="1254" alt="A red Ferrari 296 GTB on the lawn in front of a red-brick building" fetchpriority="high">
+  </picture>
+  <div class="fa-hero__scrim" aria-hidden="true"></div>
+  <div class="fa-shell fa-hero__body">
+    <p class="fa-hero__pretitle">Pre-owned</p>
+    <h1 class="fa-hero__title" id="sell-title">Sell or consign your Ferrari</h1>
+    <div class="actions">
+      <a class="btn btn--primary" href="#value">Value your Ferrari</a>
+      <a class="btn btn--ghost" href="#how">How consignment works <svg class="btn__chev" aria-hidden="true"><use href="#chev"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<section class="pr-sell__how" id="how" aria-labelledby="how-h">
+  <div class="pr-shell">
+    <p class="marker"><span>1</span><span class="marker__rule"></span><span id="how-h">How consignment works</span></p>
+    <div class="pr-sell__how-in">
+      <div class="pr-sell__how-copy">
+        <h2 class="pr-h2">We present and sell your Ferrari on your behalf</h2>
+        <p class="pr-sell__body">From the first valuation to the payout, Ferrari Puerto Rico takes care of the sale. If you would rather not wait for the right buyer, ask us about selling it to us outright.</p>
+        <p class="pr-sell__note">${tbc('Consignment process and terms: a draft —')}</p>
+        <a class="btn btn--primary btn--auto" href="#value" data-intent="Consign my Ferrari">Consign your Ferrari <svg class="btn__chev" aria-hidden="true"><use href="#chev"/></svg></a>
+      </div>
+      <ol class="pr-steps">
+${CONSIGN_STEPS.map(t => `        <li>${esc(t)}</li>`).join('\n')}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 2 · Value your Ferrari: Ferrari's own valuation fields (preowned.ferrari.com
+     Value your car — model, year, VIN, mileage, notes, then the contact),
+     in Ferrari's enrolment form (css/form.css): the heading centred, the
+     fields one column under it. -->
+<section class="pr-light pr-formsec pr-sell__value" id="value" aria-labelledby="value-h">
+  <div class="pr-shell">
+    <p class="marker"><span>2</span><span class="marker__rule"></span><span>Valuation</span></p>
+    <div class="pr-formsec__head">
+      <h2 class="pr-formsec__title" id="value-h">Value your Ferrari</h2>
+      <p class="pr-formsec__text">Our Maranello-trained specialists will provide an expert appraisal to ensure you get the best value for your Ferrari.</p>
+    </div>
+      <form class="pr-drawer__form pr-fform" id="pr-sell" novalidate>
+        <p class="pr-fform__req">*Required fields</p>
+        <div class="pr-field pr-field--fixed pr-field--select"><select id="sv-intent" name="intent" required>
+          <option value="" disabled selected hidden></option>
+          <option>Consign my Ferrari</option>
+          <option>Sell my Ferrari</option>
+          <option>Know its value</option>
+        </select><label for="sv-intent">I would like to*</label></div>
+        <div class="pr-lead__pair">
+          <div class="pr-field"><input type="text" id="sv-model" name="model" placeholder=" " required><label for="sv-model">Model*</label></div>
+          <div class="pr-field"><input type="text" id="sv-year" name="year" inputmode="numeric" maxlength="4" placeholder=" " required><label for="sv-year">Year*</label></div>
+        </div>
+        <div class="pr-lead__pair">
+          <div class="pr-field"><input type="text" id="sv-vin" name="vin" maxlength="17" autocapitalize="characters" placeholder=" " required><label for="sv-vin">VIN*</label></div>
+          <div class="pr-field"><input type="text" id="sv-miles" name="mileage" inputmode="numeric" placeholder=" " required><label for="sv-miles">Mileage (miles)*</label></div>
+        </div>
+        <div class="pr-field"><textarea id="sv-notes" name="notes" placeholder=" "></textarea><label for="sv-notes">Notes</label></div>
+        <div class="pr-lead__pair">
+          <div class="pr-field"><input type="text" id="sv-fname" name="fname" autocomplete="given-name" placeholder=" " required><label for="sv-fname">First Name*</label></div>
+          <div class="pr-field"><input type="text" id="sv-lname" name="lname" autocomplete="family-name" placeholder=" " required><label for="sv-lname">Last Name*</label></div>
+        </div>
+        <div class="pr-lead__pair">
+          <div class="pr-field"><input type="email" id="sv-email" name="email" autocomplete="email" placeholder=" " required><label for="sv-email">Email*</label></div>
+          <div class="pr-field"><input type="tel" id="sv-phone" name="phone" autocomplete="tel" placeholder=" " required><label for="sv-phone">Phone*</label></div>
+        </div>
+        <label class="pr-check"><input type="checkbox" name="i_agree" value="1"><span>Please note that by completing this form, you agree to being contacted via text, phone and email.</span></label>
+        <div class="pr-drawer__actions">
+          <button class="btn btn--primary" type="submit">Submit</button>
+        </div>
+        <p class="pr-pop__sent" aria-live="polite"></p>
+      </form>
+  </div>
+</section>
+
+<section class="pr-sell__sold pr-light" id="sold" aria-labelledby="sold-h">
+  <div class="pr-shell">
+    <div class="pr-sell__sold-in">
+      <div>
+        <p class="marker"><span>3</span><span class="marker__rule"></span><span>Sold</span></p>
+        <h2 class="pr-h2 pr-h2--ink pr-sell__sold-h" id="sold-h">Recently sold</h2>
+      </div>
+      <a class="pr-link pr-link--dark" href="pre-owned.html"><span class="pr-jumbo pr-jumbo--40">${ring40}${chev}</span><span>See the cars for sale</span></a>
+    </div>
+    <ul class="pr-sell__grid">
+${SOLD_SAMPLE.map(st => soldCard(CARS.find(c => c.stock === st))).join('\n')}
+    </ul>
+  </div>
+</section>
+
+</main>
+${DEALER}`;
+};
 
 const PAGES = [
   {
@@ -656,6 +861,58 @@ const PAGES = [
     DESC: 'Meet the team at Ferrari of Puerto Rico, official Ferrari dealer in San Juan.',
     PRELOAD: '', PAGE_CSS: '<link rel="stylesheet" href="css/team.css">\n', PAGE_JS: '',
     main: () => read('_team.html').replace('{{STAFF}}', STAFF.map(member).join('\n')),
+  },
+  {
+    out: 'demo-drive.html',
+    TITLE: 'Schedule a Demo Drive — Ferrari of Puerto Rico',
+    DESC: 'Schedule a demo drive of a Ferrari from the 2026 range at Ferrari of Puerto Rico, official Ferrari dealer in San Juan.',
+    PRELOAD: '', PAGE_CSS: INV_CSS + '<link rel="stylesheet" href="css/news.css">\n<link rel="stylesheet" href="css/drive.css">\n<link rel="stylesheet" href="css/dropdown.css">\n',
+    PAGE_JS: '<script src="js/dropdown.js" defer></script>\n<script src="js/drive.js" defer></script>\n',
+    main: drive,
+  },
+  {
+    /* Ferrari Challenge — ferrari.com's series page, 296 Challenge page and the
+       official 2027 North America calendar article; Ferrari's photographs */
+    out: 'ferrari-challenge.html',
+    TITLE: 'Ferrari Challenge — Ferrari of Puerto Rico',
+    DESC: 'Ferrari Challenge Trofeo Pirelli North America: the series, its four classes, the Ferrari 296 Challenge and the 2027 calendar, at Ferrari of Puerto Rico in San Juan.',
+    PRELOAD: '<link rel="preload" href="img/challenge/hero-1920.webp" as="image" imagesrcset="img/challenge/hero-800.webp 800w, img/challenge/hero-1280.webp 1280w, img/challenge/hero-1920.webp 1920w" imagesizes="100vw">\n',
+    PAGE_CSS: INV_CSS + '<link rel="stylesheet" href="css/approved.css">\n<link rel="stylesheet" href="css/home.css">\n<link rel="stylesheet" href="css/news.css">\n<link rel="stylesheet" href="css/drive.css">\n<link rel="stylesheet" href="css/sell.css">\n<link rel="stylesheet" href="css/dropdown.css">\n<link rel="stylesheet" href="css/warranty.css">\n<link rel="stylesheet" href="css/corso.css">\n<link rel="stylesheet" href="css/tabs.css">\n<link rel="stylesheet" href="css/challenge.css">\n',
+    PAGE_JS: '<script src="js/approved.js" defer></script>\n<script src="js/dropdown.js" defer></script>\n<script src="js/interest.js" defer></script>\n<script src="js/gallery.js" defer></script>\n<script src="js/corso.js" defer></script>\n<script src="js/tabs.js" defer></script>\n',
+    main: () => read('_challenge.html') + '\n' + DEALER,
+  },
+  {
+    /* Ferrari Corso Pilota — Cauley's course texts (Ferrari's), ferrari.com's
+       lines, special editions and photographs; the network's 2027 North
+       America dates (ferrariquebec.com), without prices */
+    out: 'corso-pilota.html',
+    TITLE: 'Ferrari Corso Pilota — Ferrari of Puerto Rico',
+    DESC: 'Ferrari Corso Pilota driving courses — Sport, Evoluzione+ and Race, special editions and the 2027 North America schedule — at Ferrari of Puerto Rico in San Juan.',
+    PRELOAD: '<link rel="preload" href="img/corso/hero-1920.webp" as="image" imagesrcset="img/corso/hero-800.webp 800w, img/corso/hero-1280.webp 1280w, img/corso/hero-1920.webp 1920w" imagesizes="100vw" media="(min-aspect-ratio: 5/4)">\n',
+    PAGE_CSS: INV_CSS + '<link rel="stylesheet" href="css/approved.css">\n<link rel="stylesheet" href="css/home.css">\n<link rel="stylesheet" href="css/news.css">\n<link rel="stylesheet" href="css/drive.css">\n<link rel="stylesheet" href="css/sell.css">\n<link rel="stylesheet" href="css/dropdown.css">\n<link rel="stylesheet" href="css/warranty.css">\n<link rel="stylesheet" href="css/corso.css">\n<link rel="stylesheet" href="css/tabs.css">\n<link rel="stylesheet" href="css/chapnav.css">\n',
+    PAGE_JS: '<script src="js/approved.js" defer></script>\n<script src="js/dropdown.js" defer></script>\n<script src="js/interest.js" defer></script>\n<script src="js/gallery.js" defer></script>\n<script src="js/corso.js" defer></script>\n<script src="js/tabs.js" defer></script>\n<script src="js/chapnav.js" defer></script>\n',
+    main: () => read('_corso.html') + '\n' + DEALER,
+  },
+  {
+    /* Ferrari Warranty & Power — Ferrari's own US aftersales texts
+       (ferrari.com/en-US/auto/car-part-services-warranty-maintenance),
+       verbatim, in Approved's hero, welcome and chapters */
+    out: 'warranty-and-power.html',
+    TITLE: 'Ferrari Warranty & Power — Ferrari of Puerto Rico',
+    DESC: 'Ferrari Manufacturer’s Warranty, 7-year Genuine Maintenance, hybrid service contracts and the Ferrari Power Contract, at Ferrari of Puerto Rico in San Juan.',
+    PRELOAD: '<link rel="preload" href="img/warranty/hero-12cilindri-1920.webp" as="image" imagesrcset="img/warranty/hero-12cilindri-800.webp 800w, img/warranty/hero-12cilindri-1280.webp 1280w, img/warranty/hero-12cilindri-1920.webp 1920w" imagesizes="100vw">\n',
+    PAGE_CSS: INV_CSS + '<link rel="stylesheet" href="css/approved.css">\n<link rel="stylesheet" href="css/home.css">\n<link rel="stylesheet" href="css/warranty.css">\n',
+    PAGE_JS: '<script src="js/approved.js" defer></script>\n',
+    main: () => read('_warranty.html') + '\n' + DEALER,
+  },
+  {
+    out: 'sell-or-consign.html',
+    TITLE: 'Sell or Consign Your Ferrari — Ferrari of Puerto Rico',
+    DESC: 'Sell or consign your Ferrari with Ferrari of Puerto Rico in San Juan: how consignment works, an expert valuation of your Ferrari, and recently sold cars.',
+    PRELOAD: '<link rel="preload" href="img/sell/hero-296-1920.webp" as="image" imagesrcset="img/sell/hero-296-800.webp 800w, img/sell/hero-296-1280.webp 1280w, img/sell/hero-296-1920.webp 1920w" imagesizes="100vw">\n',
+    PAGE_CSS: INV_CSS + '<link rel="stylesheet" href="css/approved.css">\n<link rel="stylesheet" href="css/drive.css">\n<link rel="stylesheet" href="css/sell.css">\n<link rel="stylesheet" href="css/dropdown.css">\n',
+    PAGE_JS: '<script src="js/dropdown.js" defer></script>\n<script src="js/sell.js" defer></script>\n',
+    main: sell,
   },
   {
     /* Ferrari Approved — the page built for Cauley (FERRARI_PROJECTS /
@@ -692,14 +949,14 @@ const PAGES = [
   })),
   {
     out: 'blog.html',
-    TITLE: 'Blog — Ferrari of Puerto Rico',
+    TITLE: 'Event Recaps — Ferrari of Puerto Rico',
     DESC: 'Events and stories from Ferrari Puerto Rico, the official Ferrari dealer in San Juan.',
     PRELOAD: '', PAGE_CSS: '<link rel="stylesheet" href="css/news.css">\n', PAGE_JS: '',
     main: blogroom,
   },
   ...BLOG.map(p => ({
     out: blogHref(p),
-    TITLE: `${p.title} — Blog | Ferrari of Puerto Rico`,
+    TITLE: `${p.title} — Event Recaps | Ferrari of Puerto Rico`,
     DESC: p.summary,
     PRELOAD: `<link rel="preload" href="img/blog/${p.slug}/cover-1200.jpg" as="image">\n`,
     PAGE_CSS: '<link rel="stylesheet" href="css/news.css">\n', PAGE_JS: '<script src="js/gallery.js" defer></script>\n',

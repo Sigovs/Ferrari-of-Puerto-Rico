@@ -1,0 +1,71 @@
+/* Ferrari's dropdown — www.ferrari.com f-dropdown at its production values
+   (FERRARI MEDIA/_ferrari_live_css/components/f-dropdown.css; FERRARI_DESIGN
+   §12.10): a 56px frame in ui-100 at 50%, the 11px caps label notched into
+   the top border once a value is chosen, the value 13px on 56px with 15px
+   in, the arrow 15px from the right, the frame red on hover; the layer
+   below, radius 2px, shadow 0 5px 14px 3px / 15%, list 18px top and bottom,
+   items 12px 18px at 12px, ui-10 on hover, a 0.2s fade up. Drawn by
+   js/dropdown.js over the native select, which stays in the form. */
+
+.pr-field.has-dd > select { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; }
+.pr-field.has-dd > label { display: none; }
+
+.pr-dd { position: relative; display: flex; flex-direction: column; color: var(--pr-ink); }
+.pr-dd__toggler {
+  position: relative; display: block; width: 100%; margin: 0; padding: 0;
+  background: none; border: 0; font: inherit; color: inherit; text-align: left; cursor: pointer;
+}
+.pr-dd__frame {
+  position: relative; display: flex; height: 56px;
+  border-bottom: 1px solid rgb(24 24 24 / .5); transition: border-color .2s;
+}
+.pr-dd__frame::before, .pr-dd__frame::after {
+  content: ""; height: 100%; box-sizing: border-box;
+  border: 1px solid rgb(24 24 24 / .5); border-bottom: 0; transition: border-color .2s;
+}
+.pr-dd__frame::before { flex: 0 0 10px; width: 10px; border-right: 0; }
+.pr-dd__frame::after { flex: 1 1 1px; width: 100%; border-left: 0; }
+@media (hover: hover) {
+  .pr-dd__toggler:hover .pr-dd__frame,
+  .pr-dd__toggler:hover .pr-dd__frame::before,
+  .pr-dd__toggler:hover .pr-dd__frame::after { border-color: var(--rosso-corsa); }
+}
+.pr-dd.is-open .pr-dd__frame, .pr-dd.is-open .pr-dd__frame::before, .pr-dd.is-open .pr-dd__frame::after { border-color: var(--pr-ink); }
+.pr-dd.is-invalid .pr-dd__frame, .pr-dd.is-invalid .pr-dd__frame::before, .pr-dd.is-invalid .pr-dd__frame::after { border-color: var(--rosso-corsa); }
+
+/* the label: in the middle of the box until a value is chosen, then up in
+   the notch — static, so the top border opens around it */
+.pr-dd__label {
+  position: absolute; top: 0; left: 10px; height: 100%; max-width: 100%; padding: 0 5px;
+  font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--pr-grey);
+}
+.pr-dd__label-text { position: relative; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transform: translateY(20px); transition: transform .2s; }
+.pr-dd.is-selected .pr-dd__label { position: static; }
+.pr-dd.is-selected .pr-dd__label-text { transform: translateY(-45%); }
+.pr-dd.is-invalid .pr-dd__label { color: var(--rosso-corsa); }
+
+.pr-dd__value {
+  position: absolute; top: 0; left: 0; max-width: 100%; height: 100%; padding: 0 50px 0 15px;
+  font-size: 13px; line-height: 56px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.pr-dd__arrow { position: absolute; right: 15px; top: calc(50% - 1px); transform: translateY(-50%); transition: transform .2s; }
+.pr-dd.is-open .pr-dd__arrow { transform: translateY(-50%) rotate(180deg); }
+.pr-dd__toggler:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 0; }
+
+.pr-dd__layer {
+  position: absolute; top: 100%; left: 0; z-index: 14; width: 100%; margin-top: -1px;
+  background: #fff; border: 1px solid rgb(24 24 24 / .5); border-radius: 2px;
+  box-shadow: 0 5px 14px 3px rgb(0 0 0 / .15);
+  max-height: 380px; overflow-y: auto;
+  animation: pr-dd-in .2s ease-out;
+}
+@keyframes pr-dd-in { from { transform: translateY(-20px); opacity: 0; } }
+.pr-dd__list { margin: 0; padding: 18px 0; list-style: none; outline: none; }
+.pr-dd__item { padding: 12px 18px; font-size: 12px; line-height: 1.4; color: #000; cursor: pointer; word-break: break-word; }
+.pr-dd__item.is-active { background: #f7f7f7; }
+.pr-dd__item[aria-selected="true"] { font-weight: 500; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pr-dd__layer { animation: none; }
+  .pr-dd__label-text, .pr-dd__arrow, .pr-dd__frame, .pr-dd__frame::before, .pr-dd__frame::after { transition: none; }
+}

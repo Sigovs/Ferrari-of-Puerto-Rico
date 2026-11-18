@@ -1,0 +1,41 @@
+/* Ferrari Challenge (ferrari-challenge.html). Built from what the site and
+   Ferrari already use: the one hero, Approved's welcome, figures and record
+   lists (approved.css), Corso Pilota's calendar, form and slideshow
+   (corso.css), and two Ferrari components new here: a full-width photograph
+   with no type on it, and Ferrari's tabs (f-tab) — a photograph beside its
+   text, the current tab red over a sliding bar. */
+
+.pr-chal__hero .fa-hero__bg img { object-position: 0% 50%; }   /* crop the right: the grid moves away from the lockup */
+@media (max-width: 48rem) { .pr-chal__hero .fa-hero__bg img { object-position: 62% 50%; } }
+
+/* 1 · overview: figures, then Ferrari's two paragraphs side by side */
+.pr-chal__overview .fa-figures { margin-block-start: 48px; }
+.pr-chal__cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(2rem, 5vw, 6rem); }
+
+/* 2 · classes and levels: two columns, each a heading, Ferrari's sentence
+   and a record list; the last step of the way in is the goal, in red */
+.pr-chal__classes { padding-block-start: 0; }
+.pr-chal__two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(3rem, 6vw, 8rem); margin-block-start: 24px; }
+.pr-chal__col { display: grid; gap: 24px; align-content: start; }
+.pr-chal__h3 { margin: 0; font-size: 22px; line-height: 1.25; font-weight: 500; color: #fff; }
+.pr-chal__list { margin: 8px 0 0; padding: 0; list-style: none; }
+.pr-chal__list li { font-size: 16px; }
+.pr-chal__path a { color: inherit; text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .3s; }
+.pr-chal__path a:hover, .pr-chal__path a:focus-visible { background-size: 100% 1px; }
+.pr-chal__path .is-goal { color: var(--rosso-corsa); }
+
+/* the car, full width, no type (Ferrari's full-image) */
+.pr-chal__full { margin: 0; background: #181818; }
+.pr-chal__full img { display: block; width: 100%; height: auto; max-height: 100svh; object-fit: cover; }
+
+/* 3 · the car: figures, then the tabs */
+.pr-chal__car .fa-figures { margin-block: 48px 72px; }
+/* the tabs themselves: css/tabs.css (shared with Corso Pilota) */
+
+/* 4 · schedule: round and dates in the date column; a new venue flagged */
+.pr-chal .pr-cal__date { line-height: 1.5; }
+.pr-cal__new { margin-inline-start: 12px; padding: 2px 8px; font-style: normal; font-size: 11px; letter-spacing: .6px; color: #fff; background: var(--rosso-corsa); vertical-align: 2px; }
+.pr-cal__row--final .pr-cal__venue { max-width: 52ch; }
+
+@media (max-width: 64rem) { .pr-chal__cols, .pr-chal__two { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .pr-chal__path a { transition: none; } }

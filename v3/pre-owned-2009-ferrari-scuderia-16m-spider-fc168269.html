@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="css/base.css?v=mw4gvmer">
 <link rel="stylesheet" href="css/pr.css?v=mw4hw3li">
 <link rel="stylesheet" href="css/inventory.css?v=mw4j7lpc">
+<link rel="stylesheet" href="css/form.css?v=mwm4qgub">
 <link rel="stylesheet" href="css/v2.css?v=mw4h1ny8">
 <!-- the retailer scrolls with inertia (GSAP ScrollSmoother, 1.4); Lenis
      gives the same feel without the GSAP club licence -->
@@ -89,7 +90,7 @@
               <li><a href="#">296 GTB</a></li>
               <li><a href="#">296 GTS</a></li>
               <li><a href="#">Configure Your Ferrari</a></li>
-              <li><a href="#">Schedule a Demo Drive</a></li>
+              <li><a href="demo-drive.html">Schedule a Demo Drive</a></li>
             </ul>
           </li>
           <li class="has-children">
@@ -98,17 +99,17 @@
               <li><a href="pre-owned.html">Pre-Owned Inventory</a></li>
               <li><a href="pre-owned.html">Ferrari Approved Inventory</a></li>
               <li><a href="ferrari-approved.html">Ferrari Approved Program</a></li>
-              <li><a href="#">Sell or Consign Your Ferrari</a></li>
-              <li><a href="#">How Consignment Works</a></li>
-              <li><a href="#">Value Your Ferrari</a></li>
-              <li><a href="#">Recently Sold</a></li>
+              <li><a href="sell-or-consign.html">Sell or Consign Your Ferrari</a></li>
+              <li><a href="sell-or-consign.html#how">How Consignment Works</a></li>
+              <li><a href="sell-or-consign.html#value">Value Your Ferrari</a></li>
+              <li><a href="sell-or-consign.html#sold">Recently Sold</a></li>
             </ul>
           </li>
           <li class="has-children">
             <a href="#">Service</a>
             <ul class="sub-menu">
               <li><a href="#">Schedule Service</a></li>
-              <li><a href="#">Ferrari Warranty &amp; Power</a></li>
+              <li><a href="warranty-and-power.html">Ferrari Warranty &amp; Power</a></li>
               <li><a href="#">Ferrari Classiche</a></li>
               <li><a href="#">Roadside Assistance</a></li>
               <li><a href="#">Parts &amp; Accessories</a></li>
@@ -124,8 +125,8 @@
           <li class="has-children">
             <a href="#">Motorsports</a>
             <ul class="sub-menu">
-              <li><a href="#">Ferrari Corso Pilota</a></li>
-              <li><a href="#">Ferrari Challenge</a></li>
+              <li><a href="corso-pilota.html">Ferrari Corso Pilota</a></li>
+              <li><a href="ferrari-challenge.html">Ferrari Challenge</a></li>
               <li><a href="#">Club Competizioni GT</a></li>
               <li><a href="#">Ferrari Club Challenge</a></li>
               <li><a href="#">XX Programme</a></li>
@@ -153,10 +154,10 @@
           <li class="has-children">
             <a href="#">Events &amp; Media</a>
             <ul class="sub-menu">
-              <li><a href="news.html">News &amp; Events</a></li>
-              <li><a href="blog.html">Blog (Ferrari Puerto Rico)</a></li>
               <li><a href="#">Event Schedule</a></li>
+              <li><a href="blog.html">Event Recaps</a></li>
               <li><a href="gallery.html">Gallery</a></li>
+              <li><a href="news.html">News &amp; Events</a></li>
             </ul>
           </li>
         </ul>
@@ -471,13 +472,13 @@
     <div class="pr-drawer__content">
       <h2 class="pr-drawer__title" id="pr-share-h">Share</h2>
       <p class="pr-drawer__req">*Required fields</p>
-      <form class="pr-drawer__form" novalidate>
+      <form class="pr-drawer__form pr-fform" novalidate>
         <div class="pr-field"><input type="email" id="share-from" name="email_from" placeholder=" " required><label for="share-from">Email From*</label></div>
         <div class="pr-field"><input type="email" id="share-to" name="email_to" placeholder=" " required><label for="share-to">Email To*</label></div>
         <div class="pr-field"><textarea id="share-msg" name="message" placeholder=" "></textarea><label for="share-msg">Message</label></div>
         <label class="pr-check"><input type="checkbox" name="attachimages" value="1"><span>Attach Vehicle Images</span></label>
         <div class="pr-drawer__actions">
-          <button class="btn btn--primary" type="submit">Send <svg class="btn__chev" aria-hidden="true"><use href="#chev"/></svg></button>
+          <button class="btn btn--primary" type="submit">Submit</button>
         </div>
         <p class="pr-pop__sent" aria-live="polite"></p>
       </form>
@@ -503,7 +504,7 @@
     <div class="pr-drawer__content">
       <h2 class="pr-drawer__title pr-lead__intent">Schedule a test drive</h2>
       <p class="pr-drawer__req">*Required fields</p>
-      <form class="pr-drawer__form pr-lead__form" novalidate>
+      <form class="pr-drawer__form pr-lead__form pr-fform" novalidate>
         <div class="pr-lead__pair">
           <div class="pr-field"><input type="text" id="lead-fname" name="fname" autocomplete="given-name" placeholder=" " required><label for="lead-fname">First Name*</label></div>
           <div class="pr-field"><input type="text" id="lead-lname" name="lname" autocomplete="family-name" placeholder=" " required><label for="lead-lname">Last Name*</label></div>
@@ -515,7 +516,7 @@
         <div class="pr-field"><textarea id="lead-msg" name="message" placeholder=" " required></textarea><label for="lead-msg">Message*</label></div>
         <label class="pr-check"><input type="checkbox" name="i_agree" value="1"><span>Please note that by completing this form, you agree to being contacted via text, phone and email.</span></label>
         <div class="pr-drawer__actions">
-          <button class="btn btn--primary" type="submit">Send <svg class="btn__chev" aria-hidden="true"><use href="#chev"/></svg></button>
+          <button class="btn btn--primary" type="submit">Submit</button>
         </div>
         <p class="pr-pop__sent" aria-live="polite"></p>
       </form>
@@ -529,15 +530,15 @@
     <nav class="pr-footer__map" aria-label="Site map">
       <div>
         <p class="pr-footer__h">New Model Range</p>
-        <ul><li><a href="#">Current Range</a></li><li><a href="#">Configure Your Ferrari</a></li><li><a href="#">Schedule a Demo Drive</a></li></ul>
+        <ul><li><a href="#">Current Range</a></li><li><a href="#">Configure Your Ferrari</a></li><li><a href="demo-drive.html">Schedule a Demo Drive</a></li></ul>
       </div>
       <div>
         <p class="pr-footer__h">Pre-Owned</p>
-        <ul><li><a href="pre-owned.html">Pre-Owned Inventory</a></li><li><a href="pre-owned.html">Ferrari Approved Inventory</a></li><li><a href="ferrari-approved.html">Ferrari Approved Program</a></li><li><a href="#">Sell or Consign Your Ferrari</a></li><li><a href="#">How Consignment Works</a></li><li><a href="#">Value Your Ferrari</a></li><li><a href="#">Recently Sold</a></li></ul>
+        <ul><li><a href="pre-owned.html">Pre-Owned Inventory</a></li><li><a href="pre-owned.html">Ferrari Approved Inventory</a></li><li><a href="ferrari-approved.html">Ferrari Approved Program</a></li><li><a href="sell-or-consign.html">Sell or Consign Your Ferrari</a></li><li><a href="sell-or-consign.html#how">How Consignment Works</a></li><li><a href="sell-or-consign.html#value">Value Your Ferrari</a></li><li><a href="sell-or-consign.html#sold">Recently Sold</a></li></ul>
       </div>
       <div>
         <p class="pr-footer__h">Service</p>
-        <ul><li><a href="#">Schedule Service</a></li><li><a href="#">Ferrari Warranty &amp; Power</a></li><li><a href="#">Ferrari Classiche</a></li><li><a href="#">Roadside Assistance</a></li><li><a href="#">Parts &amp; Accessories</a></li></ul>
+        <ul><li><a href="#">Schedule Service</a></li><li><a href="warranty-and-power.html">Ferrari Warranty &amp; Power</a></li><li><a href="#">Ferrari Classiche</a></li><li><a href="#">Roadside Assistance</a></li><li><a href="#">Parts &amp; Accessories</a></li></ul>
       </div>
       <div>
         <p class="pr-footer__h">Financing</p>
@@ -545,7 +546,7 @@
       </div>
       <div>
         <p class="pr-footer__h">Motorsports</p>
-        <ul><li><a href="#">Ferrari Corso Pilota</a></li><li><a href="#">Ferrari Challenge</a></li><li><a href="#">Club Competizioni GT</a></li><li><a href="#">Ferrari Club Challenge</a></li><li><a href="#">XX Programme</a></li><li><a href="#">Our Racing Pedigree</a></li></ul>
+        <ul><li><a href="corso-pilota.html">Ferrari Corso Pilota</a></li><li><a href="ferrari-challenge.html">Ferrari Challenge</a></li><li><a href="#">Club Competizioni GT</a></li><li><a href="#">Ferrari Club Challenge</a></li><li><a href="#">XX Programme</a></li><li><a href="#">Our Racing Pedigree</a></li></ul>
       </div>
       <div>
         <p class="pr-footer__h">Owners</p>
@@ -557,7 +558,7 @@
       </div>
       <div>
         <p class="pr-footer__h">Events &amp; Media</p>
-        <ul><li><a href="news.html">News &amp; Events</a></li><li><a href="blog.html">Blog (Ferrari Puerto Rico)</a></li><li><a href="#">Event Schedule</a></li><li><a href="gallery.html">Gallery</a></li></ul>
+        <ul><li><a href="#">Event Schedule</a></li><li><a href="blog.html">Event Recaps</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="news.html">News &amp; Events</a></li></ul>
       </div>
     </nav>
 
@@ -613,7 +614,7 @@
 
 <script src="js/page.js?v=mw4gvmgp" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js" defer></script>
-<script src="js/site.js?v=mw4e09vs" defer></script>
+<script src="js/site.js?v=mwlaocu1" defer></script>
 <script src="js/pop.js?v=mw4e09vs" defer></script>
 <script src="js/inventory.js?v=mw4e09vs" defer></script>
 <script src="js/footer.js?v=mw4gvmfz" defer></script>

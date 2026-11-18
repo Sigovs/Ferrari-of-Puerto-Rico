@@ -1,0 +1,85 @@
+/* Sell or Consign Your Ferrari (sell-or-consign.html).
+   Opens with the site's one hero (approved.css .fa-hero, unchanged): the
+   296 GTB at Maranello, Ferrari's after-sales editorial — with the
+   lockup low left on the asphalt. Then How consignment works on a #181818
+   band, its steps on hairlines (Approved's record list), and Recently sold
+   on one white line. Between them the valuation form on white: the
+   heading holds the left column, the fields run in one column on the right
+   as the Inquire drawer sets them (inventory.css .pr-field, .pr-lead__pair). */
+
+.pr-sell { background: var(--pr-ink); }
+.pr-sell [id] { scroll-margin-top: calc(var(--stick-h, 80px) + 24px); }
+
+/* ── hero: the car sits right of centre; keep it in frame at every width ── */
+
+.pr-sell__hero .btn { width: auto; min-width: 208px; white-space: nowrap; }   /* "Value your Ferrari" on one line */
+/* the car sits at 0.40–0.94 across the frame: when a narrow screen crops the
+   sides, crop the left (hedge), never the car's nose */
+.pr-sell__hero .fa-hero__bg img { object-position: 88% 50%; }
+
+/* ── 1 · how consignment works — the dark band ── */
+.pr-sell__how { color: #fff; padding-block: 128px; border-block-start: 1px solid rgb(243 244 246 / .12); }
+.pr-sell__how-in {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(3rem, 6vw, 8rem);
+  margin-block-start: 24px; align-items: start;
+}
+.pr-sell__how-copy { display: grid; gap: 24px; justify-items: start; }
+.pr-sell__how-copy .pr-h2 { max-width: 16ch; text-wrap: balance; }
+.pr-sell__body { margin: 0; max-width: 52ch; font-size: 14px; line-height: 1.8; letter-spacing: .195px; color: #efeded; }
+.pr-sell__note { margin: 0; font-size: 13px; }
+.pr-sell__how-copy .btn { margin-block-start: 16px; }
+
+/* the steps: Approved's record list — number, title, on hairlines */
+.pr-steps { margin: 0; padding: 0; list-style: none; counter-reset: st; }
+.pr-steps li {
+  display: flex; gap: 24px; padding-block: 20px;
+  border-block-start: 1px solid rgb(243 244 246 / .24);
+  font-size: 16px; line-height: 1.5; color: #fff;
+}
+.pr-steps li:last-child { border-block-end: 1px solid rgb(243 244 246 / .24); }
+.pr-steps li::before {
+  counter-increment: st; content: counter(st, decimal-leading-zero);
+  flex: none; min-width: 2ch; font-size: 14px; line-height: 24px; letter-spacing: .08em;
+  color: rgb(243 244 246 / .58); font-variant-numeric: tabular-nums;
+}
+
+/* ── 2 · recently sold — one line until the dealer's sold list exists ── */
+.pr-sell__sold { padding-block: 96px; }
+.pr-sell__sold-in { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 32px 64px; }
+/* the site's rule: marker, 24px, the heading (stock list, newsroom) */
+.pr-sell__sold-h { margin: 24px 0 0; }
+/* sample sold cards: the stock card, a red SOLD badge, "Sold" for the price
+   (Cauley and Quebec /sold-inventory/), three across as the stock list */
+.pr-sell__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin: 48px 0 0; padding: 0; list-style: none; }
+.pr-car--sold .pr-car__photo { display: block; width: 100%; height: 100%; }
+.pr-car--sold .pr-car__photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.pr-car--sold .pr-car__price span { text-transform: uppercase; letter-spacing: .6px; }
+/* narrower than the stock grid's cards: the colours one under the other */
+.pr-car--sold .pr-car__colours { grid-template-columns: 1fr; gap: 12px; }
+.pr-car--sold .pr-car__colours div { flex-direction: row; gap: 8px; }
+@media (max-width: 48rem) { .pr-sell__grid { grid-template-columns: 1fr; gap: 24px; } }
+.pr-sell + .pr-dealer { margin-block-start: 0; border-block-start: 1px solid rgb(243 244 246 / .12); }
+
+/* ── 2 · value your Ferrari — heading left, the fields right ── */
+.pr-sell__value { padding-block: 128px; }
+.pr-sell__value-in { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(3rem, 6vw, 8rem); align-items: start; }
+.pr-sell__value-head { position: sticky; top: calc(var(--stick-h, 80px) + 48px); display: grid; gap: 24px; justify-items: start; }
+.pr-sell__value-head .pr-h2 { margin: 0; }
+.pr-sell__body--ink { color: var(--pr-ink); }
+.pr-sell__value-head .pr-drawer__req { margin: 0; }
+.pr-sell__value .pr-drawer__form { padding-block-start: 8px; }
+.pr-sell__value .pr-drawer__actions { margin-block-start: 8px; }
+.pr-sell__value .pr-pop__sent:empty { display: none; }
+.pr-sell__value + .pr-sell__sold { border-block-start: 1px solid #e5e5e5; }
+
+@media (max-width: 64rem) {
+  .pr-sell__how { padding-block: 96px; }
+  .pr-sell__how-in, .pr-sell__value-in { grid-template-columns: 1fr; gap: 48px; }
+  .pr-sell__value { padding-block: 96px; }
+  .pr-sell__value-head { position: static; }
+}
+@media (max-width: 37.5rem) {
+  .pr-sell__how { padding-block: 72px; }
+  .pr-sell__sold { padding-block: 72px; }
+  .pr-sell__value { padding-block: 72px; }
+}

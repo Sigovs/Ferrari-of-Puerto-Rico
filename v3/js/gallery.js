@@ -28,7 +28,9 @@
     at = (i + list.length) % list.length;
     var b = list[at];
     img.src = b.getAttribute('data-full');
-    img.alt = b.querySelector('img').alt;
+    /* the photograph inside the button, or the one beside it (Corso Pilota's slideshow) */
+    var im = b.querySelector('img') || (b.closest('figure') && b.closest('figure').querySelector('img'));
+    img.alt = im ? im.alt : '';
     count.textContent = (at + 1) + ' / ' + list.length;
   }
 

@@ -28,13 +28,13 @@
     <div class="pr-drawer__content">
       <h2 class="pr-drawer__title" id="pr-share-h">Share</h2>
       <p class="pr-drawer__req">*Required fields</p>
-      <form class="pr-drawer__form" novalidate>
+      <form class="pr-drawer__form pr-fform" novalidate>
         <div class="pr-field"><input type="email" id="share-from" name="email_from" placeholder=" " required><label for="share-from">Email From*</label></div>
         <div class="pr-field"><input type="email" id="share-to" name="email_to" placeholder=" " required><label for="share-to">Email To*</label></div>
         <div class="pr-field"><textarea id="share-msg" name="message" placeholder=" "></textarea><label for="share-msg">Message</label></div>
         <label class="pr-check"><input type="checkbox" name="attachimages" value="1"><span>Attach Vehicle Images</span></label>
         <div class="pr-drawer__actions">
-          <button class="btn btn--primary" type="submit">Send <svg class="btn__chev" aria-hidden="true"><use href="#chev"/></svg></button>
+          <button class="btn btn--primary" type="submit">Submit</button>
         </div>
         <p class="pr-pop__sent" aria-live="polite"></p>
       </form>
@@ -60,7 +60,7 @@
     <div class="pr-drawer__content">
       <h2 class="pr-drawer__title pr-lead__intent">Schedule a test drive</h2>
       <p class="pr-drawer__req">*Required fields</p>
-      <form class="pr-drawer__form pr-lead__form" novalidate>
+      <form class="pr-drawer__form pr-lead__form pr-fform" novalidate>
         <div class="pr-lead__pair">
           <div class="pr-field"><input type="text" id="lead-fname" name="fname" autocomplete="given-name" placeholder=" " required><label for="lead-fname">First Name*</label></div>
           <div class="pr-field"><input type="text" id="lead-lname" name="lname" autocomplete="family-name" placeholder=" " required><label for="lead-lname">Last Name*</label></div>
@@ -72,7 +72,7 @@
         <div class="pr-field"><textarea id="lead-msg" name="message" placeholder=" " required></textarea><label for="lead-msg">Message*</label></div>
         <label class="pr-check"><input type="checkbox" name="i_agree" value="1"><span>Please note that by completing this form, you agree to being contacted via text, phone and email.</span></label>
         <div class="pr-drawer__actions">
-          <button class="btn btn--primary" type="submit">Send <svg class="btn__chev" aria-hidden="true"><use href="#chev"/></svg></button>
+          <button class="btn btn--primary" type="submit">Submit</button>
         </div>
         <p class="pr-pop__sent" aria-live="polite"></p>
       </form>
