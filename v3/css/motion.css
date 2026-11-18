@@ -1,0 +1,18 @@
+/* The home page's motions on the inner pages (js/motion.js). Nothing here
+   applies until the script arms .pr-mo, and it never does under reduced
+   motion — then every page is exactly its static composition. */
+
+/* 1 · pinned chapters (home.css): the held chapter is sticky; every other
+   section is positioned and opaque, so the next one paints over it */
+:where(html.pr-mo) main > * { position: relative; }
+:where(html.pr-mo) main > section { background-color: #181818; }
+html.pr-mo .pr-pinned { position: sticky; top: 0; z-index: 0; }
+
+/* 2 · rising titles (home.css news reveal, ferrari.com f-title) */
+.pr-mo .pr-rise .rw { display: inline-block; }
+.pr-mo .pr-rise .rw__p {
+  display: inline-block; transform-origin: 0 100%;
+  opacity: 0; transform: translate3d(0, 25px, 0) rotate(4deg);
+  transition: transform .6s cubic-bezier(.22, 1, .36, 1) var(--rw, 0ms), opacity .6s ease-out var(--rw, 0ms);
+}
+.pr-mo .pr-rise.is-in .rw__p { opacity: 1; transform: none; }
