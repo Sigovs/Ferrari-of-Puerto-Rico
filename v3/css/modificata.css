@@ -1,0 +1,809 @@
+/* 296 GT Modificata (296-gt-modificata.html) — css/gtm.css of our Cauley page,
+   scoped to .gtm by tools/pages/modificata_port.py; edit the source and re-run. */
+/* ═══════════════════════════════════════════════════════════════════════
+   Ferrari 296 GT Modificata — dealer page
+
+   Brief, as set: full-screen frames, never cropped and never inset in a
+   box; text the width of the screen, centred where it wants to be;
+   seamless joins; Ferrari's colours only. Type sizes and spacing are
+   taken from cauleyferrari.com — the page has to sit inside their site —
+   and the page's idea comes from ferrari.com's own 296 GT Modificata.
+
+   Everything below is measured, not chosen. Sources in the comments.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.gtm {
+  /* ── colour: Ferrari's, and nothing else ─────────────────────────────
+     #000 and #181818 are both grounds on ferrari.com; #DA291C is the red
+     their button carries and the red cauleyferrari.com sets model names
+     in; #8F8F8F is that site's secondary grey. */
+  --ground:   #000000;
+  --ground-2: #181818;
+  --ink:      #FFFFFF;
+  --ink-2:    #F7F7F7;
+  --grey:     #8F8F8F;
+  --red:      #DA291C;   /* fills: ferrari.com's button, white label 4.87:1 */
+  /* red TYPE takes the Brand Book value (p104, Pantone 485): at the 12px
+     the marque's chapter marker is set in, #DA291C measures 4.31:1 on
+     black and #ED1C24 measures 4.79:1. Same red, two roles, each measured
+     into the one it serves. */
+  --red-type: #ED1C24;
+  --rosso-corsa: #ED1C24;
+  --rule:     rgb(255 255 255 / .16);
+
+  /* ── type: measured on cauleyferrari.com ─────────────────────────────
+       h2            40 / 44      500   none
+       h3            28 / 33.6    500   none
+       lead          16 / 22.4    500   uppercase  .08px
+       body          13 / 19.5    400   none       .195px
+       micro         11 / 16.5    400   uppercase  .165px   #8F8F8F
+       action        12 / 15      400   uppercase  .6px
+     The body sits at 13px, which is under this system's own 14px floor for
+     functional text; it is kept because matching the dealer's own scale is
+     the instruction, and the deviation is recorded rather than hidden. */
+  --t-h1:     clamp(1.75rem, 2.8vw, 2.5rem);    /* 40px at 1440 */
+  --t-h2:     clamp(1.5rem, 2.4vw, 2.5rem);
+  --t-h3:     clamp(1.25rem, 1.8vw, 1.75rem);   /* 28px */
+  --t-lead:   1rem;                             /* 16px */
+  --t-body:   .8125rem;                         /* 13px */
+  --t-micro:  .6875rem;                         /* 11px */
+  --t-action: .75rem;                           /* 12px */
+
+  /* ── rhythm: their section padding is 128 top / 192 bottom ──────────── */
+  --pad-top:    clamp(3.5rem, 8.9vw, 8rem);     /* 128 */
+  --pad-bottom: clamp(5rem, 13.3vw, 12rem);     /* 192 */
+  --measure:    1408px;                         /* their content container */
+  --gutter:     clamp(20px, 4vw, 64px);
+
+  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px;
+  --s-7: 32px; --s-8: 40px; --s-9: 56px; --s-10: 80px;
+
+  --dur:  .2s;
+  --ease: cubic-bezier(.22, .61, .36, 1);
+  --dur-arrive: .9s;
+  --ease-arrive: cubic-bezier(.22, 1, .36, 1);
+}
+
+.gtm { background: var(--ground); color: var(--ink); font-family: var(--font); font-synthesis: none; -webkit-font-smoothing: antialiased; }
+.gtm { overflow-x: clip; }
+
+/* ═══ the frame ═════════════════════════════════════════════════════════
+   Full width, its own 16:9 height, never cropped and never boxed. The
+   join to the page is seamless by measurement, not by luck: the brightest
+   16px edge strip across all nine frames is luminance 0.022 against a
+   ground of 0.000, so the picture ends and the black continues without a
+   visible seam. */
+.gtm .frame {
+  display: block;
+  margin: 0;
+  width: 100%;
+  overflow: hidden;
+}
+.gtm .frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;      /* only ever acts on the 8192-wide engine frame */
+  /* The joins: a long fade rather than a lip. The frame goes from nothing
+     to itself over its top 12% and back to nothing over its bottom 12%, so
+     there is no line anywhere for the eye to find — the picture simply
+     emerges from the page's black and returns to it. The sides run to the
+     window untouched. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
+}
+.gtm .frame--pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;                  /* the two cabin frames meet with no seam */
+}
+
+/* ═══ the text block ════════════════════════════════════════════════════
+   The width of the screen, centred, on the page's own black. Type never
+   sits on a photograph — which is why no scrim exists anywhere in this
+   file and the frames keep all of their light. */
+.gtm .block {
+  padding-block: var(--pad-top) var(--pad-bottom);
+  padding-inline: var(--gutter);
+}
+.gtm .block--tight { padding-block: clamp(2.5rem, 6vw, 5rem) clamp(3rem, 7vw, 6rem); }
+.gtm .block__in {
+  width: min(100%, var(--measure));
+  margin-inline: auto;
+  text-align: center;
+}
+.gtm .block__in--wide { max-width: none; }
+.gtm .copy { max-width: 74ch; margin-inline: auto; }
+
+.gtm h1, .gtm .h1 { margin: 0; font-size: var(--t-h1); font-weight: 500; line-height: 1.1; letter-spacing: normal; }
+.gtm h2, .gtm .h2 { margin: 0; font-size: var(--t-h2); font-weight: 500; line-height: 1.1; }
+.gtm h3, .gtm .h3 { margin: 0; font-size: var(--t-h3); font-weight: 500; line-height: 1.2; }
+.gtm .lead {
+  margin: 0; font-size: var(--t-lead); font-weight: 500; line-height: 1.4;
+  letter-spacing: .08px; text-transform: uppercase;
+}
+.gtm .body {
+  margin: 0; font-size: var(--t-body); font-weight: 400; line-height: 1.5;
+  letter-spacing: .195px; color: var(--ink-2);
+}
+.gtm .body + .body { margin-block-start: 1.5em; }
+.gtm .micro {
+  font-size: var(--t-micro); font-weight: 400; line-height: 1.5;
+  letter-spacing: .165px; text-transform: uppercase; color: var(--grey);
+}
+.gtm .action {
+  font-size: var(--t-action); font-weight: 400; line-height: 1.25;
+  letter-spacing: .6px; text-transform: uppercase;
+}
+
+/* The chapter eyebrow, placed as ferrari.com's own 296 GT Modificata page
+   places it (measured 23 Sep 2026, all nine chapters, 1440 and 390): at
+   the content column's left edge — x 48 / 24 there — above the heading,
+   even where the heading and the copy are centred. Number, 10px, a 100px
+   rule, 10px, the label. Their #DA291C measures 4.3:1 on black at 12px,
+   under AA, so the colour stays the brighter red this page reads in. */
+.gtm .marker {
+  justify-content: flex-start; gap: 10px; margin-inline-start: 0;
+  text-align: start; color: var(--red-type);
+}
+.gtm .marker .marker__rule { width: 100px; }
+
+/* Where it stands (Alex, 23 Sep 2026): on the chapter's own picture, in
+   its top-left corner, on the vertical of the dealer's logo — as
+   ferrari.com sets "1 — ENGINE" on its frame. The logo's left edge is 64px
+   inside a 1920 container centred in the window (x 64 at 1280–1920, x 384
+   at 2560), and 16px on the phone header. */
+.gtm { --logo-x: calc(max(0px, (100vw - 1920px) / 2) + 64px); }
+@media (max-width: 64rem) { .gtm { --logo-x: 16px; } }
+.gtm .frame { position: relative; }
+.gtm .frame__marker {
+  position: absolute; z-index: 1;
+  /* ferrari.com: 103px below the top of its 900px frame at 1440 (11.4%);
+     here the frame's top 12% is its fade out of the page's black, so the
+     eyebrow stands just past it — 105px at 1440 */
+  inset-inline-start: var(--logo-x); inset-block-start: 13%;
+  margin: 0;
+}
+/* On the phone the frame is ~220px tall and a 12px red line cannot hold
+   on it: the eyebrow stands under the picture, over the heading, on the
+   same 16px vertical. */
+@media (max-width: 60rem) {
+  .gtm .frame__marker { position: static; margin: var(--s-6) 0 0 var(--logo-x); }
+}
+/* the specification has no picture: its eyebrow stays over the table, on
+   the same vertical */
+.gtm .block__in > .marker {
+  margin-inline-start: calc(var(--logo-x) - max(var(--gutter), (100vw - var(--measure)) / 2));
+}
+
+/* ═══ records ═══════════════════════════════════════════════════════════ */
+.gtm .facts {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: var(--s-6) clamp(2rem, 6vw, 5rem);
+  margin-block-start: var(--s-9);
+  padding-block-start: var(--s-7);
+  border-block-start: 1px solid var(--rule);
+}
+.gtm .facts div { min-width: 8rem; }
+.gtm .facts dt, .gtm .facts .k { margin: 0 0 var(--s-2); }
+.gtm .facts dd, .gtm .facts .v { margin: 0; font-size: var(--t-h3); font-weight: 500; line-height: 1.2; }
+
+/* ═══ the specification ═════════════════════════════════════════════════ */
+.gtm .spec { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-10) clamp(3rem, 7vw, 7rem); text-align: start; }
+.gtm .spec__group + .spec__group { margin-block-start: var(--s-9); }
+.gtm .spec__label { display: block; padding-block-end: var(--s-3); border-block-end: 1px solid var(--rule); }
+.gtm .spec__rows { margin: 0; }
+.gtm .spec__row {
+  position: relative; isolation: isolate;
+  display: grid; grid-template-columns: minmax(9rem, 1fr) auto; gap: var(--s-5);
+  align-items: baseline; padding-block: var(--s-3);
+  border-block-end: 1px solid rgb(255 255 255 / .08);
+}
+/* The hover (Alex, 23 Sep 2026): the row fills from the left with a faint
+   light and the label comes up to white.
+   Nothing moves the text — the fill is behind it — and leaving runs it
+   back the way it came. The fill reaches 12px past each end of the row so
+   the words never sit on its edge. */
+.gtm .spec__row::before {
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+  inset: 0 -12px;
+  background: linear-gradient(90deg, rgb(255 255 255 / .07), rgb(255 255 255 / .03));
+  transform: scaleX(0); transform-origin: 0 50%;
+  transition: transform .45s var(--ease);
+}
+.gtm .spec__row dt { transition: color .3s var(--ease); }
+@media (hover: hover) {
+  .gtm .spec__row:hover::before { transform: scaleX(1); }
+  .gtm .spec__row:hover dt { color: var(--ink); }
+}
+.gtm .spec__rows > .spec__row:last-child { border-block-end: 0; }
+.gtm .spec__row dt { margin: 0; }
+.gtm .spec__row dd { margin: 0; font-size: var(--t-body); font-weight: 500; text-align: end; color: var(--ink); }
+
+/* ═══ controls ══════════════════════════════════════════════════════════
+   cauleyferrari.com's own buttons, taken from their stylesheet and checked
+   on a live INQUIRE (23 Sep 2026): square, 64px, min 208px (`fr-btn--md`),
+   24px 32px, label in their caption style — Ferrari Sans 12px regular,
+   upper case, 0.05em, 15px line. Focus is their yellow ring.
+
+     primary    .btn              red gradient; hover #B01E0A, press #9D2211
+     secondary  .btn--secondary   #181818; hover #303030
+                .btn--secondary.btn--dark   white, #181818 label; hover #F7F7F7
+     tertiary   .btn--tertiary    1px #181818 outline; hover #303030
+                .btn--tertiary.btn--dark    1px white outline; hover #D2D2D2 */
+.gtm .btn {
+  box-sizing: border-box;
+  position: relative; isolation: isolate;
+  display: inline-flex; align-items: center; justify-content: center; gap: 16px;
+  height: 64px; min-width: 208px; padding: 24px 32px;
+  border: 0; border-radius: 0;
+  background: linear-gradient(180deg, #A00C01 0%, #DA291C 64%); color: #FFF;
+  font-size: 12px; font-weight: 400; line-height: 15px;
+  text-transform: uppercase; letter-spacing: .05em;
+  text-decoration: none; white-space: nowrap;
+  transition: color .3s var(--ease), border-color .3s var(--ease);
+}
+/* The hover. Theirs swaps the gradient for a flat #B01E0A, and a gradient
+   cannot be interpolated into a colour — so on their site it snaps. Here
+   the hover colour is a layer over the gradient that fades in over their
+   own 0.3s, and pressing deepens that layer rather than replacing it. The
+   end states are theirs exactly; only the way between them is added. */
+.gtm .btn::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: var(--btn-over, #B01E0A);
+  opacity: 0;
+  transition: opacity .3s var(--ease), background-color .15s var(--ease);
+}
+.gtm .btn:hover::before { opacity: 1; }
+.gtm .btn:active::before { opacity: 1; background: var(--btn-press, #9D2211); }
+.gtm .btn:hover, .gtm .btn:active { color: #FFF; }
+.gtm .btn:focus-visible { outline: 2px solid #F6E500; outline-offset: 2px; }
+.gtm .btn--secondary { background: #181818; --btn-over: #303030; --btn-press: #303030; }
+.gtm .btn--secondary.btn--dark { background: #FFF; color: #181818; --btn-over: #F7F7F7; --btn-press: #F7F7F7; }
+.gtm .btn--secondary.btn--dark:hover, .gtm .btn--secondary.btn--dark:active { color: #181818; }
+.gtm .btn--tertiary { background: transparent; color: #181818; border: 1px solid #181818; }
+.gtm .btn--tertiary::before { content: none; }
+.gtm .btn--tertiary:hover, .gtm .btn--tertiary:active { color: #303030; border-color: #303030; }
+.gtm .btn--tertiary.btn--dark { color: #FFF; border-color: #FFF; }
+.gtm .btn--tertiary.btn--dark:hover, .gtm .btn--tertiary.btn--dark:active { color: #D2D2D2; border-color: #D2D2D2; }
+.gtm .link {
+  display: inline-block; padding-block-end: var(--s-2);
+  border-block-end: 1px solid var(--red);
+  color: var(--ink); text-decoration: none;
+  transition: color var(--dur) var(--ease);
+}
+.gtm .link:hover { color: var(--red); }
+.gtm .link:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+/* ═══ motion ════════════════════════════════════════════════════════════
+   Light, and on scroll: a frame opens from its own centre line while the
+   picture settles the last few per cent of a slow zoom; text slides up a
+   short distance and fades in, in one beat, never while it is being read.
+
+   Everything defaults to its finished state, so with the script blocked
+   or prefers-reduced-motion set, the page is simply the composition.
+   There is no library: this is two CSS transitions and an observer. */
+@media (prefers-reduced-motion: no-preference) {
+  .js .gtm .reveal .frame__img, .js .gtm .reveal.frame > img {
+    clip-path: inset(6% 0 6% 0);
+    transform: scale(1.04);
+    transition:
+      clip-path var(--dur-arrive) var(--ease-arrive),
+      transform calc(var(--dur-arrive) * 1.4) var(--ease-arrive);
+  }
+  .js .gtm .reveal.is-in .frame__img, .js .gtm .reveal.is-in.frame > img {
+    clip-path: inset(0 0 0 0);
+    transform: scale(1);
+  }
+
+  .js .gtm .slide {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity .6s var(--ease-arrive), transform .7s var(--ease-arrive);
+  }
+  .js .gtm .slide.is-in { opacity: 1; transform: none; }
+  /* a block's parts arrive in order, a beat apart, and the beat is short */
+  .js .gtm .slide:nth-child(2) { transition-delay: .08s; }
+  .js .gtm .slide:nth-child(3) { transition-delay: .16s; }
+  .js .gtm .slide:nth-child(4) { transition-delay: .24s; }
+
+  /* The first screen, on load and once only (Alex, 23 Sep 2026: "the
+     words come up, the picture moves a little"). The hall's lights come
+     up — the picture rises out of the dark and eases back from 110% over
+     2.6s — and as they settle the words come up from below one at a time,
+     40px, a beat of .14s apart. The hero is marked as soon as its picture
+     has decoded, never later than 1.2s, so the screen is never held empty. */
+  .js .gtm .hero__frame img {
+    opacity: 0; transform: scale(1.1); filter: brightness(.35);
+    transition:
+      opacity 1s var(--ease-arrive),
+      filter 1.8s var(--ease-arrive),
+      transform 2.6s var(--ease-arrive);
+  }
+  .js .gtm .hero.is-in .hero__frame img { opacity: 1; transform: scale(1); filter: none; }
+
+  .js .gtm .hero__type > * {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity .8s var(--ease-arrive), transform 1s var(--ease-arrive);
+  }
+  .js .gtm .hero.is-in .hero__type > * { opacity: 1; transform: none; }
+  .js .gtm .hero.is-in .hero__type > :nth-child(1) { transition-delay: .55s; }
+  .js .gtm .hero.is-in .hero__type > :nth-child(2) { transition-delay: .69s; }
+  .js .gtm .hero.is-in .hero__type > :nth-child(3) { transition-delay: .83s; }
+  .js .gtm .hero.is-in .hero__type > :nth-child(4) { transition-delay: .97s; }
+}
+
+/* ═══ the phone ═════════════════════════════════════════════════════════
+   The frames keep their full 16:9 — they are not cropped here either, so
+   the car is whole at every width — and the type steps down to the
+   dealer's own mobile scale. */
+@media (max-width: 60rem) {
+  .gtm {
+    --t-h1: clamp(1.5rem, 7vw, 2rem);
+    --t-h2: clamp(1.375rem, 6vw, 1.75rem);
+    --t-h3: 1.25rem;
+  }
+  .gtm .frame--pair { grid-template-columns: 1fr; }
+  .gtm .facts { gap: var(--s-6) var(--s-8); }
+  .gtm .spec { grid-template-columns: 1fr; gap: var(--s-9); }
+}
+
+/* ═══ the first screen ══════════════════════════════════════════════════
+   Set against `hero screen.jpg`, the Figma frame (2026-09-22): the picture
+   runs the full width, the header sits over the top of the hall, and the
+   type stands centred on the floor under the car.
+
+   The picture is the brief's 3_4 shot in Alex's wider cut,
+   img/hero-3_4.jpg (24 Sep 2026; HERO1 is withdrawn). It is 16:9
+   (picH = 0.5625 × W), measured:
+
+       car          x 0.225–0.780,  y 0.310–0.675
+       spotlights   y 0.03–0.25
+
+   so the car's top is at 0.1744 × W and its lowest point at 0.3797 × W.
+
+   The rise pulls the hall up under the header, up to 5.6% of W, but never
+   so far that the roof goes under the 131px band — 40px of air is kept:
+       rise ≤ 0.1744 × W − 131 − 40 = 0.1744 × W − 171px
+
+   The picture always runs the full width — no side fades, no black bars
+   (Alex, 23 Sep 2026). The type block — 202px, the last 64 of it the
+   button — stands 40px under the car with at least 24px of floor beneath
+   it, so the first screen needs
+       0.3797 × W − rise + 266px
+   and where the window is shorter than that, the hero grows to it rather
+   than cutting the car or laying the words over it. It is the floor under
+   the words that gives way first, to 24px.
+
+   The only fade is the bottom one, from 68% down — the car ends at 67.5%, so it is the
+   floor alone that dims. That fade is also what holds the type: the lit
+   pool under the car reaches L 0.20 behind the facts line, 3.4:1 for its
+   78% white. Faded, and measured on the render with the type hidden —
+   the brightest pixel behind each line, 23 Sep 2026 — the minimum is
+   4.96:1 (title, large text) and 6.52:1 (facts line), 1280 to 2560. */
+.gtm .hero {
+  /* the width of the picture, and the one number the rest is derived from */
+  --pic-w: 100vw;
+  --rise: max(0px, min(calc(var(--pic-w) * 0.056), calc(var(--pic-w) * 0.1744 - 10.7rem)));
+  position: relative;
+  /* the screen, or — on a window too short for car, words and floor — as
+     much as they need, so nothing is cut and nothing overlaps */
+  height: max(100vh, calc(var(--pic-w) * 0.3797 - var(--rise) + 16.625rem));
+  /* base.css carries its own .hero — 100svh, padded for the header, with
+     its children aligned to the end — and every part of that had to go */
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  display: block;
+  overflow: hidden;
+}
+.gtm .hero__frame { position: absolute; inset: 0; margin: 0; overflow: hidden; }
+.gtm .hero__frame img {
+  display: block;
+  width: var(--pic-w);
+  max-width: none;
+  height: auto;
+  margin-inline: auto;
+  margin-block-start: calc(var(--rise) * -1);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 68%, rgb(0 0 0 / .45) 82%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 0, #000 68%, rgb(0 0 0 / .45) 82%, transparent 100%);
+}
+
+/* The words: the Figma frame's own sizes, taken off the cap heights at
+   1920 (cap height is 0.74em in this face, calibrated on our own render) —
+   title 30px, subhead 18px, facts 15px, the route 16px, all upper case,
+   centred, and the block ending 210px above the fold. */
+.gtm .hero__type {
+  position: absolute; inset-inline: 0; inset-block-end: 0; z-index: 1;
+  width: 100%;
+  max-width: none;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  /* 216px of floor under the words — raised 56px on Alex's call, 24 Sep
+     2026, once the facts line had gone and the block was shorter — and it
+     is this that gives way first, never the car. 12.25rem is the block's
+     own height plus the clearance kept above it. */
+  padding-block-end: clamp(1.5rem, calc(100vh - (var(--pic-w) * 0.3797 - var(--rise)) - 12.25rem), 13.5rem);
+  text-align: center;
+}
+.gtm .hero__type .h1 {
+  font-size: clamp(1.375rem, 2vw, 1.875rem);
+  text-transform: uppercase;
+  letter-spacing: .005em;
+  margin-block-end: 16px;
+}
+.gtm .hero__type .lead {
+  font-size: clamp(.9375rem, 1.2vw, 1.125rem);
+  margin-block-end: 17px;
+  max-width: none;
+}
+/* cauleyferrari.com's secondary grey (#8F8F8F) is right on black but
+   under AA on the hero's lit floor; the frame's own grey (#707070) is
+   worse. It is lifted to white at 78% — 6.52:1 at its worst patch — the
+   same weight and the same role. */
+.gtm .hero__type .micro {
+  font-size: clamp(.75rem, .9vw, .9375rem);
+  margin-block-end: 24px;
+  color: rgb(255 255 255 / .78);
+}
+.gtm .hero__type p { margin-block-start: 0; }
+/* The route is the page's primary control, not a line of text: the
+   dealer's own primary button (see controls, above) — the same one that
+   closes the page. */
+.gtm .hero__type .btn { margin-block-start: 0; }
+
+/* the name is in the picture; the heading still exists for anything that
+   cannot see it */
+.gtm .sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+
+@media (max-width: 60rem) {
+  /* On a phone the car is 55% of the frame, so it is set at 120% and
+     pulled back by half the overflow: the car's centre (x 0.50) is the
+     screen's, and it runs from 17vw to 84vw — whole, with air both sides. */
+  .gtm .hero { height: auto; min-height: 0; margin-block-start: var(--head-h-m, 120px); }
+  /* the picture is then 67.5vw tall and the car's lowest point lands at
+     45.6vw, so the frame is cut at 54vw — 8vw of floor under the car — and
+     the fade is moved up to land on that cut */
+  .gtm .hero__frame { position: static; height: 54vw; overflow: hidden; }
+  /* base.css caps every image at max-width:100% — that has to go here,
+     or 120% silently computes back to the frame's own width */
+  .gtm .hero__frame img {
+    width: 120%; max-width: none; margin-inline: -10%; margin-block-start: 0; height: auto;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 69%, transparent 80%);
+            mask-image: linear-gradient(to bottom, #000 0, #000 69%, transparent 80%);
+  }
+  .gtm .hero__type { position: static; padding-block: var(--s-6) var(--s-9); }
+}
+
+/* chapters 2 and 4: the plate is set whole, with no fade at either edge
+   (Alex, 23 Sep 2026) */
+.gtm .frame--bare img { -webkit-mask-image: none; mask-image: none; }
+
+/* chapter 1's plate keeps its own floor to the last pixel (Alex, 23 Sep
+   2026): the fade in from the black at the top, none at the foot */
+.gtm .frame--no-foot img {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 12%);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 12%);
+}
+
+/* ═══ the box door: chapters 1 and 6 ═════════════════════════════════
+   The plate is uncovered from the bottom up, as a garage door lifts
+   (Alex, 23 Sep 2026): the floor and the wheels first, then the car, then
+   the hall.
+
+   It runs on its own clock, not the scroll's. A plate nearly a screen tall
+   enters top-first, so a scroll-driven door lifting from the foot kept the
+   screen black for most of a screen of travel. Here the door lifts over
+   1.2s, eased in and out as a door's motor runs, once a third of the plate
+   is on screen — and closes again only when the plate has gone back below
+   the screen, so it plays again next time down.
+
+   --door is registered so it can transition. No script or reduced motion:
+   .door-on is never set and the plate is open. */
+@property --door { syntax: '<number>'; inherits: true; initial-value: 1; }
+.gtm .frame--door { overflow: hidden; }
+.gtm .frame--door > img {
+  clip-path: inset(calc((1 - var(--door)) * 100%) 0 0 0);
+}
+.gtm .frame--door::after {
+  content: ""; position: absolute; inset-inline: 0; z-index: 0; pointer-events: none;
+  inset-block-start: calc((1 - var(--door)) * 100%);
+  height: 22%;
+  border-block-start: 1px solid rgb(255 255 255 / .14);
+  background: linear-gradient(to bottom, rgb(0 0 0 / .6), rgb(0 0 0 / 0));
+  opacity: calc(1 - var(--door));
+}
+/* chapter 6 opens the other way (Alex, 23 Sep 2026): from the top down,
+   the lip travelling to the foot with its shadow above it */
+.gtm .frame--door-down > img {
+  clip-path: inset(0 0 calc((1 - var(--door)) * 100%) 0);
+}
+.gtm .frame--door-down::after {
+  inset-block-start: auto;
+  inset-block-end: calc((1 - var(--door)) * 100%);
+  border-block-start: 0;
+  border-block-end: 1px solid rgb(255 255 255 / .14);
+  background: linear-gradient(to top, rgb(0 0 0 / .6), rgb(0 0 0 / 0));
+}
+.door-on .gtm .frame--door { --door: 0; transition: --door 1.2s cubic-bezier(.65, 0, .35, 1); }
+.door-on .gtm .frame--door.is-open { --door: 1; }
+
+/* ═══ the pinned plates: chapters 3 and 5 ═════════════════════════════
+   As Cauley's own model page stacks its panels (Alex, 23 Sep 2026): the
+   picture pins to the top of the screen and its chapter's words, on the
+   page's black, ride up over it until it is covered, and then the two
+   leave together. Two plates only — the front and the side elevations,
+   one in each half of the page — so it stays an event, not a habit.
+
+   .pin bounds the sticky run to the plate and its own words; the words
+   are at least as tall as the plate (56.25vw) so they cover it whole.
+   Their leading edge is a long eased fade rather than a line across the
+   car, and the words come up from below with the scroll. The phone keeps the plain flow: a 220px plate gains nothing
+   from being held. */
+@media (min-width: 60.0625rem) {
+  .gtm .pin { position: relative; }
+  .gtm .frame--pin { position: sticky; inset-block-start: 0; z-index: 0; }
+  .gtm .pin > .block {
+    position: relative; z-index: 1;
+    min-height: 56.25vw;
+    background: #000;
+  }
+  /* the leading edge: a long eased fade, 40% of the screen, so the
+     black arrives over the car the way light goes, not as a band. The
+     stops follow an ease-in-out curve — barely there at first, the bulk
+     through the middle, settling into black. */
+  .gtm .pin > .block::before {
+    content: ""; position: absolute; inset-inline: 0; inset-block-end: 100%;
+    height: clamp(240px, 40vh, 440px); pointer-events: none;
+    background: linear-gradient(to bottom,
+      rgb(0 0 0 / 0) 0%,     rgb(0 0 0 / .013) 8.1%, rgb(0 0 0 / .049) 15.5%,
+      rgb(0 0 0 / .104) 22.5%, rgb(0 0 0 / .175) 29%,  rgb(0 0 0 / .259) 35.3%,
+      rgb(0 0 0 / .352) 41.2%, rgb(0 0 0 / .45) 47.1%,  rgb(0 0 0 / .55) 52.9%,
+      rgb(0 0 0 / .648) 58.8%, rgb(0 0 0 / .741) 64.7%, rgb(0 0 0 / .825) 71%,
+      rgb(0 0 0 / .896) 77.5%, rgb(0 0 0 / .951) 84.5%, rgb(0 0 0 / .987) 91.9%,
+      #000 100%);
+  }
+}
+
+/* ═══ chapter 8: the picture as ground ═══════════════════════════════
+   details_v06_002 is the nose from above with the whole lower half of the
+   frame empty floor: the car, splitter and shadow end at about 45% of its
+   height. The picture holds at the top of the screen and the chapter's
+   words are drawn up onto that floor, so they stand on the hall's own
+   dark rather than on a scrim — the floor is the reading zone. The phone
+   keeps the plain flow: a 220px plate has no floor to stand on. */
+@media (min-width: 60.0625rem) {
+  .gtm .stage { position: relative; }
+  .gtm .frame--stage { position: sticky; inset-block-start: 0; z-index: 0; }
+  /* A screen tall (never under 50rem, so the words always fit on the
+     floor): the picture covers from its top edge, so on a narrow screen it
+     loses empty hall at either side and on a wide, short one it loses
+     floor at the foot — never the car, and never the words below the fold. */
+  .gtm .frame--stage img {
+    aspect-ratio: auto;
+    height: max(100vh, 50rem);
+    object-fit: cover; object-position: 50% 0;
+  }
+  /* wider than the frame: fit the height instead, so the car keeps its
+     size and its floor, and the hall's own black runs out to either side */
+  @media (min-aspect-ratio: 16/9) {
+    .gtm .frame--stage { background: #000; }
+    .gtm .frame--stage img {
+      object-fit: contain; object-position: 50% 0;
+      /* the picture is narrower than the screen here: its side edges melt
+         into the black so the floor has no edge to find. Content box is
+         the picture itself, so the fade sits on the picture, not the screen. */
+      width: min(100%, calc(max(100vh, 50rem) * 16 / 9));
+      margin-inline: auto;
+      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%);
+              mask-image: linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%);
+    }
+  }
+  /* The words start lower down the chapter and come up as you scroll,
+     while the picture holds; they come to rest with their foot on the
+     picture's foot, and the two leave together. */
+  .gtm .stage > .stage__words {
+    position: relative; z-index: 1;
+    margin-block-start: -15vh;
+    padding-block: var(--s-8) var(--s-10);
+  }
+}
+
+/* chapters 4 and 6 held as grounds (Alex, 24 Sep 2026): the front and
+   side elevations have less floor under the car than chapter 8's view
+   from above, so their words sit closer together, and the side
+   elevation is lifted by its empty ceiling (the lamps go above the
+   screen) so the car stands higher and the floor under it grows. */
+@media (min-width: 60.0625rem) {
+  .gtm .stage--aero > .stage__words, .gtm .stage--brakes > .stage__words { padding-block: var(--s-4) var(--s-7); }
+  .gtm .stage--aero .copy, .gtm .stage--brakes .copy { margin-block-start: var(--s-5) !important; }
+  .gtm .stage--brakes .facts { margin-block-start: var(--s-6); padding-block-start: var(--s-5); }
+  .gtm .stage--brakes .frame--stage { overflow: hidden; }
+  .gtm .stage--brakes .frame--stage img { height: calc(max(100vh, 50rem) * 1.2); margin-block-start: calc(max(100vh, 50rem) * -0.2); }
+}
+
+/* chapter 4's floor goes down into the black over a long fade — the
+   lower half of the plate, eased so it is barely there at first
+   (Alex, 24 Sep 2026) */
+.gtm .stage--aero .frame--stage::after {
+  content: ""; position: absolute; inset-inline: 0; inset-block-end: 0;
+  height: 55%; pointer-events: none;
+  background: linear-gradient(to bottom,
+    rgb(0 0 0 / 0) 0%,     rgb(0 0 0 / .013) 8.1%, rgb(0 0 0 / .049) 15.5%,
+    rgb(0 0 0 / .104) 22.5%, rgb(0 0 0 / .175) 29%,  rgb(0 0 0 / .259) 35.3%,
+    rgb(0 0 0 / .352) 41.2%, rgb(0 0 0 / .45) 47.1%,  rgb(0 0 0 / .55) 52.9%,
+    rgb(0 0 0 / .648) 58.8%, rgb(0 0 0 / .741) 64.7%, rgb(0 0 0 / .825) 71%,
+    rgb(0 0 0 / .896) 77.5%, rgb(0 0 0 / .951) 84.5%, rgb(0 0 0 / .987) 91.9%,
+    #000 100%);
+}
+
+/* chapters 4 and 6 hand straight on to the next plate (Alex, 24 Sep
+   2026): their words keep
+   only their own height, so the next plate follows them without a screen
+   of black. */
+@media (min-width: 60.0625rem) {
+  .gtm .pin--tail > .block { min-height: 0; padding-block-end: var(--s-10); }
+}
+
+/* ═══ chapter 5: two cabin frames in one place ═══════════════════════
+   The plate pins for a screen of scroll and interni_03 is uncovered over
+   interni_05 from the foot up, following the scroll (--swap, 0 to 1, set
+   by the script). The track is the plate plus that screen, so the words
+   follow as soon as the lift is done. Without .swap-on the second frame
+   is simply the next frame down. */
+.gtm .swap__frame > img + img { margin-block-start: 0; }
+@media (min-width: 60.0625rem) {
+  .swap-on .gtm .swap { height: calc(56.25vw + 130vh); }
+  .swap-on .gtm .swap__frame { position: sticky; inset-block-start: 0; }
+  .swap-on .gtm .swap__next {
+    position: absolute; inset: 0; height: 100%;
+    clip-path: inset(calc((1 - var(--swap, 0)) * 100%) 0 0 0);
+  }
+}
+
+/* ═══ the hold: a few idle turns of the wheel after each pinned action ══
+   (Alex, 24 Sep 2026). Once the words of a pinned chapter (4, 6, 8) have
+   arrived they stop where they are — sticky at --hold-top, which the
+   script sets so their foot rests on the foot of the screen (4, 6) or of
+   the picture (8) — and picture and words stay together for 30vh more
+   before they leave as one. The spacer is ::after because a sticky box
+   cannot run into its container's padding. Chapter 5 holds the same way
+   inside its own track (the script finishes the lift early). */
+@media (min-width: 60.0625rem) {
+  .gtm .pin > .block[data-hold], .gtm .stage > .stage__words[data-hold] { position: sticky; inset-block-start: var(--hold-top, 0px); }
+  .gtm .pin:has(> [data-hold])::after, .gtm .stage::after { content: ""; display: block; height: 30vh; }
+}
+
+/* the pinned chapters' words, arriving (set by the script) */
+.rise-on .gtm [data-rise] {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity .7s var(--ease-arrive), transform .8s var(--ease-arrive);
+  transition-delay: calc(var(--rise-i, 0) * .12s);
+}
+.rise-on .gtm [data-rise].is-up { opacity: 1; transform: none; }
+
+/* ═══ the arrival: chapter 7, scrubbed by the scroll ═══════════════════
+   A locked-off frame from directly above. The car rolls in from the top
+   and stops in the upper 42% of the frame (nose x 0.29–0.72, y 0–0.42);
+   the lower half is floor that stays empty to the last frame, and that is
+   where the words stand — still, while the picture moves above them.
+
+   Static first: the stage is one screen, the last frame fills it and the
+   words sit on its floor. The script only adds the length to scroll
+   through (.scrub-on) and the canvas that plays the frames. */
+.gtm .scrub { position: relative; background: #000; }
+.gtm .scrub__stage { position: relative; height: 100vh; min-height: 40rem; overflow: hidden; }
+/* --scrub-rise: on a wide, short screen the words would reach the car, so
+   the frame is lifted just enough to keep 40px between them (the script
+   measures it; the nose simply starts further under the header) */
+.gtm .scrub__media { position: absolute; inset: 0; transform: translateY(calc(var(--scrub-rise, 0px) * -1)); }
+.gtm .scrub__poster, .gtm .scrub__canvas {
+  position: absolute; inset: 0;
+  display: block; width: 100%; height: 100%; max-width: none;
+  object-fit: cover; object-position: 50% 0;
+}
+.gtm .scrub__canvas { visibility: hidden; }
+.gtm .scrub.is-playing .scrub__canvas { visibility: visible; }
+.gtm .scrub.is-playing .scrub__poster { visibility: hidden; }
+/* out of the page's black at the top, as every plate joins; at the bottom
+   a long gradient (Alex, 23 Sep 2026) that starts just under the car's
+   final nose, at 45%, and deepens gently to black at the frame's foot —
+   the floor stays visible under the words (softened on Alex's call) — the floor dims
+   under the words and the chapter runs out into the page. */
+.gtm .scrub__media {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 12%);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 12%);
+}
+.gtm .scrub__media::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to bottom,
+    rgb(0 0 0 / 0) 45%, rgb(0 0 0 / .35) 60%, rgb(0 0 0 / .7) 80%, #000 100%);
+}
+.gtm .scrub__type {
+  position: absolute; inset-inline: 0; inset-block-end: 0; z-index: 1;
+  max-width: calc(var(--measure) + var(--gutter) * 2); margin-inline: auto;
+  padding: 0 var(--gutter) clamp(3rem, 9vh, 6rem);
+  text-align: center;
+}
+.gtm .scrub__type > * { max-width: 58rem; margin-inline: auto; }
+/* the eyebrow on the frame, clear of the navigation band that is pinned
+   over the held stage */
+.gtm .scrub__stage > .frame__marker { inset-block-start: calc(91px + var(--s-9)); }
+.gtm .scrub__type .facts { margin-block-start: var(--s-8); }
+
+/* the scroll through it: one and a half screens of travel, the stage held */
+.scrub-on .gtm .scrub { height: 250vh; }
+.scrub-on .gtm .scrub__stage { position: sticky; inset-block-start: 0; }
+
+/* The phone is authored, not cropped: a portrait screen would cut the car
+   to its bonnet. The frame sits at the top at 140% — the car whole, from
+   20vw to 80vw — and holds there while the words scroll up beneath it, so
+   the car arrives while they are read. */
+@media (max-width: 60rem) {
+  .gtm .scrub__stage { height: auto; min-height: 0; overflow: visible; }
+  .gtm .scrub__media {
+    position: sticky; inset-block-start: var(--head-h-m, 120px); z-index: 2;
+    height: calc(140vw * 907 / 1600 * .8); overflow: hidden; background: #000;
+    -webkit-mask-image: none; mask-image: none;
+  }
+  .gtm .scrub__poster, .gtm .scrub__canvas {
+    inset: 0 auto auto -20vw; width: 140vw; height: auto;
+  }
+  /* the floor runs out into the page's black below the frame — the same
+     long gradient, over the half of the frame under the car */
+  .gtm .scrub__media::after {
+    inset: auto 0 0; height: 50%;
+    background: linear-gradient(to bottom, rgb(0 0 0 / 0), rgb(0 0 0 / .6) 45%, #000);
+  }
+  /* the words pass under the held frame, never over it */
+  .gtm .scrub__type { position: relative; z-index: 0; padding-block: var(--s-9) var(--pad-bottom); }
+  .gtm .scrub__stage > .frame__marker { position: relative; z-index: 0; inset: auto; }
+  .scrub-on .gtm .scrub { height: auto; }
+  .scrub-on .gtm .scrub__stage { position: relative; }
+}
+
+/* ═══ the dealer's header, exactly as their own site behaves ════════════
+   Measured on cauleyferrari.com: the 40px contact bar scrolls away with
+   the page and the 91px navigation band — black at 60% — stays at the top
+   of the window. `.header` is absolute, so pinning the band costs no
+   reflow. Below 64rem there is no contact bar, so the whole header pins. */
+
+@media (max-width: 64rem) {
+  
+  
+}
+
+
+/* ── module headlines in capitals ─────────────────────────────────────────
+   The Tier 3 copy deck sets every module headline in capitals, and the page is
+   required to read 1:1 against that document. The h1 and the buttons were
+   already uppercased here; the module headlines were the only strings left
+   differing from the deck, and they differed by case alone. */
+.gtm .block h2 { text-transform: uppercase; }
+
+/* ═══ the phone: every line starts at the left edge (Alex, 28 Sep 2026) ═══
+   Below the width where the pinned chapters switch off, the page reads as
+   a column, and a column reads from its left edge: the first screen, every
+   chapter's title and copy, the fact plates and the buttons. */
+@media (max-width: 60rem) {
+  .gtm .hero__type, .gtm .block__in, .gtm .scrub__type { text-align: start; }
+  .gtm .copy { margin-inline: 0; text-wrap: wrap; }
+  .gtm .facts { justify-content: flex-start; }
+  /* one left edge for everything: the dealer's logo, the eyebrows and
+     the words all start on --logo-x */
+  .gtm .block, .gtm .hero__type { padding-inline: var(--logo-x); }
+  .gtm .block__in > .marker { margin-inline-start: 0; }
+  /* the page's buttons run the full width of the column */
+  .gtm main .btn { display: flex; width: 100%; }
+}
+
+/* v3: the sticky band is the site's own, and the acts stand on the site's
+   column: copy on --band-pad, markers hung out by --marker-out, as on every page */
+.gtm { --head-h-m: var(--stick-h, 80px); --gutter: var(--band-pad); --logo-x: calc(var(--band-pad) - var(--marker-out)); }
+.pr-gtm__hero .btn { width: auto; min-width: 208px; white-space: nowrap; }
+/* the phone band: keep the whole car (x 0.20–0.76 of the frame) in view */
+@media (max-width: 48rem) { .pr-gtm__hero .fa-hero__bg img { object-position: 43% 55%; } .gtm .btn { width: 100%; padding-inline: 16px; white-space: nowrap; } }

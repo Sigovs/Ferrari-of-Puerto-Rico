@@ -483,6 +483,8 @@ const NAV = [
   ['Financing', '#', [['Finance Center', '#'], ['Apply for Financing', '#']]],
   ['Motorsports', '#', [
     ['Ferrari Corso Pilota', 'corso-pilota.html'], ['Ferrari Challenge', 'ferrari-challenge.html'], ['Club Competizioni GT', '#'],
+    /* extra: the Club's own car, not in the client's sitemap */
+    ['296 GT Modificata', '296-gt-modificata.html'],
     ['Ferrari Club Challenge', '#'], ['XX Programme', '#'], ['Our Racing Pedigree', '#'],
   ]],
   ['Owners', '#', [
@@ -491,9 +493,10 @@ const NAV = [
   ]],
   ['About Us', '#', [['Our Story', '#'], ['Our Team', 'our-team.html'], ['Contact Us', '#']]],
   ['Events & Media', '#', [
-    ['Event Schedule', '#'], ['Event Recaps', 'blog.html'], ['Gallery', 'gallery.html'],
-    /* extra, not in the client's sitemap: Ferrari's own news (feeds the home page block) */
-    ['News & Events', 'news.html'],
+    ['Event Schedule', '#'], ['Event Recaps', '#'], ['Gallery', 'gallery.html'],
+    /* extra, not in the client's sitemap: the dealer's own blog (name to be decided) and
+       Ferrari's own news (feeds the home page block) */
+    ['Blog', 'blog.html'], ['News & Events', 'news.html'],
   ]],
 ];
 const navLink = ([label, href]) => `<a href="${href}">${esc(label)}</a>`;
@@ -615,7 +618,7 @@ ${items.slice(2).map(p => listTile(p, 'pr-list__card')).join('\n')}
   </div>
 </main>`;
 const newsroom = () => listing(NEWS.map(newsStory), 'News & Events', 'The latest from Ferrari');
-const blogroom = () => listing(BLOG.map(blogStory), 'Event Recaps', 'Life at Ferrari Puerto Rico');
+const blogroom = () => listing(BLOG.map(blogStory), 'Blog', 'Life at Ferrari Puerto Rico');
 const article = n => readPage(newsStory(n), {
   backHref: 'news.html',
   by: `${esc(n.date)} / Source: Ferrari S.p.A.`,
@@ -631,7 +634,7 @@ const blogPost = p => readPage(blogStory(p), {
   after: `  <section class="pr-shell pr-photos" aria-label="Photographs">
 ${photoGrid(`img/gallery/${p.slug}`, GALLERY.find(a => a.slug === p.slug).photos, p.title, 1400)}
   </section>`,
-  ctas: `<a class="btn btn--outline-dark btn--auto" href="blog.html">More event recaps</a>`,
+  ctas: `<a class="btn btn--outline-dark btn--auto" href="blog.html">More from the blog</a>`,
 });
 
 const INV_CSS = '<link rel="stylesheet" href="css/inventory.css">\n<link rel="stylesheet" href="css/form.css">\n';
@@ -871,6 +874,18 @@ const PAGES = [
     main: drive,
   },
   {
+    /* 296 GT Modificata — our Cauley page (cauleyferrari.com) ported by
+       tools/pages/modificata_port.py: the acts 1:1 under the site's hero, then
+       Ferrari's enrolment form. Extra: not in the client's sitemap. */
+    out: '296-gt-modificata.html',
+    TITLE: 'Ferrari 296 GT Modificata — Ferrari of Puerto Rico',
+    DESC: 'The Ferrari 296 GT Modificata, the most extreme model yet created for the Club Competizioni GT program. Track use only. Register your interest at Ferrari of Puerto Rico, San Juan.',
+    PRELOAD: '<link rel="preload" href="img/modificata/hero-3_4-1920.webp" as="image" imagesrcset="img/modificata/hero-3_4-800.webp 800w, img/modificata/hero-3_4-1200.webp 1200w, img/modificata/hero-3_4-1600.webp 1600w, img/modificata/hero-3_4-1920.webp 1920w" imagesizes="100vw">\n',
+    PAGE_CSS: INV_CSS + '<link rel="stylesheet" href="css/approved.css">\n<link rel="stylesheet" href="css/modificata.css">\n',
+    PAGE_JS: '<script src="js/interest.js" defer></script>\n<script src="js/modificata.js" defer></script>\n',
+    main: () => read('_modificata.html') + '\n' + DEALER,
+  },
+  {
     /* Ferrari Challenge — ferrari.com's series page, 296 Challenge page and the
        official 2027 North America calendar article; Ferrari's photographs */
     out: 'ferrari-challenge.html',
@@ -949,14 +964,14 @@ const PAGES = [
   })),
   {
     out: 'blog.html',
-    TITLE: 'Event Recaps — Ferrari of Puerto Rico',
+    TITLE: 'Blog — Ferrari of Puerto Rico',
     DESC: 'Events and stories from Ferrari Puerto Rico, the official Ferrari dealer in San Juan.',
     PRELOAD: '', PAGE_CSS: '<link rel="stylesheet" href="css/news.css">\n', PAGE_JS: '',
     main: blogroom,
   },
   ...BLOG.map(p => ({
     out: blogHref(p),
-    TITLE: `${p.title} — Event Recaps | Ferrari of Puerto Rico`,
+    TITLE: `${p.title} — Blog | Ferrari of Puerto Rico`,
     DESC: p.summary,
     PRELOAD: `<link rel="preload" href="img/blog/${p.slug}/cover-1200.jpg" as="image">\n`,
     PAGE_CSS: '<link rel="stylesheet" href="css/news.css">\n', PAGE_JS: '<script src="js/gallery.js" defer></script>\n',
