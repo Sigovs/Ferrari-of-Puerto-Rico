@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="css/corso.css?v=mwmd36ts">
 <link rel="stylesheet" href="css/chapnav.css?v=mwm404b5">
 <link rel="stylesheet" href="css/ccgt.css?v=mwmcpdv8">
-<link rel="stylesheet" href="css/events.css?v=mwmhygyk">
+<link rel="stylesheet" href="css/events.css?v=mwmib6nf">
 <link rel="stylesheet" href="css/motion.css?v=mwmbwlra">
 <link rel="stylesheet" href="css/v2.css?v=mw4h1ny8">
 <!-- the retailer scrolls with inertia (GSAP ScrollSmoother, 1.4); Lenis
@@ -476,17 +476,24 @@
   </div>
 </section>
 
-<!-- ══ 2 · AT FERRARI OF PUERTO RICO — the dealer's own events: the client's
-     facts, not yet given; the place is kept, visibly (OUR copy) ══ -->
-<section class="pr-ev__own" id="dealer" data-chapter="At the dealership" aria-labelledby="dealer-h">
+<!-- a full-width photograph, no copy (as the 296 Challenge band on
+     ferrari-challenge.html): the Ferrari Challenge North America start at
+     Indianapolis — Ferrari's, restored x2 (tools/pages/events_imgs.py) -->
+<figure class="pr-chal__full pr-ev__band">
+  <img src="img/events/indy-1920.webp" srcset="img/events/indy-800.webp 800w, img/events/indy-1280.webp 1280w, img/events/indy-1920.webp 1920w, img/events/indy-2560.webp 2560w" sizes="100vw" width="2600" height="1460" loading="lazy" alt="The Ferrari Challenge North America field at the start at Indianapolis, the cars two by two down the straight">
+</figure>
+
+<!-- ══ 2 · OUR EVENTS — only what the dealer keeps up himself: the Event Recaps
+     (blog) and the Gallery. No announcements block, no dates to maintain (Alex,
+     19 Nov 2026: the client's part is the blog and the gallery, nothing else).
+     OUR copy. ══ -->
+<section class="pr-ev__own" id="recaps" data-chapter="Our events" aria-labelledby="recaps-h">
   <div class="pr-shell">
-    <p class="marker"><span>2</span><span class="marker__rule"></span><span>At the dealership</span></p>
+    <p class="marker"><span>2</span><span class="marker__rule"></span><span>Our events</span></p>
     <div class="pr-ev__own-in">
-      <!-- deslop-ignore-next-line 23 — a real status: the dealer's events are not yet given (Alex: visible placeholder) -->
-      <p class="fa-record"><span>Coming soon</span></p>
-      <h2 class="pr-ev__own-title" id="dealer-h">Events at Ferrari of Puerto Rico</h2>
-      <p class="pr-ev__own-text">Our own events in San Juan will be announced here. Until then, see how the last ones went.</p>
-      <p class="pr-ev__own-cta"><a class="pr-link" href="blog.html"><span class="pr-jumbo pr-jumbo--40"><svg class="pr-ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" pathLength="100"/></svg><svg aria-hidden="true"><use href="#chev"/></svg></span><span>Event Recaps</span></a></p>
+      <h2 class="pr-ev__own-title" id="recaps-h">Ferrari of Puerto Rico events</h2>
+      <p class="pr-ev__own-text">How our events went, in words and in photographs.</p>
+      <p class="pr-ev__own-cta"><a class="pr-link" href="blog.html"><span class="pr-jumbo pr-jumbo--40"><svg class="pr-ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" pathLength="100"/></svg><svg aria-hidden="true"><use href="#chev"/></svg></span><span>Event Recaps</span></a><a class="pr-link" href="gallery.html"><span class="pr-jumbo pr-jumbo--40"><svg class="pr-ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" pathLength="100"/></svg><svg aria-hidden="true"><use href="#chev"/></svg></span><span>Gallery</span></a></p>
     </div>
   </div>
 </section>
@@ -509,7 +516,6 @@
               <option>Club Competizioni GT</option>
               <option>XX Programme</option>
               <option>Ferrari Finali Mondiali</option>
-              <option>Events at Ferrari of Puerto Rico</option>
             </select><label for="ci-course">Programme*</label></div>
       <div class="pr-field pr-field--fixed pr-field--select"><select id="ci-venue" name="event">
               <option value="" disabled selected hidden></option>

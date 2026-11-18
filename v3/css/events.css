@@ -1,8 +1,8 @@
 /* Event Schedule (event-schedule.html) — on the components already set: hero and
    welcome (approved.css), the calendar and its CATEGORY dropdown (corso.css,
    dropdown.css), the "In the US" tag (ccgt.css), Ferrari's form (form.css).
-   Set here: the hero frame, the programme link in each row, the dealer's own
-   events block that waits for the client's dates. */
+   Set here: the hero frame, the programme link in each row, the links to the
+   dealer's own Event Recaps and Gallery. */
 
 /* hero: the F2002 right of centre, whole; the title on the open asphalt at
    the lower left */
@@ -18,15 +18,20 @@
 .pr-ev__prog:hover { text-decoration-color: currentColor; }
 .pr-ev__prog:focus-visible { outline: 2px solid var(--pr-ink); outline-offset: 2px; }
 
-/* 2 · at the dealership: centred, on the ground, the "Coming soon" record over it */
+/* 2 · our events: centred on the ground, the two links the dealer keeps up */
 .pr-ev__own { padding-block: var(--pad-top) 128px; background: #181818; }
 .pr-ev__own-in { display: grid; justify-items: center; max-width: 720px; margin: 48px auto 0; text-align: center; }
 .pr-ev__own-title { margin: 24px 0 0; font-size: clamp(1.625rem, 1.5vw + 1.1rem, 2.5rem); line-height: 1.1; font-weight: 500; text-transform: uppercase; text-wrap: balance; color: #fff; }
 .pr-ev__own-text { margin: 24px 0 0; max-width: 52ch; font-size: 16px; line-height: 1.6; color: rgb(243 244 246 / .9); }
-.pr-ev__own-cta { margin: 40px 0 0; }
+.pr-ev__own-cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px 40px; margin: 40px 0 0; }
 
 @media (max-width: 48rem) {
   .pr-ev__cal .pr-cal__row { grid-template-columns: minmax(0, 1fr) auto; }
   .pr-ev__own { padding-block-end: 72px; }
   .pr-ev__own-in { margin-block-start: 32px; }
 }
+
+/* the full-width photograph after the calendar (challenge.css .pr-chal__full, not
+   loaded here): the whole field, never cropped */
+.pr-ev__band { margin: 0; background: #181818; }
+.pr-ev__band img { display: block; width: 100%; height: auto; }
