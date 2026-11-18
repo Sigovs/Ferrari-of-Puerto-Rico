@@ -488,7 +488,7 @@ const NAV = [
     ['Ferrari Club Challenge', 'club-challenge.html'], ['XX Programme', 'xx-programme.html'], ['Our Racing Pedigree', '#'],
   ]],
   ['Owners', '#', [
-    ['Owner Resources', '#'], ["Owner’s Manuals", '#'], ['Hybrid Recharge Guide', '#'],
+    ['Owner Resources', '#'], ["Owner’s Manuals", 'owners-manuals.html'], ['Hybrid Recharge Guide', '#'],
     ['Personalization', '#'], ['My Ferrari App', '#'],
   ]],
   ['About Us', '#', [['Our Story', '#'], ['Our Team', 'our-team.html'], ['Contact Us', '#']]],
@@ -906,6 +906,18 @@ const PAGES = [
     PAGE_CSS: INV_CSS + '<link rel="stylesheet" href="css/approved.css">\n<link rel="stylesheet" href="css/home.css">\n<link rel="stylesheet" href="css/news.css">\n<link rel="stylesheet" href="css/drive.css">\n<link rel="stylesheet" href="css/sell.css">\n<link rel="stylesheet" href="css/dropdown.css">\n<link rel="stylesheet" href="css/warranty.css">\n<link rel="stylesheet" href="css/corso.css">\n<link rel="stylesheet" href="css/chapnav.css">\n<link rel="stylesheet" href="css/ccgt.css">\n<link rel="stylesheet" href="css/xx.css">\n<link rel="stylesheet" href="css/motion.css">\n',
     PAGE_JS: '<script src="js/dropdown.js" defer></script>\n<script src="js/interest.js" defer></script>\n<script src="js/gallery.js" defer></script>\n<script src="js/corso.js" defer></script>\n<script src="js/chapnav.js" defer></script>\n<script src="js/motion.js" defer></script>\n',
     main: () => read('_xx.html') + '\n' + DEALER,
+  },
+  {
+    /* Owner's Manuals — Ferrari's Smart Guides (ferrari.com/en-US/auto/smart-guide-ferrari)
+       and a request form for earlier models, as Ferrari of Fort Lauderdale offers;
+       tools/pages/owners_page.py, images tools/pages/owners_imgs.py */
+    out: 'owners-manuals.html',
+    TITLE: 'Owner’s Manuals — Ferrari of Puerto Rico',
+    DESC: 'Ferrari’s interactive Smart Guides for the Roma, SF90, 296, Purosangue, SF90 XX and Amalfi, and the owner’s manual of an earlier Ferrari on request, at Ferrari of Puerto Rico in San Juan.',
+    PRELOAD: '<link rel="preload" href="img/owners/hero-1920.webp" as="image" imagesrcset="img/owners/hero-800.webp 800w, img/owners/hero-1280.webp 1280w, img/owners/hero-1920.webp 1920w" imagesizes="100vw" media="(min-aspect-ratio: 5/4)">\n',
+    PAGE_CSS: INV_CSS + '<link rel="stylesheet" href="css/approved.css">\n<link rel="stylesheet" href="css/home.css">\n<link rel="stylesheet" href="css/news.css">\n<link rel="stylesheet" href="css/drive.css">\n<link rel="stylesheet" href="css/sell.css">\n<link rel="stylesheet" href="css/dropdown.css">\n<link rel="stylesheet" href="css/warranty.css">\n<link rel="stylesheet" href="css/corso.css">\n<link rel="stylesheet" href="css/chapnav.css">\n<link rel="stylesheet" href="css/ccgt.css">\n<link rel="stylesheet" href="css/owners.css">\n<link rel="stylesheet" href="css/motion.css">\n',
+    PAGE_JS: '<script src="js/interest.js" defer></script>\n<script src="js/chapnav.js" defer></script>\n<script src="js/motion.js" defer></script>\n',
+    main: () => read('_owners.html') + '\n' + DEALER,
   },
   {
     /* 296 GT Modificata — our Cauley page (cauleyferrari.com) ported by

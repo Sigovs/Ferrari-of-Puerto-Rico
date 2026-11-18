@@ -1,0 +1,37 @@
+/* Owner's Manuals (owners-manuals.html) — Ferrari's Smart Guide page on the
+   components already set: hero and welcome (approved.css), the pair grid
+   (corso.css .pr-life), Ferrari's form (form.css). Set here: the hero frame,
+   the chapter head over the guides, the link under each model. */
+
+/* hero: the instrument cluster sits high in Ferrari's frame, the title below
+   it on the dark */
+.pr-owners__hero .fa-hero__bg img { object-position: 50% 30%; }
+/* the cluster is wider than a squarish screen: from 5:4 down, Ferrari's upright cut */
+@media (max-aspect-ratio: 5/4) { .pr-owners__hero .fa-hero__bg img { object-position: 50% 20%; } }
+.pr-owners__hero .btn { width: auto; min-width: 208px; white-space: nowrap; }
+
+/* 1 · smart guides: marker, 24px, the chapter title; the studio photographs
+   keep Ferrari's black around each car */
+.pr-owners__guides { padding-block: var(--pad-top) 128px; border-block-start: 1px solid var(--rule); }
+.pr-owners__h { margin: 24px 0 64px; font-size: clamp(1.625rem, 1.5vw + 1.1rem, 2.5rem); line-height: 1.1; font-weight: 500; text-transform: uppercase; color: #fff; }
+.pr-owners__guides .pr-life__grid { row-gap: 72px; }
+.pr-owners__guides .pr-life__item img { background: #000; }
+.pr-owners__guides .pr-life__title { margin-block: 24px 16px; }
+.pr-owners__go { margin: 0; }
+
+@media (max-width: 48rem) {
+  .pr-owners__guides { padding-block-end: 72px; }
+  .pr-owners__h { margin-block-end: 40px; }
+  .pr-owners__guides .pr-life__grid { row-gap: 48px; }
+}
+
+/* each guide's chapters (Ferrari's own chapter pages), under the model name */
+.pr-owners__ch { display: grid; gap: 0; margin: 0 0 24px; padding: 0; list-style: none; border-block-start: 1px solid var(--rule); }
+.pr-owners__ch li { border-block-end: 1px solid var(--rule); }
+.pr-owners__ch a { display: block; padding-block: 12px; font-size: 14px; line-height: 20px; color: rgb(243 244 246 / .9); text-decoration: none; }
+.pr-owners__ch a:hover { color: #fff; text-decoration: underline; text-underline-offset: 4px; }
+.pr-owners__ch a:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 2px; }
+
+/* the app's guide follows the six, on the same ground */
+.pr-owners__connect { padding-block-start: 0; }
+.pr-owners__connect .pr-ed__text + .pr-ed__text { margin-block-start: 16px; }
