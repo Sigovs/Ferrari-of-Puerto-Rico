@@ -879,7 +879,7 @@ const PAGES = [
     out: 'club-challenge.html',
     TITLE: 'Passione Ferrari Club Challenge — Ferrari of Puerto Rico',
     DESC: 'The Passione Ferrari Club Challenge for Ferrari Challenge car owners: dedicated driving slots, personal Ferrari instructors, telemetry analysis and hospitality, at Ferrari of Puerto Rico in San Juan.',
-    PRELOAD: '<link rel="preload" href="img/clubchallenge/hero-1920.webp" as="image" imagesrcset="img/clubchallenge/hero-800.webp 800w, img/clubchallenge/hero-1280.webp 1280w, img/clubchallenge/hero-1920.webp 1920w" imagesizes="100vw">\n',
+    PRELOAD: '<link rel="preload" href="img/clubchallenge/hero-1920.webp" as="image" imagesrcset="img/clubchallenge/hero-800.webp 800w, img/clubchallenge/hero-1280.webp 1280w, img/clubchallenge/hero-1920.webp 1920w, img/clubchallenge/hero-2560.webp 2560w" imagesizes="100vw">\n',
     PAGE_CSS: INV_CSS + '<link rel="stylesheet" href="css/approved.css">\n<link rel="stylesheet" href="css/home.css">\n<link rel="stylesheet" href="css/news.css">\n<link rel="stylesheet" href="css/drive.css">\n<link rel="stylesheet" href="css/sell.css">\n<link rel="stylesheet" href="css/dropdown.css">\n<link rel="stylesheet" href="css/warranty.css">\n<link rel="stylesheet" href="css/corso.css">\n<link rel="stylesheet" href="css/tabs.css">\n<link rel="stylesheet" href="css/chapnav.css">\n<link rel="stylesheet" href="css/ccgt.css">\n<link rel="stylesheet" href="css/clubchallenge.css">\n',
     PAGE_JS: '<script src="js/dropdown.js" defer></script>\n<script src="js/interest.js" defer></script>\n<script src="js/tabs.js" defer></script>\n<script src="js/chapnav.js" defer></script>\n',
     main: () => read('_clubchallenge.html') + '\n' + DEALER,
