@@ -482,10 +482,10 @@ const NAV = [
   ]],
   ['Financing', '#', [['Finance Center', '#'], ['Apply for Financing', '#']]],
   ['Motorsports', '#', [
-    ['Ferrari Corso Pilota', 'corso-pilota.html'], ['Ferrari Challenge', 'ferrari-challenge.html'], ['Club Competizioni GT', '#'],
+    ['Ferrari Corso Pilota', 'corso-pilota.html'], ['Ferrari Challenge', 'ferrari-challenge.html'], ['Club Competizioni GT', 'club-competizioni-gt.html'],
     /* extra: the Club's own car, not in the client's sitemap */
     ['296 GT Modificata', '296-gt-modificata.html'],
-    ['Ferrari Club Challenge', '#'], ['XX Programme', '#'], ['Our Racing Pedigree', '#'],
+    ['Ferrari Club Challenge', 'club-challenge.html'], ['XX Programme', '#'], ['Our Racing Pedigree', '#'],
   ]],
   ['Owners', '#', [
     ['Owner Resources', '#'], ["Owner’s Manuals", '#'], ['Hybrid Recharge Guide', '#'],
@@ -494,7 +494,7 @@ const NAV = [
   ['About Us', '#', [['Our Story', '#'], ['Our Team', 'our-team.html'], ['Contact Us', '#']]],
   ['Events & Media', '#', [
     /* Event Recaps is the blog the client asked for (blog.html) */
-    ['Event Schedule', '#'], ['Event Recaps', 'blog.html'], ['Gallery', 'gallery.html'],
+    ['Event Schedule', '#'], ['Event Recaps (Blog)', 'blog.html'], ['Gallery', 'gallery.html'],
     /* extra, not in the client's sitemap: Ferrari's own news (feeds the home page block) */
     ['News & Events', 'news.html'],
   ]],
@@ -872,6 +872,28 @@ const PAGES = [
     PRELOAD: '', PAGE_CSS: INV_CSS + '<link rel="stylesheet" href="css/news.css">\n<link rel="stylesheet" href="css/drive.css">\n<link rel="stylesheet" href="css/dropdown.css">\n',
     PAGE_JS: '<script src="js/dropdown.js" defer></script>\n<script src="js/drive.js" defer></script>\n',
     main: drive,
+  },
+  {
+    /* Ferrari Club Challenge — Passione Ferrari Club Challenge: Ferrari Québec's
+       overview and cars, ferrari.com's programme (tools/pages/clubchallenge_page.py) */
+    out: 'club-challenge.html',
+    TITLE: 'Passione Ferrari Club Challenge — Ferrari of Puerto Rico',
+    DESC: 'The Passione Ferrari Club Challenge for Ferrari Challenge car owners: dedicated driving slots, personal Ferrari instructors, telemetry analysis and hospitality, at Ferrari of Puerto Rico in San Juan.',
+    PRELOAD: '<link rel="preload" href="img/clubchallenge/hero-1920.webp" as="image" imagesrcset="img/clubchallenge/hero-800.webp 800w, img/clubchallenge/hero-1280.webp 1280w, img/clubchallenge/hero-1920.webp 1920w" imagesizes="100vw">\n',
+    PAGE_CSS: INV_CSS + '<link rel="stylesheet" href="css/approved.css">\n<link rel="stylesheet" href="css/home.css">\n<link rel="stylesheet" href="css/news.css">\n<link rel="stylesheet" href="css/drive.css">\n<link rel="stylesheet" href="css/sell.css">\n<link rel="stylesheet" href="css/dropdown.css">\n<link rel="stylesheet" href="css/warranty.css">\n<link rel="stylesheet" href="css/corso.css">\n<link rel="stylesheet" href="css/tabs.css">\n<link rel="stylesheet" href="css/chapnav.css">\n<link rel="stylesheet" href="css/ccgt.css">\n<link rel="stylesheet" href="css/clubchallenge.css">\n',
+    PAGE_JS: '<script src="js/dropdown.js" defer></script>\n<script src="js/interest.js" defer></script>\n<script src="js/tabs.js" defer></script>\n<script src="js/chapnav.js" defer></script>\n',
+    main: () => read('_clubchallenge.html') + '\n' + DEALER,
+  },
+  {
+    /* Club Competizioni GT — ferrari.com's programme page module by module and
+       its 2027 calendar article (tools/pages/ccgt_page.py); Ferrari's photographs */
+    out: 'club-competizioni-gt.html',
+    TITLE: 'Club Competizioni GT — Ferrari of Puerto Rico',
+    DESC: 'Club Competizioni GT: Ferrari GT racing cars produced since 1989 on the world’s great circuits, the 2027 calendar, the eligible models and the International and US programmes, at Ferrari of Puerto Rico in San Juan.',
+    PRELOAD: '<link rel="preload" href="img/ccgt/hero-1920.webp" as="image" imagesrcset="img/ccgt/hero-800.webp 800w, img/ccgt/hero-1280.webp 1280w, img/ccgt/hero-1920.webp 1920w" imagesizes="100vw" media="(min-aspect-ratio: 5/4)">\n',
+    PAGE_CSS: INV_CSS + '<link rel="stylesheet" href="css/approved.css">\n<link rel="stylesheet" href="css/home.css">\n<link rel="stylesheet" href="css/news.css">\n<link rel="stylesheet" href="css/drive.css">\n<link rel="stylesheet" href="css/sell.css">\n<link rel="stylesheet" href="css/dropdown.css">\n<link rel="stylesheet" href="css/warranty.css">\n<link rel="stylesheet" href="css/corso.css">\n<link rel="stylesheet" href="css/chapnav.css">\n<link rel="stylesheet" href="css/ccgt.css">\n',
+    PAGE_JS: '<script src="js/dropdown.js" defer></script>\n<script src="js/interest.js" defer></script>\n<script src="js/corso.js" defer></script>\n<script src="js/chapnav.js" defer></script>\n<script src="js/ccgt.js" defer></script>\n',
+    main: () => read('_ccgt.html') + '\n' + DEALER,
   },
   {
     /* 296 GT Modificata — our Cauley page (cauleyferrari.com) ported by
