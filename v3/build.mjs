@@ -494,7 +494,7 @@ const NAV = [
   ['About Us', '#', [['Our Story', '#'], ['Our Team', 'our-team.html'], ['Contact Us', '#']]],
   ['Events & Media', '#', [
     /* Event Recaps is the blog the client asked for (blog.html) */
-    ['Event Schedule', '#'], ['Event Recaps (Blog)', 'blog.html'], ['Gallery', 'gallery.html'],
+    ['Event Schedule', 'event-schedule.html'], ['Event Recaps (Blog)', 'blog.html'], ['Gallery', 'gallery.html'],
     /* extra, not in the client's sitemap: Ferrari's own news (feeds the home page block) */
     ['News & Events', 'news.html'],
   ]],
@@ -930,6 +930,18 @@ const PAGES = [
     PAGE_CSS: INV_CSS + '<link rel="stylesheet" href="css/approved.css">\n<link rel="stylesheet" href="css/home.css">\n<link rel="stylesheet" href="css/news.css">\n<link rel="stylesheet" href="css/drive.css">\n<link rel="stylesheet" href="css/sell.css">\n<link rel="stylesheet" href="css/dropdown.css">\n<link rel="stylesheet" href="css/warranty.css">\n<link rel="stylesheet" href="css/corso.css">\n<link rel="stylesheet" href="css/chapnav.css">\n<link rel="stylesheet" href="css/ccgt.css">\n<link rel="stylesheet" href="css/hybrid.css">\n<link rel="stylesheet" href="css/motion.css">\n',
     PAGE_JS: '<script src="js/dropdown.js" defer></script>\n<script src="js/interest.js" defer></script>\n<script src="js/corso.js" defer></script>\n<script src="js/chapnav.js" defer></script>\n<script src="js/motion.js" defer></script>\n',
     main: () => read('_hybrid.html') + '\n' + DEALER,
+  },
+  {
+    /* Event Schedule — Ferrari's 2027 programme calendars as one (Corso Pilota NA,
+       Ferrari Challenge NA, Club Competizioni GT, XX Programme) and the dealer's own
+       events kept as "Coming soon"; tools/pages/events_page.py, events_imgs.py */
+    out: 'event-schedule.html',
+    TITLE: 'Event Schedule — Ferrari of Puerto Rico',
+    DESC: 'Every 2027 date in one calendar: Corso Pilota and Ferrari Challenge in North America, Club Competizioni GT and the XX Programme, at Ferrari of Puerto Rico in San Juan.',
+    PRELOAD: '<link rel="preload" href="img/events/hero-1920.webp" as="image" imagesrcset="img/events/hero-800.webp 800w, img/events/hero-1280.webp 1280w, img/events/hero-1920.webp 1920w, img/events/hero-2560.webp 2560w" imagesizes="100vw" media="(min-aspect-ratio: 5/4)">\n',
+    PAGE_CSS: INV_CSS + '<link rel="stylesheet" href="css/approved.css">\n<link rel="stylesheet" href="css/home.css">\n<link rel="stylesheet" href="css/news.css">\n<link rel="stylesheet" href="css/drive.css">\n<link rel="stylesheet" href="css/sell.css">\n<link rel="stylesheet" href="css/dropdown.css">\n<link rel="stylesheet" href="css/warranty.css">\n<link rel="stylesheet" href="css/corso.css">\n<link rel="stylesheet" href="css/chapnav.css">\n<link rel="stylesheet" href="css/ccgt.css">\n<link rel="stylesheet" href="css/events.css">\n<link rel="stylesheet" href="css/motion.css">\n',
+    PAGE_JS: '<script src="js/dropdown.js" defer></script>\n<script src="js/interest.js" defer></script>\n<script src="js/corso.js" defer></script>\n<script src="js/chapnav.js" defer></script>\n<script src="js/motion.js" defer></script>\n',
+    main: () => read('_events.html') + '\n' + DEALER,
   },
   {
     /* 296 GT Modificata — our Cauley page (cauleyferrari.com) ported by
