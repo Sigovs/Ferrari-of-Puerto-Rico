@@ -45,10 +45,10 @@ const MODELS = [
 ];
 const tile = ([slug, name, url]) => `      <li class="pr-lineup__item">
         <a class="pr-model" href="${url}" target="_blank" rel="noopener">
-          <span class="pr-model__img"><img src="img/lineup/${slug}.webp" width="462" height="462" loading="lazy" alt="Ferrari ${name}"></span>
+          <span class="pr-model__img"><img src="img/lineup-live/${slug}.webp" width="462" height="462" loading="lazy" alt="Ferrari ${name}"></span>
           <span class="pr-model__name">${name}</span>
         </a>
-        <button type="button" class="pr-model__td" data-pop="pr-lead" data-intent="testdrive" data-car="Ferrari ${name}" data-spec="2026 range" data-img="img/lineup/${slug}.webp">Schedule test drive ${chev}</button>
+        <button type="button" class="pr-model__td" data-pop="pr-lead" data-intent="testdrive" data-car="Ferrari ${name}" data-spec="2026 range" data-img="img/lineup-live/${slug}.webp">Schedule test drive ${chev}</button>
       </li>`;
 
 /* the dealer's details and hours — the client's confirmed wording (Oct 2026);
@@ -989,9 +989,8 @@ const PAGES = [
 /* the home as it was before the dealer's confirmed details, on its old chrome */
 // (v1 home lives only in ../site)
 
-/* the home with live photographs in the lineup instead of the studio
-   cut-outs — the same page otherwise (img/lineup-live) */
-PAGES.push({ ...PAGES[0], out: 'index-live.html', main: () => PAGES[0].main().replaceAll('img/lineup/', 'img/lineup-live/') });
+/* one home since 18 Nov 2026 (Alex): the lineup in live photographs
+   (img/lineup-live); the studio cut-out version and index-live.html are gone */
 
 /* a car that has left the stock takes its page with it */
 const live = new Set(PAGES.map(p => p.out));

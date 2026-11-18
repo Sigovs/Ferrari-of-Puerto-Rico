@@ -24,7 +24,14 @@ h1{font-weight:500;font-size:clamp(22px,2.2vw,30px);letter-spacing:-.01em;margin
 .s{display:grid;gap:2px;font-size:12.5px;color:var(--mute)}
 .t{font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px 2px;border:1px solid currentColor;line-height:1.4}
 .t--R{background:var(--ink);border-color:var(--ink);color:#fff}
-.t--X{background:#fff;color:var(--ink)}
+.t--X,.g{background:#e6f4ea;border:1px solid #9fd3ad;color:#1e6b34}
+.g{display:inline-block;font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:0 5px;line-height:15px;white-space:nowrap}
+.ps{display:grid;gap:6px;width:100%;margin-top:4px;padding-top:10px;border-top:1px solid #ececec}
+.pl{display:block;font-size:12.5px;line-height:1.4;text-align:center;color:inherit;text-decoration:none}
+.pl .g{margin-left:6px;vertical-align:1px}
+.pl:hover span:first-child,.nl:hover{text-decoration:underline}
+.pl:focus-visible,.nl:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.nl{color:inherit;text-decoration:none} .nl::after{content:" ↗";color:var(--mute)}
 .t--N{color:var(--red)}
 .t--L{color:#8f8f8f;border-color:#d4d4d4}
 .b--N{border-color:#e9a39d}
@@ -46,10 +53,10 @@ a.b:focus-visible{outline:2px solid var(--red);outline-offset:2px}
     <li><span class="t t--R">In preview</span> ready to see (14)</li>
     <li><span class="t t--N">Next</span> your priority list, we build these now (7)</li>
     <li><span class="t t--L">Later</span> after that (14)</li>
-    <li><span class="t t--X">Extra</span> not in your sitemap (1)</li>
+    <li><span class="g">New</span> page not in your sitemap — we had to add it (20)</li>
   </ul>
 </header>
-<nav class="home" aria-label="Homepage"><a class="b b--R home__b" href="index-live.html"><span class="n">Homepage · live photography</span><span class="t t--R">In preview</span></a><a class="b b--R home__b" href="index.html"><span class="n">Homepage · studio line-up</span><span class="t t--R">In preview</span></a></nav>
+<nav class="home" aria-label="Homepage"><a class="b b--R home__b" href="index.html"><span class="n">Homepage</span><span class="t t--R">In preview</span></a></nav>
 <div class="grid">
 <section class="c"><h2 class="h">New Model Range</h2>
 <div class="b b--L"><span class="n">Current Range</span><span class="t t--L">Later</span></div>
@@ -58,7 +65,7 @@ a.b:focus-visible{outline:2px solid var(--red);outline-offset:2px}
 <a class="b b--R" href="demo-drive.html"><span class="n">Schedule a Demo Drive</span><span class="t t--R">In preview</span></a>
 </section>
 <section class="c"><h2 class="h">Pre-Owned</h2>
-<a class="b b--R" href="pre-owned.html"><span class="n">Pre-Owned Inventory</span><span class="s"><span>· 9 vehicle pages</span></span><span class="t t--R">In preview</span></a>
+<div class="b b--R"><a class="n nl" href="pre-owned.html">Pre-Owned Inventory</a><span class="t t--R">In preview</span><span class="ps"><a class="pl" href="pre-owned-2009-ferrari-scuderia-16m-spider-fc168269.html"><span>2009 Scuderia 16M Spider</span><span class="g">New</span></a><a class="pl" href="pre-owned-2020-ferrari-portofino-fp250688.html"><span>2020 Portofino</span><span class="g">New</span></a><a class="pl" href="pre-owned-2021-ferrari-roma-fp264666.html"><span>2021 Roma</span><span class="g">New</span></a><a class="pl" href="pre-owned-2021-ferrari-sf90-stradale-fc263540.html"><span>2021 SF90 Stradale</span><span class="g">New</span></a><a class="pl" href="pre-owned-2021-ferrari-sf90-stradale-fp267208.html"><span>2021 SF90 Stradale</span><span class="g">New</span></a><a class="pl" href="pre-owned-2022-ferrari-sf90-stradale-fp270555.html"><span>2022 SF90 Stradale</span><span class="g">New</span></a><a class="pl" href="pre-owned-2024-ferrari-296-gtb-f303757.html"><span>2024 296 GTB</span><span class="g">New</span></a><a class="pl" href="pre-owned-2024-ferrari-roma-f301025.html"><span>2024 Roma</span><span class="g">New</span></a><a class="pl" href="pre-owned-2026-ferrari-purosangue-fc329737.html"><span>2026 Purosangue</span><span class="g">New</span></a></span></div>
 <a class="b b--R" href="pre-owned.html"><span class="n">Ferrari Approved Inventory</span><span class="t t--R">In preview</span></a>
 <a class="b b--R" href="ferrari-approved.html"><span class="n">Ferrari Approved Program</span><span class="s"><span>· What It Is</span><span>· Why It Matters</span><span>· How It Works</span></span><span class="t t--R">In preview</span></a>
 <a class="b b--R" href="sell-or-consign.html"><span class="n">Sell or Consign Your Ferrari</span><span class="t t--R">In preview</span></a>
@@ -99,12 +106,13 @@ a.b:focus-visible{outline:2px solid var(--red);outline-offset:2px}
 </section>
 <section class="c"><h2 class="h">Events &amp; Media</h2>
 <div class="b b--N"><span class="n">Event Schedule</span><span class="t t--N">Next</span></div>
-<a class="b b--R" href="blog.html"><span class="n">Event Recaps</span><span class="s"><span>· Blog-Style Write-Ups</span><span>· Hosted Photos &amp; Video</span></span><span class="t t--R">In preview</span></a>
-<a class="b b--R" href="gallery.html"><span class="n">Gallery</span><span class="s"><span>· Photo Albums</span><span>· Video</span></span><span class="t t--R">In preview</span></a>
-<a class="b b--X" href="news.html"><span class="n">News &amp; Events</span><span class="s"><span>· Ferrari news · feeds the home page</span></span><span class="t t--X">Extra · in preview</span></a>
+<div class="b b--R"><a class="n nl" href="blog.html">Event Recaps</a><span class="s"><span>· Blog-Style Write-Ups</span><span>· Hosted Photos &amp; Video</span></span><span class="t t--R">In preview</span><span class="ps"><a class="pl" href="blog-amalfi-evening.html"><span>The Ferrari Amalfi evening</span><span class="g">New</span></a><a class="pl" href="blog-coffee-event.html"><span>Ferrari Coffee Event</span><span class="g">New</span></a></span></div>
+<div class="b b--R"><a class="n nl" href="gallery.html">Gallery</a><span class="s"><span>· Photo Albums</span><span>· Video</span></span><span class="t t--R">In preview</span><span class="ps"><a class="pl" href="gallery-amalfi-evening.html"><span>Album · The Ferrari Amalfi evening</span><span class="g">New</span></a><a class="pl" href="gallery-coffee-event.html"><span>Album · Ferrari Coffee Event</span><span class="g">New</span></a></span></div>
+<div class="b b--X"><a class="n nl" href="news.html">News &amp; Events</a><span class="s"><span>· Ferrari news · feeds the home page</span></span><span class="t t--X">New page</span><span class="ps"><a class="pl" href="news-550-bloodline.html"><span>The 550 Maranello Bloodline</span><span class="g">New</span></a><a class="pl" href="news-new-manual-era.html"><span>A New Manual Era</span><span class="g">New</span></a><a class="pl" href="news-austin-preview.html"><span>American triple-header kicks off in Austin</span><span class="g">New</span></a><a class="pl" href="news-austin-livery.html"><span>Special Austin livery</span><span class="g">New</span></a><a class="pl" href="news-austin-cover-art.html"><span>United States Grand Prix 2026 cover art</span><span class="g">New</span></a><a class="pl" href="news-barcelona-comments.html"><span>Comments ahead of 6 Hours of Barcelona</span><span class="g">New</span></a></span></div>
 </section>
 </div>
 <p class="note">Changes from your sitemap: “Event Recaps” is the event blog (write-ups with photos) — same page as before.
-“News & Events” is Ferrari’s own news, an extra page that feeds the news block on the homepage.
+“News & Events” is Ferrari’s own news, a new page that feeds the news block on the homepage.
+Pages marked <span class="g">New</span> are not in your sitemap: we added them because the pages above need them (each car, each write-up, each album, each article).
 Ferrari’s official name for the Club Challenge is “Passione Ferrari Club Challenge”.</p>
 </div></body></html>
