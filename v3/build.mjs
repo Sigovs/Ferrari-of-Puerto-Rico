@@ -521,7 +521,7 @@ const chromePart = f => read(f)
   .replace('{{NAV_MENU}}', NAV_MENU).replace('{{NAV_MOBILE}}', NAV_MOBILE).replace('{{NAV_FOOTER}}', NAV_FOOTER);
 
 /* the gallery: the albums as cards, then video */
-const galleryroom = () => `<main class="pr-newsroom pr-light">
+const galleryroom = () => `<main id="main" class="pr-newsroom pr-light">
   <div class="pr-shell">
     <p class="marker"><span>1</span><span class="marker__rule"></span><span>Gallery</span></p>
     <h1 class="pr-h2 pr-h2--ink">Photo albums</h1>
@@ -536,7 +536,7 @@ ${GALLERY.map(albumCard).join('\n')}
 </main>`;
 
 /* an album: its heading, every photograph, the story it belongs to */
-const album = a => `<main class="pr-newsroom pr-light">
+const album = a => `<main id="main" class="pr-newsroom pr-light">
   <div class="pr-shell">
     <a class="pr-vdp__back pr-vdp__back--ink" href="gallery.html"><svg aria-hidden="true" style="transform:scaleX(-1)"><use href="#chev"/></svg>Back to the gallery</a>
     <p class="pr-record pr-record--red"><span>${esc(a.date)}</span><span class="pr-record__rule"></span><span>${a.photos.length} photographs</span></p>
@@ -575,7 +575,7 @@ ${photos.map(([w, h], i) => {
 /* an article, as ferrari.com/news sets one: back; date and category, the
    title in capitals, in the reading column; the photograph the width of
    the page, not the screen; then the text in the same column */
-const readPage = (p, { backHref, by, body, after = '', ctas }) => `<main class="pr-read">
+const readPage = (p, { backHref, by, body, after = '', ctas }) => `<main id="main" class="pr-read">
   <div class="pr-read__back">${back(backHref)}</div>
   <header class="pr-read__head">
     <p class="pr-record pr-record--red"><span>${esc(p.date)}</span><span class="pr-record__rule"></span><span>${esc(p.cat)}</span></p>
@@ -605,7 +605,7 @@ const listTile = (p, cls) => `      <li class="${cls}">
           </span>
         </a>
       </li>`;
-const listing = (items, label, title) => `<main class="pr-list">
+const listing = (items, label, title) => `<main id="main" class="pr-list">
   <div class="pr-shell">
     <p class="marker"><span>1</span><span class="marker__rule"></span><span>${esc(label)}</span></p>
     <h1 class="pr-list__h">${esc(title)}</h1>
