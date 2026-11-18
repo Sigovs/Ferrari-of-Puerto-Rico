@@ -1,0 +1,45 @@
+/* XX Programme (xx-programme.html) — ferrari.com's programme page on the
+   components already set: hero and welcome (approved.css), calendar and rail
+   (corso.css), model tiles, editorial pairs and the "In the US" tag
+   (ccgt.css), figures (approved.css), Ferrari's form (form.css). Set here:
+   the hero frame, the brochure link under the welcome, the figures under the
+   current car, the US chapter's head. */
+
+/* hero: two FXX-K Evo cars at Portimão, in the middle band of the frame —
+   whole, clear of the header above and of the title below on the asphalt */
+.pr-xx__hero .fa-hero__bg img { object-position: 50% 40%; }
+/* squarish screens keep the wide frame, moved right so the yellow car stays
+   in; only upright ones take the cut, the dark blue car whole above the title */
+@media (max-aspect-ratio: 5/4) { .pr-xx__hero .fa-hero__bg img { object-position: 64% 40%; } }
+@media (max-aspect-ratio: 1/1) { .pr-xx__hero .fa-hero__bg img { object-position: 50% 45%; } }
+.pr-xx__hero .btn { width: auto; min-width: 208px; white-space: nowrap; }
+
+/* welcome: the brochure (Ferrari's DownloadList) under the copy */
+.pr-xx__dl { margin: 40px 0 0; }
+
+/* the current car: its four figures under the pair, on the same ground */
+.pr-xx__car .fa-figures { margin-block: 64px 0; }
+
+/* in the US: the marker over the pair, as a chapter opens */
+.pr-xx__us { padding-block-start: var(--pad-top); }
+.pr-xx__us > .pr-shell:first-child { margin-block-end: 48px; }
+.pr-xx__us .pr-ed__title { margin-block-start: 24px; }
+.pr-xx__us .pr-ed__text + .pr-ed__text { margin-block-start: 16px; }
+.pr-xx__car .pr-ed__text + .pr-ed__text, .pr-xx .pr-ed--flip .pr-ed__text + .pr-ed__text { margin-block-start: 16px; }
+
+/* the Corso Pilota banner closes the programme before the form */
+.pr-xx__promo { border-block-start: 1px solid var(--rule); }
+
+@media (max-width: 48rem) {
+  .pr-xx__car .fa-figures { margin-block-start: 48px; }
+  .pr-xx__us > .pr-shell:first-child { margin-block-end: 32px; }
+}
+
+/* the Corso Pilota banner's long Ferrari title takes a wider column, so it
+   sets in two or three lines, not four */
+@media (min-width: 64.0625rem) {
+  .pr-xx__promo .pr-ed__in { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); }
+}
+
+/* the gallery title breaks in balanced lines on a phone, never one word alone */
+.pr-xx .pr-show__title { text-wrap: balance; }
