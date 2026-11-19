@@ -1,0 +1,94 @@
+/* Value your Ferrari (sell-or-consign.html #value) — cauleyferrari.com
+   /value-your-trade/ reproduced, measured off the live page at 1440 and 390
+   on 19 Nov 2026. Their theme's values, not this site's tokens — that is
+   what 1:1 means here:
+
+     block      1px rgba(24,24,24,.35) box, 24 / 32 / 48 padding, 48 apart
+     heading    16 / 22.4, 500, uppercase, .08px, #181818, 24 to the fields
+     fields     the site's .pr-field (inventory.css) — already theirs: 52 tall,
+                13px, 1px #8f8f8f rule, the label at 24 lifting 24
+     rows       12 columns at a 32 gutter, 32 between rows (an 84 pitch)
+     select     the label as the first option, in ink; their 16 × 8 arrow
+     upload     half width: Click to upload (tertiary, 64), Drag and drop
+                (#f7f7f7, 2px dashed #d2d2d2), Upload (secondary: #181818,
+                #8f8f8f at .65 while disabled)
+     submit     outside the blocks, at the right, 96 below; full width on
+                a phone, where the drop area is not offered (theirs too) */
+
+.pr-formsec .pr-vform { margin: 80px 0 0; }
+.pr-vform { display: flex; flex-direction: column; gap: 48px; }
+
+.pr-vform__sec { padding: 24px 32px 48px; border: 1px solid rgb(24 24 24 / .35); }
+.pr-vform__h {
+  margin: 0 0 24px; font-size: 16px; line-height: 22.4px; font-weight: 500;
+  letter-spacing: .08px; text-transform: uppercase; color: var(--pr-ink);
+}
+
+/* the row: spans of a 12-column grid at a 32 gutter; a break starts a row */
+.pr-vform__grid { display: flex; flex-wrap: wrap; column-gap: 32px; margin-block-end: -32px; }
+.pr-vform__grid > .pr-field { flex: none; margin-block-end: 32px; }
+.pr-vform__break { flex-basis: 100%; height: 0; }
+.pr-vform__c3 { width: calc((100% + 32px) * .25 - 32px); }
+.pr-vform__c4 { width: calc((100% + 32px) / 3 - 32px); }
+.pr-vform__c6 { width: calc((100% + 32px) * .5 - 32px); }
+.pr-vform__c9 { width: calc((100% + 32px) * .75 - 32px); }
+
+/* their select: no floating label — the first option is the label, in ink */
+.pr-vform .pr-field select {
+  padding: 24px 28px 8px 2px;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='8' viewBox='0 0 16 8'%3E%3Cpath d='M6.4541 7.26855C6.46186 7.278 6.47059 7.2866 6.47852 7.2959L6.54687 7.37305V7.37109C6.91154 7.75743 7.42687 8 8 8C8.57289 8 9.08751 7.75714 9.45215 7.37109L9.45312 7.37305L9.52051 7.2959C9.52844 7.2866 9.53716 7.278 9.54492 7.26855L16 0L8 4L0 0L6.4541 7.26855Z' fill='black'/%3E%3C/svg%3E") 100% calc(100% - 14px) / 16px 8px no-repeat;
+}
+.pr-vform .pr-field textarea { height: 128px; }
+
+/* upload: the three stacked controls, half the block */
+.pr-vup { width: calc((100% + 32px) * .5 - 32px); display: flex; flex-direction: column; }
+.pr-vup .btn { width: 100%; }
+.pr-vup__pick { color: var(--pr-ink); background: transparent; border-color: var(--pr-ink); }
+@media (hover: hover) { .pr-vup__pick:hover { color: #fff; background: var(--pr-ink); } }
+.pr-vup__drop {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  margin-block-start: 16px; padding: 25px 16px 30px;
+  background: #f7f7f7; border: 2px dashed #d2d2d2;
+  font-size: 12px; line-height: 15px; letter-spacing: .6px; text-transform: uppercase; color: #212121;
+  transition: border-color .3s ease, background-color .3s ease;
+}
+.pr-vup__drop.is-over { border-color: var(--pr-ink); background: #efefef; }
+.pr-vup__send { margin-block-start: 32px; color: #fff; background: var(--pr-ink); border-color: #000; }
+.pr-vup__send:disabled { color: #d2d2d2; background: #8f8f8f; opacity: .65; cursor: default; }
+@media (hover: hover) { .pr-vup__send:not(:disabled):hover { background: #303030; } }
+
+/* the chosen images: thumbnails under the controls, each removable */
+.pr-vup__list { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.pr-vup__list:not(:empty) { margin-block-start: 16px; }
+.pr-vup__list li { position: relative; width: 72px; height: 72px; background: #f7f7f7; }
+.pr-vup__list img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.pr-vup__list button {
+  position: absolute; top: 0; right: 0; width: 24px; height: 24px; padding: 0; border: 0; cursor: pointer;
+  background: rgb(24 24 24 / .8); color: #fff; font: inherit; font-size: 14px; line-height: 24px;
+}
+.pr-vup__list button:focus-visible { outline: 2px solid rgb(246 229 0); outline-offset: 0; }
+.pr-vup__note { width: 100%; margin: 8px 0 0; font-size: 13px; color: #303030; }
+.pr-vup__note:empty { display: none; }
+
+/* consent, then Submit outside the blocks at the right */
+.pr-vform__agree { margin-block-start: 34px; line-height: 19.5px; letter-spacing: .195px; color: var(--pr-ink); }
+.pr-vform__actions { display: flex; align-items: center; justify-content: flex-end; gap: 32px; margin-block-start: 48px; }
+.pr-vform__actions .pr-pop__sent { margin: 0; font-size: 13px; color: #303030; }
+.pr-vform__actions .pr-pop__sent:empty { display: none; }
+
+/* their md: two to a row; the wide fields the full row */
+@media (max-width: 61.99rem) {
+  .pr-vform__c3, .pr-vform__c4 { width: calc((100% + 32px) * .5 - 32px); }
+  .pr-vform__c6, .pr-vform__c9, .pr-vup { width: 100%; }
+}
+/* a phone: one column, 24 padding, no drop area, Submit the full width */
+@media (max-width: 48rem) {
+  .pr-formsec .pr-vform { margin-block-start: 48px; }
+  .pr-vform__sec { padding: 24px; }
+  .pr-vform__grid > .pr-field { width: 100%; }
+  .pr-vup__drop { display: none; }
+  .pr-vup__send { margin-block-start: 16px; }
+  .pr-vform__actions { flex-direction: column-reverse; align-items: stretch; gap: 16px; margin-block-start: 48px; }
+  .pr-vform__actions .btn { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .pr-vup__drop { transition: none; } }

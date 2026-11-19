@@ -738,6 +738,18 @@ const soldCard = c => `        <li class="pr-car pr-car--sold">
             </dl>
           </div>
         </li>`;
+/* the Value your Ferrari form — cauleyferrari.com /value-your-trade/'s
+   lists as that form has them (Year 2027–1920, its Make list, its states),
+   Puerto Rico added to State; field helpers on the site's .pr-field */
+const V_YEARS = Array.from({ length: 108 }, (_, i) => String(2027 - i));
+const V_MAKES = ['ACURA','ALFA ROMEO','AM GENERAL','AMC','AMERICAN MOTORS','ASTON MARTIN','AUBURN','AUSTIN','AUSTIN HEALEY','AUDI','AVANTI','A.C.','BENTLEY','BMC','BMW','BUELL','BUICK','BUCKBOARD','CADILLAC','CHEVROLET','CHRYSLER','CORD','CROSLEY','CUSHMAN','DAEWOO','DAIHATSU','DELOREAN','DETOMASO','DODGE','DUCATI','DUESENBERG','EAGLE','EDSEL','ESSEX','EXCALIBUR','FERRARI','FIAT','FIRESTONE','FORD','GEO','GMC','HARLEY-DAVIDSON','HOLLYWOOD','HOLLYWOOD+PROP','HONDA','HUMMER','HYUNDAI','INTERNATIONAL','INFINITI','ISUZU','JAGUAR','JEEP','JENSEN','JENSEN HEALEY','JOHN','KARMA','KAWASAKI','KENT','KIA','KIT CARS','LAMBORGHINI','LAND ROVER','LA SALLE','LEXUS','LINCOLN','LOTUS','MASERATI','MAYBACH','MAZDA','MAXWELL','MCLAREN','MERCEDES-BENZ','MERCURY','MERKUR','MINI','MITSUBISHI','MORGAN','MG','MGA','MGB','NISSAN','OLDSMOBILE','OTHER','PANOZ','PACKARD','PATHFINDER','PEUGEOT','PONTIAC','PORSCHE','PLYMOUTH','QVALE','RENAULT','ROLLS-ROYCE','SAAB','SALEEN','SATURN','SCHWIN','SCION','SMART','STERLING','STUDEBAKER','SUBARU','SUZUKI','TESLA','TEXACO','TOYOTA','TRIUMPH','ULTRA','VOLKSWAGEN','VOLVO','WHIPPET','WOOD','YAMAHA','YUGO','ZIMMER'];
+const V_STATES = ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Islands','Virginia','Washington','West Virginia','Wisconsin','Wyoming'];
+/* a select as theirs: the label is the first option, in ink, no floating label */
+const vsel = (id, name, label, opts, span, req = false, pick = '') => `<div class="pr-field pr-vform__c${span}"><select id="${id}" name="${name}" aria-label="${label.replace('*', '')}"${req ? ' required' : ''}>
+            <option value=""${pick ? '' : ' selected'}>${label}</option>${opts.map(o => `<option${o === pick ? ' selected' : ''}>${o}</option>`).join('')}
+          </select></div>`;
+const vin = (id, name, label, span, req = false, attrs = '', type = 'text') => `<div class="pr-field pr-vform__c${span}"><input type="${type}" id="${id}" name="${name}" placeholder=" "${attrs ? ' ' + attrs : ''}${req ? ' required' : ''}><label for="${id}">${label}</label></div>`;
+
 const sell = () => {
   return `<main id="main" class="pr-sell">
 
@@ -780,10 +792,12 @@ ${CONSIGN_STEPS.map(t => `        <li>${esc(t)}</li>`).join('\n')}
   </div>
 </section>
 
-<!-- 2 · Value your Ferrari: Ferrari's own valuation fields (preowned.ferrari.com
-     Value your car — model, year, VIN, mileage, notes, then the contact),
-     in Ferrari's enrolment form (css/form.css): the heading centred, the
-     fields one column under it. -->
+<!-- 2 · Value your Ferrari: cauleyferrari.com /value-your-trade/ reproduced —
+     its five boxed blocks (Trade-in Vehicle Info, Upload Supporting Documents,
+     Contact Information, Vehicle Notes, Desired Vehicle Info), its fields,
+     its order, its stars, its 12-column rows; Submit outside the blocks at
+     the right. Two additions for this page: "I would like to" (the hero's
+     Consign / Sell links preset it) and Puerto Rico in State, chosen. -->
 <section class="pr-light pr-formsec pr-sell__value" id="value" aria-labelledby="value-h">
   <div class="pr-shell">
     <p class="marker"><span>2</span><span class="marker__rule"></span><span>Valuation</span></p>
@@ -791,37 +805,88 @@ ${CONSIGN_STEPS.map(t => `        <li>${esc(t)}</li>`).join('\n')}
       <h2 class="pr-formsec__title" id="value-h">Value your Ferrari</h2>
       <p class="pr-formsec__text">Our Maranello-trained specialists will provide an expert appraisal to ensure you get the best value for your Ferrari.</p>
     </div>
-      <form class="pr-drawer__form pr-fform" id="pr-sell" novalidate>
-        <p class="pr-fform__req">*Required fields</p>
-        <div class="pr-field pr-field--fixed pr-field--select"><select id="sv-intent" name="intent" required>
-          <option value="" disabled selected hidden></option>
-          <option>Consign my Ferrari</option>
-          <option>Sell my Ferrari</option>
-          <option>Know its value</option>
-        </select><label for="sv-intent">I would like to*</label></div>
-        <div class="pr-lead__pair">
-          <div class="pr-field"><input type="text" id="sv-model" name="model" placeholder=" " required><label for="sv-model">Model*</label></div>
-          <div class="pr-field"><input type="text" id="sv-year" name="year" inputmode="numeric" maxlength="4" placeholder=" " required><label for="sv-year">Year*</label></div>
+    <form class="pr-vform" id="pr-sell" novalidate>
+      <div class="pr-vform__sec">
+        <h3 class="pr-vform__h">Trade-in Vehicle Info</h3>
+        <div class="pr-vform__grid">
+          ${vsel('sv-intent', 'intent', 'I would like to*', ['Consign my Ferrari', 'Sell my Ferrari', 'Know its value'], 6, true)}
+          <span class="pr-vform__break" aria-hidden="true"></span>
+          ${vsel('sv-year', 'year', 'Year*', V_YEARS, 3, true)}
+          ${vsel('sv-make', 'make', 'Make*', V_MAKES, 3, true, 'FERRARI')}
+          ${vin('sv-model', 'model', 'Model*', 3, true)}
+          <span class="pr-vform__break" aria-hidden="true"></span>
+          ${vin('sv-trim', 'trim', 'Trim', 6)}
+          ${vsel('sv-body', 'body', 'Body Style', ['2 Door', '4 Door', 'Hatchback'], 3)}
+          <span class="pr-vform__break" aria-hidden="true"></span>
+          ${vin('sv-vin', 'vin', 'VIN', 6, false, 'maxlength="17" autocapitalize="characters"')}
+          <span class="pr-vform__break" aria-hidden="true"></span>
+          ${vin('sv-ext', 'ext_color', 'Exterior Color', 3)}
+          ${vin('sv-int', 'int_color', 'Interior Color', 3)}
+          <span class="pr-vform__break" aria-hidden="true"></span>
+          ${vin('sv-cyl', 'cylinders', 'Cylinders', 3, false, 'inputmode="numeric"')}
+          ${vin('sv-litres', 'litrs', 'Liters', 3, false, 'inputmode="decimal"')}
+          <span class="pr-vform__break" aria-hidden="true"></span>
+          ${vin('sv-miles', 'mileage', 'Mileage', 3, false, 'inputmode="numeric"')}
+          ${vsel('sv-trans', 'trans', 'Transmission', ['Automatic', 'Manual'], 3)}
+          <span class="pr-vform__break" aria-hidden="true"></span>
+          ${vin('sv-lien', 'lienholder', 'Lien Holder', 6)}
+          ${vin('sv-payoff', 'estimatepayoff', 'Estimated Payoff', 3, false, 'inputmode="decimal"')}
         </div>
-        <div class="pr-lead__pair">
-          <div class="pr-field"><input type="text" id="sv-vin" name="vin" maxlength="17" autocapitalize="characters" placeholder=" " required><label for="sv-vin">VIN*</label></div>
-          <div class="pr-field"><input type="text" id="sv-miles" name="mileage" inputmode="numeric" placeholder=" " required><label for="sv-miles">Mileage (miles)*</label></div>
+      </div>
+
+      <div class="pr-vform__sec">
+        <h3 class="pr-vform__h">Upload Supporting Documents</h3>
+        <div class="pr-vup" data-max="12">
+          <button type="button" class="btn pr-vup__pick">Click to Upload Images (up to 12)</button>
+          <input class="pr-vup__file" type="file" name="uploader" accept="image/*" multiple hidden>
+          <div class="pr-vup__drop" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.0625 8.93404L.5 8.49671C.224 8.49671 0 8.2728 0 7.9969C0 7.72101.224 7.4971.5 7.4971L7.0625 7.05977L7.5.499806C7.5.223913 7.724 0 8 0C8.276 0 8.5.223913 8.5.499806L8.9375 7.05977L15.5 7.4971C15.776 7.4971 16 7.72101 16 7.9969C16 8.2728 15.776 8.49671 15.5 8.49671L8.9375 8.93404L8.5 15.494C8.5 15.7699 8.276 15.9938 8 15.9938C7.724 15.9938 7.5 15.7699 7.5 15.494L7.0625 8.93404Z" fill="#181818"/></svg>
+            <span>Drag and Drop Here</span>
+          </div>
+          <button type="button" class="btn pr-vup__send" disabled>Upload <svg class="btn__chev" aria-hidden="true"><use href="#chev"/></svg></button>
+          <ul class="pr-vup__list" aria-live="polite"></ul>
         </div>
-        <div class="pr-field"><textarea id="sv-notes" name="notes" placeholder=" "></textarea><label for="sv-notes">Notes</label></div>
-        <div class="pr-lead__pair">
-          <div class="pr-field"><input type="text" id="sv-fname" name="fname" autocomplete="given-name" placeholder=" " required><label for="sv-fname">First Name*</label></div>
-          <div class="pr-field"><input type="text" id="sv-lname" name="lname" autocomplete="family-name" placeholder=" " required><label for="sv-lname">Last Name*</label></div>
+      </div>
+
+      <div class="pr-vform__sec">
+        <h3 class="pr-vform__h">Contact Information</h3>
+        <div class="pr-vform__grid">
+          ${vin('sv-fname', 'fname', 'First Name*', 4, true, 'autocomplete="given-name"')}
+          ${vin('sv-lname', 'lname', 'Last Name*', 4, true, 'autocomplete="family-name"')}
+          <span class="pr-vform__break" aria-hidden="true"></span>
+          ${vin('sv-address', 'address', 'Your Address', 4, false, 'autocomplete="street-address"')}
+          ${vin('sv-city', 'city', 'City', 4, false, 'autocomplete="address-level2"')}
+          <span class="pr-vform__break" aria-hidden="true"></span>
+          ${vsel('sv-state', 'state', 'State*', V_STATES, 4, true, 'Puerto Rico')}
+          ${vin('sv-zip', 'zip', 'Zip*', 4, true, 'inputmode="numeric" autocomplete="postal-code"')}
+          <span class="pr-vform__break" aria-hidden="true"></span>
+          ${vin('sv-email', 'email', 'Email*', 4, true, 'autocomplete="email"', 'email')}
+          ${vin('sv-phone', 'phone', 'Phone*', 4, true, 'autocomplete="tel"', 'tel')}
         </div>
-        <div class="pr-lead__pair">
-          <div class="pr-field"><input type="email" id="sv-email" name="email" autocomplete="email" placeholder=" " required><label for="sv-email">Email*</label></div>
-          <div class="pr-field"><input type="tel" id="sv-phone" name="phone" autocomplete="tel" placeholder=" " required><label for="sv-phone">Phone*</label></div>
+      </div>
+
+      <div class="pr-vform__sec">
+        <h3 class="pr-vform__h">Vehicle Notes</h3>
+        <div class="pr-vform__grid">
+          <div class="pr-field pr-vform__c9"><textarea id="sv-notes" name="message" placeholder=" " required></textarea><label for="sv-notes">Tell us More*</label></div>
         </div>
-        <label class="pr-check"><input type="checkbox" name="i_agree" value="1"><span>Please note that by completing this form, you agree to being contacted via text, phone and email.</span></label>
-        <div class="pr-drawer__actions">
-          <button class="btn btn--primary" type="submit">Submit</button>
+      </div>
+
+      <div class="pr-vform__sec">
+        <h3 class="pr-vform__h">Desired Vehicle Info</h3>
+        <div class="pr-vform__grid">
+          ${vsel('sv-yeari', 'yeari', 'Year', V_YEARS, 3)}
+          ${vsel('sv-makei', 'makei', 'Make', V_MAKES, 3)}
+          ${vin('sv-modeli', 'modeli', 'Model', 3)}
         </div>
+        <label class="pr-check pr-vform__agree"><input type="checkbox" name="i_agree" value="1"><span>Please note that by completing this form, you agree to being contacted via text, phone and email.</span></label>
+      </div>
+
+      <div class="pr-vform__actions">
         <p class="pr-pop__sent" aria-live="polite"></p>
-      </form>
+        <button class="btn btn--primary" type="submit">Submit <svg class="btn__chev" aria-hidden="true"><use href="#chev"/></svg></button>
+      </div>
+    </form>
   </div>
 </section>
 
@@ -1006,7 +1071,7 @@ const PAGES = [
     TITLE: 'Sell or Consign Your Ferrari — Ferrari of Puerto Rico',
     DESC: 'Sell or consign your Ferrari with Ferrari of Puerto Rico in San Juan: how consignment works, an expert valuation of your Ferrari, and recently sold cars.',
     PRELOAD: '<link rel="preload" href="img/sell/hero-296-1920.webp" as="image" imagesrcset="img/sell/hero-296-800.webp 800w, img/sell/hero-296-1280.webp 1280w, img/sell/hero-296-1920.webp 1920w" imagesizes="100vw">\n',
-    PAGE_CSS: INV_CSS + '<link rel="stylesheet" href="css/approved.css">\n<link rel="stylesheet" href="css/drive.css">\n<link rel="stylesheet" href="css/sell.css">\n<link rel="stylesheet" href="css/dropdown.css">\n<link rel="stylesheet" href="css/motion.css">\n',
+    PAGE_CSS: INV_CSS + '<link rel="stylesheet" href="css/approved.css">\n<link rel="stylesheet" href="css/drive.css">\n<link rel="stylesheet" href="css/sell.css">\n<link rel="stylesheet" href="css/vform.css">\n<link rel="stylesheet" href="css/dropdown.css">\n<link rel="stylesheet" href="css/motion.css">\n',
     PAGE_JS: '<script src="js/dropdown.js" defer></script>\n<script src="js/sell.js" defer></script>\n<script src="js/motion.js" defer></script>\n',
     main: sell,
   },
