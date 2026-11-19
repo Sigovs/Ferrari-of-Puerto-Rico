@@ -1,5 +1,8 @@
 # Ferrari of Puerto Rico — home page
 
+> **Developers and agents: start with [HANDOFF.md](HANDOFF.md)** — links, build, forms, rules, open items. Current work is in `v3/`.
+
+
 Built from Figma, AAN FERRARI PROJECT LIB (`Aci2Fz647chvtpI1bMUdhJ`),
 frame `2791:32481` "Ferrari of Puerto Rico _index", 1920 × 10222.
 `node build.mjs` → `index.html`. Never edit `index.html` by hand.
